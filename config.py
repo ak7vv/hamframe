@@ -1,3 +1,7 @@
+
+# This does nothing terribly useful currently, and simply a crutch for
+# hacking this together.
+
 import sys
 import os
 
