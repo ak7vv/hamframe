@@ -6,13 +6,15 @@
 # toml_dict : dictionary with toml data for table table_name
 
 import sys
+import json
 
 def toml_import(logger, instance_name, table_name, **toml_dict):
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     logger.debug("instance_name: " + instance_name)
     logger.debug("table_name: " + table_name)
-    logger.debug("toml_dict: " + str(toml_dict))
+    # dump the dict we're supposed to write to kv store as JSON
+    logger.debug(json.dumps(str(toml_dict)))
 
     logger.debug("< " + sys._getframe().f_code.co_name + "()")
     return
@@ -29,8 +31,8 @@ def toml_export(logger, instance_name, table_name):
 
     toml_dict = {}
 
-    # report what we retrieved and return the dict
-    logger.debug("toml_dict: " + str(toml_dict))
+    # dump the dict retrieved from kv store as JSON
+    logger.debug(json.dumps(str(toml_dict)))
 
     logger.debug("< " + sys._getframe().f_code.co_name + "()")
     return toml_dict
