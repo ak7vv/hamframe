@@ -8,19 +8,22 @@
 
 
 def toml_import(logger, instance_name, table_name, **toml_dict):
-    logger.info("toml_import()")
+    logger.info("toml_import() start")
     logger.debug("instance_name: ", instance_name)
     logger.debug("table_name: ", table_name)
     logger.debug("toml_dict: ", toml_dict)
 
+    logger.debug("toml_import() complete")
     return
 
 
 
 def toml_export(logger, instance_name, table_name):
-    logger.info("toml_import()")
+    logger.info("toml_export() start")
     logger.debug("instance_name: ", instance_name)
     logger.debug("table_name: ", table_name)
 
+    # report what we retrieved and return the dict
     logger.debug("toml_dict: ", toml_dict)
+    logger.debug("toml_import() complete")
     return toml_dict
