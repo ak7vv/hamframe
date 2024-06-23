@@ -12,8 +12,4 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 ## Dev
 
 - Clone the repo.
-- Make sure you have virtualenv (___apt install python3-virtualenv___)
-- Run ___virtualenv hamframe___ and initialize the virtual environment with ___hamframe/bin/activate___
-- Make sure you're using the virtual environment by executing ___which python___ and it should refer to _hamframe/bin/python_
-
-If this doesn't make sense, perhaps start reading [here](https://realpython.com/python-virtual-environments-a-primer/).
+- Open the _hamframe.code-workspace_ file in Visual Studio Code.
