@@ -8,11 +8,9 @@
 import sys
 import json
 
-def toml_import(logger, instance_name, table_name, toml_dict):
+def toml_import(logger, toml_dict):
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
-    logger.debug("instance_name: " + instance_name)
-    logger.debug("table_name: " + table_name)
     # dump the dict we're supposed to write to kv store as JSON
     logger.debug(json.dumps(str(toml_dict)))
 
@@ -24,12 +22,10 @@ def toml_import(logger, instance_name, table_name, toml_dict):
 def toml_export(logger, instance_name, table_name):
 
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
-    logger.debug("instance_name: " + instance_name)
-    logger.debug("table_name: " + table_name)
-
+    
     # initialize toml_dict dict since it doesn't exist here
 
-    toml_dict = {}
+    toml_dict = {'instance' : instance_name, 'table' : table_name }
 
     # dump the dict retrieved from kv store as JSON
     logger.debug(json.dumps(str(toml_dict)))

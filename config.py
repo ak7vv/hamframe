@@ -18,9 +18,9 @@ log.setLevel(logging.DEBUG)
 
 log.info("test start")
 
-toml_dict = {}
+toml_dict = { 'instance' : 'foo', 'table' : 'bar' }
 
-provider.configuration.toml_import(logger=log, instance_name="foo", table_name="bar", toml_dict=toml_dict)
+provider.configuration.toml_import(logger=log, toml_dict=toml_dict)
 provider.configuration.toml_export(logger=log, instance_name="foo", table_name="bar")
 
 log.info("test complete")
