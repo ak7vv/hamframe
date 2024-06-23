@@ -14,11 +14,11 @@ log = logging.getLogger(__name__)
 log.addHandler(journal.JournalHandler())
 log.setLevel(logging.DEBUG)
 
-log.info("config test start")
+log.info("test start")
 
 toml_dict = {}
 
 provider.configuration.toml_import(logger=log, instance_name="foo", table_name="bar", toml_dict=toml_dict)
 provider.configuration.toml_export(logger=log, instance_name="foo", table_name="bar")
 
-log.info("config test complete")
+log.info("test complete")
