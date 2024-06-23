@@ -5,15 +5,15 @@
 import sys
 import os
 import logging
-from systemd import journal
+from cysystemd import journal
 import json
 import redis
 
 import provider
 from provider.configuration import *
 
-log = logging.getLogger(__name__)
-log.addHandler(journal.JournalHandler())
+log = logging.getLogger("config.py")
+log.addHandler(journal.JournaldLogHandler())
 log.setLevel(logging.DEBUG)
 
 log.info("test start")
