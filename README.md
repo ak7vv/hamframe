@@ -11,10 +11,12 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 
 ## Dev
 
+### Getting started
+
 - Clone the repo.
 - Open the _hamframe.code-workspace_ file in Visual Studio Code.
 - Open _command palette_, Python: Create Environment, follow prompts
 
-## Dependencies
+### Dependencies
 
-- sudo apt install libsystemd-dev
+sudo apt install ___libsystemd-dev___
