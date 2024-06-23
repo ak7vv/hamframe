@@ -8,7 +8,7 @@
 import sys
 import json
 
-def toml_import(logger, instance_name, table_name, **toml_dict):
+def toml_import(logger, instance_name, table_name, toml_dict):
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     logger.debug("instance_name: " + instance_name)
