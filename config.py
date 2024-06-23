@@ -1,10 +1,13 @@
 
 # this is used to develop and exercise the functions in the provider.configuration module
+# 
 
 import sys
 import os
 import logging
 from systemd import journal
+import json
+import redis
 
 import provider
 from provider.configuration import *
