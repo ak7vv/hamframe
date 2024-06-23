@@ -1,6 +1,5 @@
 
-# This does nothing terribly useful currently, and simply a crutch for
-# hacking this together.
+# this is used to develop and exercise the functions in the provider.configuration module
 
 import sys
 import os
