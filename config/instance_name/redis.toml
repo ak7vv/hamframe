@@ -1,0 +1,6 @@
+# location of a Redis compatible cache
+# used for bootstrap, everything else is retrieved from this root
+
+host = "redis.local"
+port = 6379
+decode_responses = True
