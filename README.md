@@ -20,6 +20,12 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 
 The directory ___cli/___ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.
 
+- ___make___ builds a container image ___hamframe-cli___ with can be used to interact with ___cli/cli.py___.
+- ___make clean___ prepares for another build
+- ___make dist-clean___ executes ___clean___ and blows away all cached, unreferenced, and hamframe-cli container images
+
+___docker run hamframe-cli___ _command_ executes a command known to ___cli/cli.py___.
+
 #### Configuration
 
 ##### Files 
