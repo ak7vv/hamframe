@@ -8,12 +8,20 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 
 73 Christian AK7VV
 
-### Getting started
+### Contributing
 
 - Clone the repo.
 - Open the _hamframe.code-workspace_ file in Visual Studio Code.
 - Open _command palette_, Python: Create Environment, follow prompts
 
-### Dependencies
+### Operation
 
-sudo apt install ___libsystemd-dev___
+#### CLI
+
+The directory ___cli/___ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.
+
+#### Configuration
+
+##### Files 
+
+Prototypes for configuration are stored in ___config/___. The file ___config/hamframe.toml___ contains the bootstrap for this specific instance ___"instance_name"___. By convention, the files associated with this instance are located in a subdirectory ___config/instance__name/___. The providers enabled are defined within ___hamframe.toml___ for each instance.  Each provider name is present in the ___instance_name/___ directory as ___provider.toml___.
