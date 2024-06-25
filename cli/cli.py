@@ -52,7 +52,7 @@ print(args)
 # did we get any args?
 
 if len(args.help) > 1:  # yes
-    if args.verbose or args.confdir or args.redis:
+    if args.verbose or args.confdir or args.redis: # nonsense arg snark
         print('Sorry?')
     else:
         match args.help[0]:
