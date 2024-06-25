@@ -1,4 +1,4 @@
-From alpine
+FROM alpine
 
 ENV PYTHONUNBUFFERED=1
 
