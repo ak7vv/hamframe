@@ -1,4 +1,4 @@
-# Framework for Ham Radio
+# A Framework for Ham Radio
 
 This repo contains an experimental framework for automating the workflow of an amateur radio operator (ham), which is currently in the early stages. The goal is to develop a disaggregated software stack that allows the end user to easily tailor the specific structure to a particular need by removing, modifying, or adding components.
 
@@ -8,26 +8,26 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 
 73 Christian AK7VV
 
-### Contributing
+### **Contributing**
 
 - Clone the repo.
 - Open the _hamframe.code-workspace_ file in Visual Studio Code.
 - Open _command palette_, Python: Create Environment, follow prompts
 
-### Operation
+### **Operation**
 
 #### CLI
 
-The directory ___cli/___ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.
+The directory _cli/_ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.
 
-- ___make___ builds a container image ___hamframe-cli___ with can be used to interact with ___cli/cli.py___.
-- ___make clean___ prepares for another build
-- ___make dist-clean___ executes ___clean___ and blows away all cached, unreferenced, and hamframe-cli container images
+- **make** builds a container image _hamframe-cli_ with can be used to interact with _cli/cli.py_.
+- **make clean** prepares for another build.
+- **make dist-clean** executes _clean_ and blows away all cached, unreferenced, and _hamframe-cli_ container images.
 
-___docker run hamframe-cli___ _command_ executes a command known to ___cli/cli.py___.
+**docker run hamframe-cli** ___command___ executes a command known to _cli/cli.py_.
 
 #### Configuration
 
 ##### Files 
 
-Prototypes for configuration are stored in ___config/___. The file ___config/hamframe.toml___ contains the bootstrap for this specific instance ___"instance_name"___. By convention, the files associated with this instance are located in a subdirectory ___config/instance__name/___. The providers enabled are defined within ___hamframe.toml___ for each instance.  Each provider name is present in the ___instance_name/___ directory as ___provider.toml___.
+Prototypes for configuration are stored in _config/_. The file _config/hamframe.toml_ contains the bootstrap for this specific instance _"instance_name"_. By convention, the files associated with this instance are located in a subdirectory _config/instance__name/_. The providers enabled are defined within _hamframe.toml_ for each instance.  Each provider name is present in the _instance_name/_ directory as _provider.toml_.
