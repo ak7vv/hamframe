@@ -1,6 +1,13 @@
-all:
+all: hamframe-cli
+
+hamframe-cli:
 	cp ../requirements.txt .
-	docker build --tag=hamframe-cli --compress=true --memory=2048 .
+	docker build \
+		--tag=hamframe-cli \
+		--compress=true \
+		--memory=2048 \
+		.
+	docker image ls hamframe-cli
 
 clean:
 	-rm requirements.txt
