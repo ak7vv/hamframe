@@ -8,7 +8,7 @@ The directory _cli/_ contains the instructions and contents for building a [Dock
 - **make clean** prepares for another build.
 - **make dist-clean** executes _clean_ and blows away all cached, unreferenced, and _hamframe-cli_ container images.
 
-**docker run hamframe-cli** ___command___ executes a command known to _cli/cli.py_.
+**docker run hamframe-cli** _args_ executes a command known to _cli/cli.py_.
 
 ### Configuration
 
