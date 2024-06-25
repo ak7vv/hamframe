@@ -1,8 +1,6 @@
-# A Framework for Ham Radio
+## **Operation**
 
-### **Operation**
-
-#### CLI
+### CLI
 
 The directory _cli/_ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.
 
@@ -12,9 +10,9 @@ The directory _cli/_ contains the instructions and contents for building a [Dock
 
 **docker run hamframe-cli** ___command___ executes a command known to _cli/cli.py_.
 
-#### Configuration
+### Configuration
 
-##### Files 
+#### Files 
 
 Prototypes for configuration are stored in _config/_. The file _config/hamframe.toml_ contains the bootstrap for this specific instance _"instance_name"_. By convention, the files associated with this instance are located in a subdirectory _config/instance__name/_. The providers enabled are defined within _hamframe.toml_ for each instance.  Each provider name is present in the _instance_name/_ directory as _provider.toml_.
 
