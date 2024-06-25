@@ -11,7 +11,7 @@ import json
 
 
 
-def toml_import(logger, toml_file)
+def toml_import(logger, toml_file) :
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     
@@ -26,7 +26,7 @@ def toml_import(logger, toml_file)
 
 
 
-def toml_export(logger, redis, instance_name, table_name):
+def toml_export(logger, redis, instance_name, table_name) :
 
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     
