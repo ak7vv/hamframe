@@ -12,18 +12,22 @@ import json
 
 
 
-def toml_import(logger, toml_dict):
+def toml_import(logger, redis, toml_dict):
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
+    
     # dump the dict we're supposed to write to kv store as JSON
-    logger.debug(json.dumps(str(toml_dict)))
+    dict_as_json = json.dumps(str(toml_dict))
+    logger.debug(dict_as_json)
 
+    # write meta data to redis
+    
     logger.debug("< " + sys._getframe().f_code.co_name + "()")
     return
 
 
 
-def toml_export(logger, instance_name, table_name):
+def toml_export(logger, redis, instance_name, table_name):
 
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     

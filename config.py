@@ -12,6 +12,8 @@ import redis
 import provider
 from provider.configuration import *
 
+# set up logging provider (systemd only)
+
 log = logging.getLogger("config.py")
 log.addHandler(journal.JournaldLogHandler())
 log.setLevel(logging.DEBUG)
