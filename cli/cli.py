@@ -61,7 +61,7 @@ if len(args.help) > 1:  # yes
                     case 'status':
                         print('Reports the system status.\n'
                             '\n'
-                            'Requires either --instance and either --confdir or --redis to be present')
+                            'Requires --instance and either --confdir or --redis to be present')
                     case _:
                         parser.print_help()
             case 'status':
