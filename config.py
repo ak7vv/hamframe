@@ -20,9 +20,13 @@ log.setLevel(logging.DEBUG)
 
 log.info("test start")
 
-toml_dict = { 'instance' : 'foo', 'table' : 'bar' }
+# construct dictionary
 
-provider.configuration.toml_import(logger=log, toml_dict=toml_dict)
-provider.configuration.toml_export(logger=log, instance_name="foo", table_name="bar")
+instance_name = "instance_name"
+table_name = "table_name"
+toml_dict = { 'instance' : instance_name, 'table' : table_name }
+
+provider.configuration.toml_import(logger=log, redis="", toml_dict=toml_dict)
+provider.configuration.toml_export(logger=log, redis="", instance_name="foo", table_name="bar")
 
 log.info("test complete")

@@ -1,5 +1,4 @@
-# module provides functions to import toml to redis and export redis to toml
-#
+# module provides functions to import toml and export toml from a configuration dict
 # logger : defines which logging instance should be used
 # instance_name : prescriptive info as to which instance this configuration table should apply to
 # table_name : prescriptive info as to what table should be written in redis
@@ -12,7 +11,7 @@ import json
 
 
 
-def toml_import(logger, redis, toml_dict):
+def toml_import(logger, toml_file)
     
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     
@@ -23,7 +22,7 @@ def toml_import(logger, redis, toml_dict):
     # write meta data to redis
     
     logger.debug("< " + sys._getframe().f_code.co_name + "()")
-    return
+    return toml_dict
 
 
 

@@ -1,0 +1,13 @@
+# bootstrap
+
+instance = "instance_name"
+
+[instance_name]
+
+providers = [
+#	"clublog",
+#	"n0nbh",
+#	"qrz",
+	"redis"
+]
+
