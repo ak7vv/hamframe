@@ -8,3 +8,4 @@ clean:
 dist-clean: clean
 	-docker builder prune --force
 	-docker image rm hamframe-cli --force
+	-docker image prune --force
