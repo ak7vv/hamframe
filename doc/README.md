@@ -19,6 +19,7 @@ The CLI understands the following commands:
 #### status
 
     Reports system status information.
+    
     Required:
         --instance
         --confdir | --redis
