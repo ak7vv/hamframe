@@ -17,4 +17,5 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 ---
 <P>
 
+
 73 Christian AK7VV
