@@ -10,6 +10,21 @@ The directory _cli/_ contains the instructions and contents for building a [Dock
 
 **docker run hamframe-cli** _args_ executes a command known to _cli/cli.py_.
 
+The CLI understands the following commands:
+
+#### help
+
+    Produces the command line help. Takes an optional argument to produce more detailed help for another command.
+
+#### status
+
+    Reports system status information.
+    Required:
+        --instance
+        --confdir | --redis
+
+---
+
 ### Configuration
 
 #### Files 
