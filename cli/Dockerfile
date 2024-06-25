@@ -1,5 +1,7 @@
 From alpine
 
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /hamframe
 
 RUN apk add --update --no-cache python3 py3-pip
