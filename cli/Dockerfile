@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu
 
 WORKDIR /hamframe
 COPY requirements.txt ./

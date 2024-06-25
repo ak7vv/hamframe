@@ -4,4 +4,7 @@ all:
 
 clean:
 	-rm requirements.txt
-	-docker remove hamframe-cli
+	-docker image rm hamframe-cli --force
+
+dist-clean: clean
+	-docker builder prune --force
