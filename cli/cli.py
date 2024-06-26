@@ -47,28 +47,26 @@ group.add_argument('status',help='report status', nargs='?', default=[])
 
 args = parser.parse_args()
 
-print(args)
-
 # did we get any command args?  
 # Note: For some reason args.help is the only thing ever populated and args.status etc never is.
 
 if len(args.help) > 0:  # yes
     match args.help[0]:
         case 'help':
-            match args.help[1]:
-                case 'status':
-                    print('Reports the system status.\n'
-                        '\n'
-                        'Requires --instance and either --confdir or --redis to be present')
-                case _:
-                    parser.print_help()
+            if len(args.help) > 1: # did we get more than the help command?
+                match args.help[1]:
+                    case 'status':
+                        print('Reports the system status.\n'
+                            '\n'
+                            'Requires --instance and either --confdir or --redis to be present')
+                        exit(0)
+
         case 'status':
             if args.instance and (args.confdir or args.redis):
-                print('no status.')
+                print('no status for you.')
+                exit(0)
             else:
-                print('Missing required arguments.')
-        case _:
-            parser.print_help()
-else: # no
-    parser.print_help()
+                print('\nERROR: missing required arguments.\n\n')
+
+parser.print_help()
 
