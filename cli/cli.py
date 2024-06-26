@@ -58,6 +58,8 @@ args = parser.parse_args()
 
 # did we get any command args?  
 # Note: For some reason args.help is the only thing ever populated and args.status etc never is.
+# if we didn't match something in this section, we go to parser.print_help()
+# if we did match something in this section, we exit(0)
 
 if len(args.help) > 0:  # yes
 
