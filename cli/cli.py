@@ -1,4 +1,4 @@
-# accepts parameters as commands
+# CLI interface for hamframe
 
 import argparse
 
@@ -11,6 +11,8 @@ class SmartFormatter(argparse.HelpFormatter):
         if text.startswith('R|'):
             return text[2:].splitlines()
         return super()._split_lines(text, width)
+
+# define the arg parser
 
 parser = argparse.ArgumentParser(description='Interact with hamframe',
                                  prog='hamframe-cli',
@@ -40,8 +42,15 @@ parser.add_argument('-v', '--verbose',
 # create the commands we understand
 
 group = parser.add_mutually_exclusive_group(required=False)
-group.add_argument('help', help='produce this message', nargs='*', default=[])
-group.add_argument('status',help='report status', nargs='?', default=[])
+
+group.add_argument('help', help='R|produce this message, or\n'
+                   "specify a command to produce help on, e.g. 'help status'\n",
+                   nargs='*', 
+                   default=[])
+group.add_argument('status',
+                   help='report status', 
+                   nargs='?', 
+                   default=[])
 
 # process the args
 
@@ -56,9 +65,11 @@ if len(args.help) > 0:  # yes
             if len(args.help) > 1: # did we get more than the help command?
                 match args.help[1]:
                     case 'status':
-                        print('Reports the system status.\n'
+                        print('\nReports the system status.\n'
                             '\n'
-                            'Requires --instance and either --confdir or --redis to be present')
+                            'Requires\n'
+                            '\t--instance and\n'
+                            '\t--confdir or --redis\n')
                         exit(0)
 
         case 'status':
