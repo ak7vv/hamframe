@@ -49,25 +49,26 @@ args = parser.parse_args()
 
 print(args)
 
-# did we get any args?
+# did we get any command args?  
+# Note: For some reason args.help is the only thing ever populated and args.status etc never is.
 
-if len(args.help) > 1:  # yes
-    if args.verbose or args.confdir or args.redis: # nonsense arg snark
-        print('Sorry?')
-    else:
-        match args.help[0]:
-            case 'help':
-                match args.help[1]:
-                    case 'status':
-                        print('Reports the system status.\n'
-                            '\n'
-                            'Requires --instance and either --confdir or --redis to be present')
-                    case _:
-                        parser.print_help()
-            case 'status':
+if len(args.help) > 0:  # yes
+    match args.help[0]:
+        case 'help':
+            match args.help[1]:
+                case 'status':
+                    print('Reports the system status.\n'
+                        '\n'
+                        'Requires --instance and either --confdir or --redis to be present')
+                case _:
+                    parser.print_help()
+        case 'status':
+            if args.instance and (args.confdir or args.redis):
                 print('no status.')
-            case _:
-                parser.print_help()
+            else:
+                print('Missing required arguments.')
+        case _:
+            parser.print_help()
 else: # no
     parser.print_help()
 
