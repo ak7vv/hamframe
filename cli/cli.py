@@ -60,9 +60,12 @@ args = parser.parse_args()
 # Note: For some reason args.help is the only thing ever populated and args.status etc never is.
 
 if len(args.help) > 0:  # yes
+
     match args.help[0]:
         case 'help':
+            
             if len(args.help) > 1: # did we get more than the help command?
+
                 match args.help[1]:
                     case 'status':
                         print('\nReports the system status.\n'
