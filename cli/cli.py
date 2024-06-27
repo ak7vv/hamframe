@@ -16,7 +16,7 @@ class SmartFormatter(argparse.HelpFormatter):
 
 # define the arg parser
 
-def parse_argumennts():
+def parse_arguments():
 
     parser = argparse.ArgumentParser(description='Interact with hamframe',
                                     prog='hamframe-cli',
@@ -86,8 +86,7 @@ def handle_status(parser, args):
 # process the args
 
 if __name__ == '__main__':
-    parser, args = parse_argumennts()
-
+    parser, args = parse_arguments()
 
     if args.command == 'help':
         handle_help(parser, args)
