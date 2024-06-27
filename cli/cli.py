@@ -17,7 +17,6 @@ class SmartFormatter(argparse.HelpFormatter):
 parser = argparse.ArgumentParser(description='Interact with hamframe',
                                  prog='hamframe-cli',
                                  add_help=True,
-#                                 usage='%(prog)s [command | -h | --help]',
                                  epilog='Refer to the documentation for a complete reference.',
                                  formatter_class=SmartFormatter)
 
