@@ -2,6 +2,7 @@
 
 import argparse
 
+
 # define a formatter to honor newlines in help text
 # https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
 
@@ -12,76 +13,88 @@ class SmartFormatter(argparse.HelpFormatter):
             return text[2:].splitlines()
         return super()._split_lines(text, width)
 
+
 # define the arg parser
 
-parser = argparse.ArgumentParser(description='Interact with hamframe',
-                                 prog='hamframe-cli',
-                                 add_help=True,
-                                 epilog='Refer to the documentation for a complete reference.',
-                                 formatter_class=SmartFormatter)
+def parse_argumennts():
 
-# add optional flags
+    parser = argparse.ArgumentParser(description='Interact with hamframe',
+                                    prog='hamframe-cli',
+                                    add_help=True,
+                                    formatter_class=SmartFormatter)
 
-parser.add_argument('--instance',
-                    type=str,
-                    help='instance name')
+    # add optional flags
 
-parser.add_argument('--confdir',
-                    type=str,
-                    help='path to configuration files')
+    parser.add_argument('--instance', type=str, help='instance name')
 
-parser.add_argument('--redis',
-                    type=str,
-                    help='Redis server')
+    parser.add_argument('--confdir', type=str, help='path to configuration files')
 
-parser.add_argument('-v', '--verbose',
-                    action="store_true",
-                    help='be noisy')
+    parser.add_argument('--redis', type=str, help='Redis server')
 
-# create the commands we understand
+    parser.add_argument('-v', '--verbose', action="store_true", help='be noisy')
 
-group = parser.add_mutually_exclusive_group(required=False)
+    # create the commands we understand
 
-group.add_argument('help', help='R|produce this message, or\n'
-                   "specify a command to produce help on, e.g. 'help status'\n",
-                   nargs='*', 
-                   default=[])
-group.add_argument('status',
-                   help='report status', 
-                   nargs='?', 
-                   default=[])
+    subparsers = parser.add_subparsers(dest='command')
+
+    # help
+    help_parser = subparsers.add_parser('help', help='produce this message or specify a command to produce help on')
+    help_parser.add_argument('subcommand', nargs='*', help='Subcommand to get help on')
+    
+    # status
+    status_parser = subparsers.add_parser('status', help='report status')
+    
+    return parser, parser.parse_args()
+
+
+# help handler
+
+def handle_help(parser, args):
+    if args.subcommand:
+        if args.subcommand[0] == 'status':
+            print('\nReports the system status.\n'
+                '\n'
+                'Requires\n'
+                '\t--instance and\n'
+                '\t--confdir or --redis\n')
+        elif args.subcommand[0] == 'help':
+            parser.print_help()
+        else:
+            parser.print_help()
+            print('\nERROR: Command not recognized.\n')
+            exit(1)
+    else:
+        print('\nProvides help on specific commands.\n'
+              '\n'
+              'Example:\n'
+              '\thelp status\n')
+    exit(0)
+
+
+# status handler
+
+def handle_status(parser, args):
+    if args.instance and (args.confdir or args.redis):
+        print('\nno status for you.\n')
+        exit(0)
+    else:
+        parser.print_help()
+        print('\nERROR: Missing required arguments. Check \'help status\'.\n')
+        exit(1)
+
 
 # process the args
 
-args = parser.parse_args()
+if __name__ == '__main__':
+    parser, args = parse_argumennts()
 
-# did we get any command args?  
-# Note: For some reason args.help is the only thing ever populated and args.status etc never is.
-# if we didn't match something in this section, we go to parser.print_help()
-# if we did match something in this section, we exit(0)
 
-if len(args.help) > 0:  # yes
+    if args.command == 'help':
+        handle_help(parser, args)
+    elif args.command == 'status':
+        handle_status(parser, args)
+    else:
+        parser.print_help()
+        print('\nRefer to the documentation for a complete reference.\n')
 
-    match args.help[0]:
-        case 'help':
-            
-            if len(args.help) > 1: # did we get more than the help command?
-
-                match args.help[1]:
-                    case 'status':
-                        print('\nReports the system status.\n'
-                            '\n'
-                            'Requires\n'
-                            '\t--instance and\n'
-                            '\t--confdir or --redis\n')
-                        exit(0)
-
-        case 'status':
-            if args.instance and (args.confdir or args.redis):
-                print('no status for you.')
-                exit(0)
-            else:
-                print('\nERROR: missing required arguments.\n\n')
-
-parser.print_help()
 
