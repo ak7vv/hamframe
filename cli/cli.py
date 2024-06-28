@@ -3,6 +3,12 @@
 import argparse
 
 
+# local constants
+
+AVAILABLE_CONFIG_OPS = [ "import", "export" ]
+AVAILABLE_CONFIG_SECTIONS = ["clublog", "n0nbh", "qrz", "redis"]
+
+
 # define a formatter to honor newlines in help text
 # https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
 
@@ -94,19 +100,19 @@ def handle_config(parser, args):
     if not args.subcommand or len(args.subcommand) > 2:
         print('\nERROR:\tincorrect number of arguments; check \'help config\'.\n')
         exit(1)
+    
     else:
-        if args.subcommand[0] != ('import' or 'export'):
+        config_op = args.subcommand[0]
+        if not config_op in AVAILABLE_CONFIG_OPS:
             print('\nERROR:\tcommand \'' + args.subcommand[0] + '\' not recognized.\n')
             exit(1)
-        else:
-            config_op = args.subcommand[0]
+        
         if (len(args.subcommand) == 2):
             config_section = args.subcommand[1]
-            available_config_sections = ["clublog", "n0nbh", "qrz", "redis"]
-            if not config_section in available_config_sections:
+            if not config_section in AVAILABLE_CONFIG_SECTIONS:
                 print('ERROR:\tconfiguration section not recognized.')
                 print('\tprovided: \'' + config_section + '\'')
-                print('\tavailable:', str(available_config_sections))
+                print('\tavailable:', str(AVAILABLE_CONFIG_SECTIONS))
                 exit(1)
         else:
             config_section = ''
@@ -133,3 +139,4 @@ if __name__ == '__main__':
     else:
         parser.print_help()
         print('\nRefer to the documentation for a complete reference.\n')
+        exit(1)
