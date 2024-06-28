@@ -35,15 +35,19 @@ def parse_arguments():
 
     # create the commands we understand
 
-    subparsers = parser.add_subparsers(dest='command')
+    command_parsers = parser.add_subparsers(dest='command')
 
     # help
-    help_parser = subparsers.add_parser('help', help='produce this message or specify a command to produce help on')
-    help_parser.add_argument('subcommand', nargs='*', help='Subcommand to get help on')
+    help_parser = command_parsers.add_parser('help', help='produce this message or specify a command to produce help on')
+    help_parser.add_argument('subcommand', nargs='*')
     
     # status
-    status_parser = subparsers.add_parser('status', help='report status')
-    
+    status_parser = command_parsers.add_parser('status', help='report status')
+
+    # config
+    config_parser = command_parsers.add_parser('config', help='interact with configuration')
+    config_parser.add_argument('subcommand', nargs='*')
+
     return parser, parser.parse_args()
 
 
@@ -51,18 +55,19 @@ def parse_arguments():
 
 def handle_help(parser, args):
     if args.subcommand:
-        if args.subcommand[0] == 'status':
-            print('\nReports the system status.\n'
+        match args.subcommand[0]:
+            case 'status':
+                print('\nReports the system status.\n'
                 '\n'
                 'Requires\n'
                 '\t--instance and\n'
                 '\t--confdir or --redis\n')
-        elif args.subcommand[0] == 'help':
-            parser.print_help()
-        else:
-            parser.print_help()
-            print('\nERROR: Command not recognized.\n')
-            exit(1)
+            case 'help':
+                parser.print_help()
+            case _:
+                parser.print_help()
+                print('\nERROR: command not recognized.\n')
+                exit(1)
     else:
         print('\nProvides help on specific commands.\n'
               '\n'
@@ -79,8 +84,37 @@ def handle_status(parser, args):
         exit(0)
     else:
         parser.print_help()
-        print('\nERROR: Missing required arguments. Check \'help status\'.\n')
+        print('\nERROR: missing required arguments; check \'help status\'.\n')
         exit(1)
+
+
+# config handler
+
+def handle_config(parser, args):
+    if not args.subcommand or len(args.subcommand) > 2:
+        print('\nERROR: incorrect number of arguments; check \'help config\'.\n')
+        exit(1)
+    else:
+        if args.subcommand[0] != ('import' or 'export'):
+            print('\nERROR: command not recognized.\n')
+            exit(1)
+        else:
+            config_op = args.subcommand[0]
+        if (len(args.subcommand) == 2):
+            config_section = args.subcommand[1]
+            available_config_sections = ["clublog", "n0nbh", "qrz", "redis"]
+            if not config_section in available_config_sections:
+                print('ERROR: configuration section not recognized')
+                exit(1)
+        else:
+            config_section = ''
+      
+        match config_op:
+            case 'import':
+                print()
+            case 'export':
+                print()
+
 
 
 # process the args
@@ -92,6 +126,8 @@ if __name__ == '__main__':
         handle_help(parser, args)
     elif args.command == 'status':
         handle_status(parser, args)
+    elif args.command == 'config':
+        handle_config(parser, args)
     else:
         parser.print_help()
         print('\nRefer to the documentation for a complete reference.\n')
