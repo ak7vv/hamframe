@@ -23,7 +23,6 @@ class SmartFormatter(argparse.HelpFormatter):
 # define the arg parser
 
 def parse_arguments():
-
     parser = argparse.ArgumentParser(description='Interact with hamframe',
                                     prog='hamframe-cli',
                                     add_help=True,
@@ -32,11 +31,8 @@ def parse_arguments():
     # add optional flags
 
     parser.add_argument('--instance', type=str, help='instance name')
-
     parser.add_argument('--confdir', type=str, help='path to configuration files')
-
     parser.add_argument('--redis', type=str, help='Redis server')
-
     parser.add_argument('-v', '--verbose', action="store_true", help='be noisy')
 
     # create the commands we understand
@@ -46,7 +42,7 @@ def parse_arguments():
     # help
     help_parser = command_parsers.add_parser('help', help='produce this message or specify a command to produce help on')
     help_parser.add_argument('subcommand', nargs='*')
-    
+
     # status
     status_parser = command_parsers.add_parser('status', help='report status')
 
@@ -54,16 +50,30 @@ def parse_arguments():
     config_parser = command_parsers.add_parser('config', help='interact with configuration')
     config_parser.add_argument('subcommand', nargs='*')
 
-    return parser, parser.parse_args()
+    args = parser.parse_args()
+
+    return parser, args
 
 
 # help handler
 
 def handle_help(parser, args):
     if args.subcommand:
-        match args.subcommand[0]:
+        help_command = args.subcommand[0]
+        match help_command:
+            case 'config':
+                print('\nInteract with configuration\n'
+                      '\n'
+                      'Requires\n'
+                      '\t--instance and\n'
+                      '\t--confdir or --redis\n'
+                      '\n'
+                      'Subcommands:\n'
+                      '\n'
+                      '\timport [section]\n'
+                      '\texport [section]\n')
             case 'status':
-                print('\nReports the system status.\n'
+                print('\nReports system status.\n'
                 '\n'
                 'Requires\n'
                 '\t--instance and\n'
@@ -72,12 +82,12 @@ def handle_help(parser, args):
                 parser.print_help()
             case _:
                 parser.print_help()
-                print('\nERROR:\tcommand not recognized.\n')
+                print('\nERROR:\tcommand \'' + help_command + '\' not recognized.\n')
                 exit(1)
     else:
-        print('\nProvides help on specific commands.\n'
+        parser.print_help()
+        print('\nFor help on specific commands, try:\n'
               '\n'
-              'Example:\n'
               '\thelp status\n')
     exit(0)
 
@@ -138,5 +148,4 @@ if __name__ == '__main__':
         handle_config(parser, args)
     else:
         parser.print_help()
-        print('\nRefer to the documentation for a complete reference.\n')
         exit(1)
