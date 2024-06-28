@@ -66,7 +66,7 @@ def handle_help(parser, args):
                 parser.print_help()
             case _:
                 parser.print_help()
-                print('\nERROR: command not recognized.\n')
+                print('\nERROR:\tcommand not recognized.\n')
                 exit(1)
     else:
         print('\nProvides help on specific commands.\n'
@@ -84,7 +84,7 @@ def handle_status(parser, args):
         exit(0)
     else:
         parser.print_help()
-        print('\nERROR: missing required arguments; check \'help status\'.\n')
+        print('\nERROR:\tmissing required arguments; check \'help status\'.\n')
         exit(1)
 
 
@@ -92,11 +92,11 @@ def handle_status(parser, args):
 
 def handle_config(parser, args):
     if not args.subcommand or len(args.subcommand) > 2:
-        print('\nERROR: incorrect number of arguments; check \'help config\'.\n')
+        print('\nERROR:\tincorrect number of arguments; check \'help config\'.\n')
         exit(1)
     else:
         if args.subcommand[0] != ('import' or 'export'):
-            print('\nERROR: command not recognized.\n')
+            print('\nERROR:\tcommand \'' + args.subcommand[0] + '\' not recognized.\n')
             exit(1)
         else:
             config_op = args.subcommand[0]
@@ -104,7 +104,9 @@ def handle_config(parser, args):
             config_section = args.subcommand[1]
             available_config_sections = ["clublog", "n0nbh", "qrz", "redis"]
             if not config_section in available_config_sections:
-                print('ERROR: configuration section not recognized')
+                print('ERROR:\tconfiguration section not recognized.')
+                print('\tprovided: \'' + config_section + '\'')
+                print('\tavailable:', str(available_config_sections))
                 exit(1)
         else:
             config_section = ''
