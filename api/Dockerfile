@@ -6,12 +6,12 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-COPY requirements.txt ./
+COPY requirements.txt /hamframe/requirements.txt
 
-RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
+RUN pip3 install --break-system-packages --no-cache-dir -r /hamframe/requirements.txt
 
-COPY api.py .
+COPY api.py api.sh /hamframe
 
 EXPOSE 8000
 
-ENTRYPOINT [ "fastapi", "run", "api.py", "--proxy-headers", "--port", "8000" ]
+ENTRYPOINT [ "sh", "/hamframe/api.sh" ]
