@@ -9,6 +9,7 @@ AVAILABLE_CONFIG_OPS = [ "import", "export" ]
 AVAILABLE_CONFIG_SECTIONS = ["clublog", "n0nbh", "qrz", "redis"]
 
 
+
 # define a formatter to honor newlines in help text
 # https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
 
@@ -18,6 +19,7 @@ class SmartFormatter(argparse.HelpFormatter):
         if text.startswith('R|'):
             return text[2:].splitlines()
         return super()._split_lines(text, width)
+
 
 
 # define the arg parser
@@ -53,6 +55,7 @@ def parse_arguments():
     args = parser.parse_args()
 
     return parser, args
+
 
 
 # command 'help' handler
@@ -92,6 +95,7 @@ def handle_help(parser, args):
     exit(0)
 
 
+
 # command 'status' handler
 
 def handle_status(parser, args):
@@ -102,6 +106,7 @@ def handle_status(parser, args):
         parser.print_help()
         print('\nERROR:\tmissing required arguments; check \'help status\'.\n')
         exit(1)
+
 
 
 # command 'config' handler
