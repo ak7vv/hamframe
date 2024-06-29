@@ -10,8 +10,10 @@ AVAILABLE_CONFIG_SECTIONS = ["clublog", "n0nbh", "qrz", "redis"]
 
 
 
-# define a formatter to honor newlines in help text
-# https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
+# define a custom formatter to honor newlines in help text
+# inspired by https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
+# use the above URL for instructions on how to use this formatter since it's currently available but 
+# not used in the code below.
 
 class SmartFormatter(argparse.HelpFormatter):
     
