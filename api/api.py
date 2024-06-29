@@ -4,6 +4,6 @@ from fastapi import FastAPI
 
 api = FastAPI()
 
-@app.get("/")
+@api.get("/")
 async def read_root():
     return {"Hello": "World"}
