@@ -14,5 +14,4 @@ COPY api.py .
 
 EXPOSE 8000
 
-#ENTRYPOINT [ "fastapi", "run", "api.py", "--proxy-headers", "--port", "8000" ]
 ENTRYPOINT [ "fastapi", "run", "api.py", "--proxy-headers", "--port", "8000" ]
