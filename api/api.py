@@ -9,5 +9,5 @@ api = FastAPI()
 #     return {"Hello": "World"}
 
 @api.get("/config/${config_op}/${config_section}")
-async def config(config_op, config_section):
+async def config(config_op: str, config_section: str):
     return {"config_op": config_op, "config_section": config_section}
