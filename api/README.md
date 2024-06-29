@@ -14,7 +14,7 @@ or
 
 The API is then exposed on _8000/tcp_ and bound to _0.0.0.0_ (this means you can access it from outside of the host).
 
-FastAPI is self-documenting as OpenAPI, which can be found at
+FastAPI is self-documenting as [OpenAPI](https://www.openapis.org/) (the artist formerly known as Swagger), which can be found at
 
     http://host_ip:8000/openapi.json
 
