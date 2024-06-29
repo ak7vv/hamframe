@@ -2,7 +2,7 @@
 
 ## Background
 
-The API is implemented as a Docker container running gunicorn/uvicorn/FastAPI.  The container can be built with _make_ within the API directory.
+The API is implemented as a Docker container running gunicorn/uvicorn/[FastAPI](https://fastapi.tiangolo.com/).  The container can be built with _make_ within the API directory.
 
 You can run the container in FastAPI's _dev_ or _prod_ mode depending on whether you pass _'dev'_ as an argument to the _docker run_ command:
 
