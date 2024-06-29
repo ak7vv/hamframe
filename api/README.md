@@ -29,6 +29,6 @@ where you can learn about the API verbs and attributes as well as exercise the A
 
 If you've launched the API container as described above, you can iterate through code versions by executing this command:
 
-docker cp api.py hamframe-api:/hamframe
+    docker cp api.py hamframe-api:/hamframe
 
 FastAPI will detect the change and relaunch with the new version.  You still need to rebuild the container image as described above if you want this change to persist.
