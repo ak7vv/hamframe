@@ -55,7 +55,7 @@ def parse_arguments():
     return parser, args
 
 
-# help handler
+# command 'help' handler
 
 def handle_help(parser, args):
     if args.subcommand:
@@ -92,11 +92,11 @@ def handle_help(parser, args):
     exit(0)
 
 
-# status handler
+# command 'status' handler
 
 def handle_status(parser, args):
     if args.instance and (args.confdir or args.redis):
-        print('\nno status for you.\n')
+        print('\nno status for you.\n') # FIXME: placebo until backend is alive
         exit(0)
     else:
         parser.print_help()
@@ -104,7 +104,7 @@ def handle_status(parser, args):
         exit(1)
 
 
-# config handler
+# command 'config' handler
 
 def handle_config(parser, args):
     if not args.subcommand or len(args.subcommand) > 2:
@@ -129,9 +129,9 @@ def handle_config(parser, args):
       
         match config_op:
             case 'import':
-                print()
+                print() # FIXME: placebo until backend is alive
             case 'export':
-                print()
+                print() # FIXME: placebo until backend is alive
 
 
 
