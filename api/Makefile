@@ -1,7 +1,6 @@
 all: hamframe-api
 
 hamframe-api:
-	cp ../requirements.txt .
 	docker build \
 		--tag=hamframe-api \
 		--compress=true \
@@ -10,7 +9,6 @@ hamframe-api:
 	docker image ls hamframe-api
 
 clean:
-	-rm requirements.txt
 	-docker image prune --force
 	-docker builder prune --force
 	# clean up when --rm is not specified
