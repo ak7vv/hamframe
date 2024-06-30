@@ -26,8 +26,9 @@ async def config(response: Response,
         # we have a working redis connection
         
         key='config:' + instance_param + ':' + config_section
-        json=r.json().get(key, '.')
-        if json:
+        value=r.json().get(key, '.')
+        if value:
+            json = { 'value': value }
             json.update({ 'status': 'success' })
             json.update({ 'key': key })
             return json
