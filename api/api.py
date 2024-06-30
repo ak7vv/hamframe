@@ -2,7 +2,8 @@
 
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
-from redis import Redis
+from redis import *
+from configuration.redis import check_conf_server
 
 api = FastAPI()
 
@@ -33,15 +34,12 @@ async def config(response: Response,
 
     if config_op == "import" and instance_param and redis_param:
         body = await request.body()
-        redissplit = urllib.parse.urlsplit('//' + redis_param) # split parameter into .hostname and .port
-        redishost=redissplit.hostname
-        if redissplit.port:
-            redisport = redissplit.port
-        else:
-            redisport = 6379
-        print('redis:', redishost + '/' + str(redisport))
-        r = Redis(host=redishost, port=redisport, decode_responses=True)
-        r.ping()
+        redis_status, r = check_conf_server(redis_param,instance_param)
+        
+        if not redis_status:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return
+        
         # response.status_code=status.HTTP_200_OK
         return 
     else:
