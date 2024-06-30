@@ -38,7 +38,7 @@ async def config(response: Response,
             return {'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
-        return { 'status': 'failure', 'operation not recognized' }
+        return { 'status': 'failure', 'message': 'operation not recognized' }
     
 # import or delete configuration
 
