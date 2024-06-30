@@ -35,17 +35,23 @@ async def config(response: Response,
 
     if config_op == "import" and instance_param and redis_param:
         body = await request.body()
-        if json.loads(body):
-            response.status_code = status.HTTP_418_IM_A_TEAPOT
-            
+        try:
+            body_json = json.loads(body)
+        except ValueError:
+            response.status_code = status.HTTP_418_IM_A_TEAPOT # you didn't use a coffee maker
+            return { 'status': 'failed', 'message': 'body is not valid JSON' }
+
         redis_status, r = check_conf_server(redis_param,instance_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
-            return
+            return { 'status': 'failed', 'message': 'redis connection failed' }
         
+        # we have a valid redis connection
+
+        r.hset('config:' + instance_param + ':' + config_section, mapping=body_json)
 
         # response.status_code=status.HTTP_200_OK
-        return 
+        return { 'status': 'success' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        return
+        return { 'status': 'failed', 'message': 'operation not recognized' }
