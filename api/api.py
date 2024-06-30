@@ -69,7 +69,7 @@ async def config(response: Response,
         print(r.json().get(key))
 
         # response.status_code=status.HTTP_200_OK
-        return { 'status': 'success' }
+        return { 'status': 'success', 'message': 'key \'' + key + '\' created' }
     
 
     elif config_op == "delete" and instance_param and redis_param and config_section:
