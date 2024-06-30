@@ -1,4 +1,4 @@
-# ripped from https://fastapi.tiangolo.com/#example
+# implement REST API using FastAPI
 
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
