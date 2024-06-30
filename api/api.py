@@ -54,7 +54,6 @@ async def config(response: Response,
         r.json().set(key, '.', body_json)
         print(r.json().get(key))
 
-
         # response.status_code=status.HTTP_200_OK
         return { 'status': 'success' }
     elif config_op == "delete" and instance_param and redis_param and config_section:
@@ -67,10 +66,10 @@ async def config(response: Response,
 
         key='config:' + instance_param + ':' + config_section
         
-        keys_deleted = r.json().delete(key)
+        r.delete(key, '.')
 
         # response.status_code=status.HTTP_200_OK
-        return { 'status': 'success', 'message': keys_deleted + ' keys deleted' }
+        return { 'status': 'success' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        return { 'status': 'failure', 'message': }
+        return { 'status': 'failure' }
