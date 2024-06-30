@@ -29,9 +29,10 @@ async def config(response: Response,
         json=r.json().get(key, '.')
         if json:
             json.update({ 'status': 'success' })
+            json.update({ 'key': key })
             return json
         else:
-            return {'status': 'failure', 'message': 'key does not exist' }
+            return {'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
         return { 'status': 'failure' }
@@ -79,10 +80,11 @@ async def config(response: Response,
 
         key='config:' + instance_param + ':' + config_section
         
-        r.delete(key, '.')
-
-        # response.status_code=status.HTTP_200_OK
-        return { 'status': 'success' }
+        if r.delete(key, '.'):
+            # response.status_code=status.HTTP_200_OK
+            return { 'status': 'success' }
+        else:
+            return { 'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
         return { 'status': 'failure' }
