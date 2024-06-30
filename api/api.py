@@ -37,8 +37,8 @@ async def config(response: Response,
             response.status_code = status.HTTP_404_NOT_FOUND
             return {'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return { 'status': 'failure' }
+        response.status_code = status.HTTP_501_NOT_IMPLEMENTED
+        return { 'status': 'failure', 'operation not recognized' }
     
 # import or delete configuration
 
@@ -80,7 +80,7 @@ async def config(response: Response,
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param,instance_param)
         if not redis_status:
-            response.status_code = status.HTTP_400_BAD_REQUEST
+            response.status_code = status.HTTP_502_BAD_GATEWAY
             return { 'status': 'failure', 'message': 'redis connection failed' }
         # we have a working redis connection
 
@@ -94,5 +94,5 @@ async def config(response: Response,
             response.status_code = status.HTTP_404_NOT_FOUND
             return { 'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return { 'status': 'failure' }
+        response.status_code = status.HTTP_501_NOT_IMPLEMENTED
+        return { 'status': 'failure', 'message': 'operation not recognized' }
