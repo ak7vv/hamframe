@@ -71,7 +71,7 @@ async def config(response: Response,
         # response.status_code=status.HTTP_200_OK
         return { 'status': 'success' }
     
-    
+
     elif config_op == "delete" and instance_param and redis_param and config_section:
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param,instance_param)
@@ -84,7 +84,7 @@ async def config(response: Response,
         
         if r.delete(key, '.'):
             # response.status_code=status.HTTP_200_OK
-            return { 'status': 'success' }
+            return { 'status': 'success', 'message': 'key \'' + key + '\' deleted' }
         else:
             return { 'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
