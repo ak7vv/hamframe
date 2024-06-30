@@ -18,10 +18,23 @@ async def config(response: Response,
                  config_section: str | None = None ):
     
     if config_op == "export" and instance_param and redis_param:
-        return {"config_op": config_op, "config_section": config_section}
+        # do we have a working Redis connection?
+        redis_status, r = check_conf_server(redis_param,instance_param)
+        if not redis_status:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return { 'status': 'failure', 'message': 'redis connection failed' }
+        # we have a working redis connection
+        
+        key='config:' + instance_param + ':' + config_section
+        json=r.json().get(key, '.')
+        if json:
+            json.update({ 'status': 'success' })
+            return json
+        else:
+            return {'status': 'failure', 'message': 'key does not exist' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        return
+        return { 'status': 'failure' }
     
 # import or delete configuration
 
