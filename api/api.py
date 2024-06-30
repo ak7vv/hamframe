@@ -25,6 +25,7 @@ async def config(response: Response,
             return { 'status': 'failure', 'message': 'redis connection failed' }
         # we have a working redis connection
         
+        # construct key and retrieve value
         key='config:' + instance_param + ':' + config_section
         value=r.json().get(key, '.')
         if value:
@@ -65,9 +66,10 @@ async def config(response: Response,
             return { 'status': 'failure', 'message': 'redis connection failed' }
         # we have a working redis connection
 
+        # construct key and set value
         key='config:' + instance_param + ':' + config_section
+
         r.json().set(key, '.', body_json)
-        print(r.json().get(key))
 
         # response.status_code=status.HTTP_200_OK
         return { 'status': 'success', 'message': 'key \'' + key + '\' created' }
@@ -81,6 +83,7 @@ async def config(response: Response,
             return { 'status': 'failure', 'message': 'redis connection failed' }
         # we have a working redis connection
 
+        # construct key and delete
         key='config:' + instance_param + ':' + config_section
         
         if r.delete(key, '.'):
