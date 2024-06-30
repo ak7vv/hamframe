@@ -23,7 +23,7 @@ async def config(response: Response,
         response.status_code = status.HTTP_400_BAD_REQUEST
         return
     
-# import configuration
+# import or delete configuration
 
 @api.post("/config/${config_op}", status_code=status.HTTP_200_OK)
 async def config(response: Response,
@@ -41,19 +41,36 @@ async def config(response: Response,
             body_json = json.loads(body)
         except ValueError:
             response.status_code = status.HTTP_418_IM_A_TEAPOT # you didn't use a coffee maker
-            return { 'status': 'failed', 'message': 'body is not valid JSON' }
+            return { 'status': 'failure', 'message': 'body is not valid JSON' }
 
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param,instance_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
-            return { 'status': 'failed', 'message': 'redis connection failed' }
+            return { 'status': 'failure', 'message': 'redis connection failed' }
         # we have a working redis connection
 
-        r.hset('config:' + instance_param + ':' + config_section, mapping=body_json)
+        key='config:' + instance_param + ':' + config_section
+        r.json().set(key, '.', body_json)
+        print(r.json().get(key))
+
 
         # response.status_code=status.HTTP_200_OK
         return { 'status': 'success' }
+    elif config_op == "delete" and instance_param and redis_param and config_section:
+        # do we have a working Redis connection?
+        redis_status, r = check_conf_server(redis_param,instance_param)
+        if not redis_status:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return { 'status': 'failure', 'message': 'redis connection failed' }
+        # we have a working redis connection
+
+        key='config:' + instance_param + ':' + config_section
+        
+        keys_deleted = r.json().delete(key)
+
+        # response.status_code=status.HTTP_200_OK
+        return { 'status': 'success', 'message': keys_deleted + ' keys deleted' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        return { 'status': 'failed', 'message': 'operation not recognized' }
+        return { 'status': 'failure', 'message': }
