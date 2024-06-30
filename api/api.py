@@ -4,6 +4,7 @@ from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
 from redis import *
 from configuration.redis import check_conf_server
+import json
 
 api = FastAPI()
 
@@ -34,12 +35,15 @@ async def config(response: Response,
 
     if config_op == "import" and instance_param and redis_param:
         body = await request.body()
+        if json.loads(body):
+            response.status_code = status.HTTP_418_IM_A_TEAPOT
+            
         redis_status, r = check_conf_server(redis_param,instance_param)
-        
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return
         
+
         # response.status_code=status.HTTP_200_OK
         return 
     else:

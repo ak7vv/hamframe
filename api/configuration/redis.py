@@ -1,4 +1,4 @@
-# module is a wrapped for redis related code
+# module contains redis related code
 # check_conf_server() takes what we hope to be parts of a URL for Redis, constructs valid connection
 # parameters, checks the connection and returns a boolean as well as a Redis handle if successful. 
 
@@ -20,4 +20,4 @@ def check_conf_server(host_param, db):
         return False, None
     except redis.ConnectionError:
         return False, None
-    
+
