@@ -34,6 +34,7 @@ async def config(response: Response,
             json.update({ 'key': key })
             return json
         else:
+            response.status_code = status.HTTP_404_NOT_FOUND
             return {'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
@@ -90,6 +91,7 @@ async def config(response: Response,
             # response.status_code=status.HTTP_200_OK
             return { 'status': 'success', 'message': 'key \'' + key + '\' deleted' }
         else:
+            response.status_code = status.HTTP_404_NOT_FOUND
             return { 'status': 'failure', 'message': 'key \'' + key + '\' does not exist' }
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
