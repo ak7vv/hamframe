@@ -67,7 +67,7 @@ async def config(response: Response,
         try:
             body_json = json.loads(body)
         except ValueError:
-            response.status_code = status.HTTP_418_IM_A_TEAPOT # you didn't use a coffee maker
+            response.status_code = status.HTTP_418_IM_A_TEAPOT # you didn't try to make tea
             return { 'status': 'failure', 'message': 'body is not valid JSON' }
 
         # do we have a working Redis connection?
