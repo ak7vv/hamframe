@@ -48,7 +48,7 @@ async def config(response: Response,
 
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
-        return { 'status': 'failure', 'message': 'operation not recognized' }
+        return { 'status': 'failure', 'message': 'operation \'' + config_op + '\' not recognized' }
     
 # import or delete configuration
 
@@ -114,4 +114,4 @@ async def config(response: Response,
         return { 'status': 'success', 'message': 'no keys matching \'' + pattern + '\' remaining in instance', 'sections': len(keys) }
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
-        return { 'status': 'failure', 'message': 'operation not recognized' }
+        return { 'status': 'failure', 'message': 'operation \'' + config_op + '\' not recognized' }
