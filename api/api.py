@@ -39,7 +39,7 @@ async def config(response: Response,
                 print(key)
                 value=r.json().get(key, '.')
                 json[len(json)+1] = { 'section': key.split(':')[2], 'value': value }
-            json |= { 'status': 'success', 'message': 'section(s) matching \'' + pattern + '\' in instance' }
+            json |= { 'status': 'success', 'message': 'section(s) matching \'' + pattern + '\'', 'sections': len(keys) }
             response.status_code = status.HTTP_200_OK
             return json
         else:
@@ -111,7 +111,7 @@ async def config(response: Response,
                     return { 'status': 'failure', 'message': 'redis connection failed' }
 
         response.status_code = status.HTTP_202_ACCEPTED
-        return { 'status': 'success', 'message': 'no keys matching \'' + pattern + '\' remaining in instance' }
+        return { 'status': 'success', 'message': 'no keys matching \'' + pattern + '\' remaining in instance', 'sections': len(keys) }
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
         return { 'status': 'failure', 'message': 'operation not recognized' }
