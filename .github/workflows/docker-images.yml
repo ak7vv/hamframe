@@ -16,9 +16,6 @@ jobs:
         platform: [ linux/amd64, linux/arm64 ]
 
     steps:
-    - name: Force Node 20
-      run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE20=true" >> $GITHUB_ENV
-
     - name: Create a variable with platform '${{ matrix.platform }}' value
       run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
     
@@ -45,7 +42,7 @@ jobs:
         password: ${{ secrets.GHCR_TOKEN }}
 
     - name: Cache Docker layers
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
         # key: ${{ runner.os }}-buildx-${{ github.sha }}
