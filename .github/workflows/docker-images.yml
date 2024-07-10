@@ -46,9 +46,10 @@ jobs:
       uses: actions/cache@v3
       with:
         path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        # key: ${{ runner.os }}-buildx-${{ github.sha }}
+        key: ${{ runner.os }}-buildx
         restore-keys: |
-          ${{ runner.os }}-buildx-
+          ${{ runner.os }}-buildx
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
