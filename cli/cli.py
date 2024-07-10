@@ -81,7 +81,7 @@ def handle_help(parser, args):
                 '\n'
                 'Requires\n'
                 '\t--instance and\n'
-                '\t--confdir or --redis\n')
+                '\t--confdir or --redis or both\n')
             case 'help':
                 parser.print_help()
             case _:
