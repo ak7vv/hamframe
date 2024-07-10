@@ -1,6 +1,6 @@
-[![container build status](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)](https://github.com/ckuhtz/hamframe/actions/)
-
 # A Framework for Ham Radio
+
+[![container build status](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)](https://github.com/ckuhtz/hamframe/actions/)
 
 This repo contains an experimental framework for automating the workflow of an amateur radio operator (ham). This work is currently in the early stages and probably not terribly useful as-is. The goal is to develop a disaggregated software stack that allows the end user to easily tailor the specific structure to a particular need by removing, modifying, or adding components.
 
@@ -12,14 +12,12 @@ And it probably goes without saying.. feedback is very welcome.
 
 ---
 
-### **Contributing**
+## **Contributing**
 
 - Clone the repo.
 - Open the _hamframe.code-workspace_ file in Visual Studio Code.
 - Open _command palette_, Python: Create Environment, follow prompts
 
 ---
-<P>
-
 
 73 Christian AK7VV
