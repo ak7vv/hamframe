@@ -1,2 +1,6 @@
-.gitignore
-README.md
+*
+!api.py
+!api.sh
+!configuration
+!database
+!requirements.txt
