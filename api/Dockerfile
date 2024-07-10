@@ -10,7 +10,7 @@ COPY . .
 
 # COPY /api/requirements.txt /hamframe/requirements.txt
 
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 
 RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
 
