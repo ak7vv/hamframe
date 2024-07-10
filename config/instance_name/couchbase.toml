@@ -1,0 +1,8 @@
+# couchbase parameters for this instance
+
+[frontend]
+hostname = "hostname"
+port = 12345
+username = "username"
+password = "password"
+bucket = "bucket"
