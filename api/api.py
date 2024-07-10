@@ -8,7 +8,7 @@ import json
 
 api = FastAPI()
 
-# export configuration
+# configuration operations
 
 @api.get("/config/${config_op}", status_code=status.HTTP_200_OK)
 async def config(response: Response, 
@@ -16,7 +16,9 @@ async def config(response: Response,
                  instance_param: str =  Query(None, alias='instance'),
                  redis_param: str = Query(None, alias='redis'),
                  config_section: str | None = None ):
-    
+
+# export configuration
+
     if config_op == "export" and instance_param and redis_param:
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param,instance_param)
