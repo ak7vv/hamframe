@@ -12,9 +12,9 @@ RUN pip3 install --break-system-packages --no-cache-dir -r /hamframe/requirement
 
 COPY /api/api.py /api/api.sh /hamframe/
 
-COPY /api/configuration /hamframe/
+COPY /api/configuration/ /hamframe/
 
-COPY /api/database /hamframe/
+COPY /api/database/ /hamframe/
 
 EXPOSE 8000
 
