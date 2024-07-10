@@ -30,7 +30,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_TOKEN }}
-        logout: false 
+        # logout: false 
 
     - name: Create a variable with platform '${{ matrix.platform }}' value
       run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
