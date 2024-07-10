@@ -23,7 +23,8 @@ jobs:
 
     strategy:
       matrix:
-        directory: [ api, cli ]
+#        directory: [ api, cli ]
+        directory: [ cli ]
         platform: [ linux/amd64 ]
 #        platform: [ linux/amd64, linux/arm64 ]
 
