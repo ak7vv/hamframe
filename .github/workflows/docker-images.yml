@@ -32,8 +32,6 @@ jobs:
         password: ${{ secrets.GHCR_TOKEN }}
         logout: false 
 
-# Add support for more platforms with QEMU (optional)
-# https://github.com/docker/setup-qemu-action
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       
