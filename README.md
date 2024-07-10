@@ -1,4 +1,4 @@
-[https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)
+![container build status](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)
 
 # A Framework for Ham Radio
 
