@@ -39,7 +39,6 @@ jobs:
       run: |
         LOCAL_PLATFORM="${PLATFORM//\//-}"
         echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
-        # echo "::set-output name=local_platform::${LOCAL_PLATFORM}"
         echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
 
     - name: Cache Docker layers
