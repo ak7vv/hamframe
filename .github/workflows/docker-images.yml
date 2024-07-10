@@ -23,8 +23,10 @@ jobs:
 
     strategy:
       matrix:
-        container: [ api, cli ]
-        platform: [ linux/amd64, linux/arm64 ]
+        container: [ api ]
+#        container: [ api, cli ]
+        platform: [ linux/amd64 ]
+#        platform: [ linux/amd64, linux/arm64 ]
 
     steps:
 
