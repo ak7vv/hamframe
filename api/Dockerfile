@@ -10,16 +10,16 @@ COPY /api/requirements.txt /hamframe/requirements.txt
 
 RUN pip3 install --break-system-packages --no-cache-dir -r /hamframe/requirements.txt
 
-COPY /api/api.py /hamframe/api.py
-COPY /api/api.sh /hamframe/api.sh
+# COPY /api/api.py /hamframe/api.py
+# COPY /api/api.sh /hamframe/api.sh
 
-RUN mkdir /hamframe/configuration
+# RUN mkdir /hamframe/configuration
 
-RUN mkdir /hamframe/database
+# RUN mkdir /hamframe/database
 
-COPY /api/configuration/* /hamframe/configuration/
+# COPY /api/configuration/* /hamframe/configuration/
 
-COPY /api/database/* /hamframe/database/
+# COPY /api/database/* /hamframe/database/
 
 EXPOSE 8000
 
