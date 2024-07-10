@@ -23,13 +23,11 @@ jobs:
 
     strategy:
       matrix:
-        container: [ api ]
-#        container: [ api, cli ]
+        directory: [ api, cli ]
         platform: [ linux/amd64 ]
 #        platform: [ linux/amd64, linux/arm64 ]
 
     steps:
-
     - name: checkout repo
       uses: actions/checkout@v4
 
@@ -44,7 +42,7 @@ jobs:
     - name: Build and push the Docker image
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: ./${{ matrix.directory }}
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.container }}:latest ./${{ matrix.container }}
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.container }}:latest
         platforms: ${{ matrix.platform }}
