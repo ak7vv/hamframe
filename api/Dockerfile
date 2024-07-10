@@ -10,7 +10,8 @@ COPY /api/requirements.txt /hamframe/requirements.txt
 
 RUN pip3 install --break-system-packages --no-cache-dir -r /hamframe/requirements.txt
 
-COPY /api/api.py /api/api.sh /hamframe/
+COPY /api/api.py /hamframe/api.py
+COPY /api/api.sh /hamframe/api.sh
 
 COPY /api/configuration/ /hamframe/
 
