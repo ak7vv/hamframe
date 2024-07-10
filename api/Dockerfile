@@ -6,6 +6,8 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
+COPY api/* .
+
 # COPY /api/requirements.txt /hamframe/requirements.txt
 
 RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
