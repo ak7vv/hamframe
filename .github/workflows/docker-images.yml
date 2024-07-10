@@ -16,6 +16,19 @@ jobs:
         platform: [ linux/amd64, linux/arm64 ]
 
     steps:
+    - name: Force Node 20
+      run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE20=true" >> $GITHUB_ENV
+
+    - name: Create a variable with platform '${{ matrix.platform }}' value
+      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
+    
+    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
+      id: local_platform
+      run: |
+        LOCAL_PLATFORM="${PLATFORM//\//-}"
+        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
+        echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
+
     - name: checkout repo
       uses: actions/checkout@v4
 
@@ -31,21 +44,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_TOKEN }}
 
-    - name: Create a variable with platform '${{ matrix.platform }}' value
-      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
-    
-    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
-      id: local_platform
-      run: |
-        LOCAL_PLATFORM="${PLATFORM//\//-}"
-        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
-        echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
-
     - name: Cache Docker layers
       uses: actions/cache@v3
-      env:
-        FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
-
       with:
         path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
         # key: ${{ runner.os }}-buildx-${{ github.sha }}
