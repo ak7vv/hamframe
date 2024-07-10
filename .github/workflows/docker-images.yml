@@ -44,5 +44,5 @@ jobs:
       with:
         context: ./${{ matrix.directory }}
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.container }}:latest
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.directory }}:latest
         platforms: ${{ matrix.platform }}
