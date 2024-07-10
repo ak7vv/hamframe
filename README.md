@@ -1,3 +1,5 @@
+[https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)
+
 # A Framework for Ham Radio
 
 This repo contains an experimental framework for automating the workflow of an amateur radio operator (ham). This work is currently in the early stages and probably not terribly useful as-is. The goal is to develop a disaggregated software stack that allows the end user to easily tailor the specific structure to a particular need by removing, modifying, or adding components.
