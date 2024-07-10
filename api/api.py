@@ -17,7 +17,7 @@ async def config(response: Response,
                  redis_param: str = Query(None, alias='redis'),
                  config_section: str | None = None ):
 
-# export configuration
+## export configuration
 
     if config_op == "export" and instance_param and redis_param:
         # do we have a working Redis connection?
@@ -52,7 +52,7 @@ async def config(response: Response,
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
         return { 'status': 'failure', 'message': 'operation \'' + config_op + '\' not recognized' }
     
-# import or delete configuration
+## import or delete configuration
 
 @api.post("/config/${config_op}", status_code=status.HTTP_200_OK)
 async def config(response: Response,
