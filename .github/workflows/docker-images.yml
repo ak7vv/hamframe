@@ -30,21 +30,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_TOKEN }}
-        logout: false
-
-    - name: cache python packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    
-    - name: install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f api/requirements.txt ]; then pip install -r api/requirements.txt; fi
-        if [ -f cli/requirements.txt ]; then pip install -r cli/requirements.txt; fi        
+        logout: false 
 
 # Add support for more platforms with QEMU (optional)
 # https://github.com/docker/setup-qemu-action
