@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-COPY /api/* .
+COPY . .
 
 # COPY /api/requirements.txt /hamframe/requirements.txt
 
