@@ -8,7 +8,7 @@ RUN mkdir /hamframe /hamframe/configuration
 
 WORKDIR /hamframe
 
-COPY ../requirements.txt /hamframe/requirements.txt
+COPY requirements.txt /hamframe/requirements.txt
 
 RUN pip3 install --break-system-packages --no-cache-dir -r /hamframe/requirements.txt
 

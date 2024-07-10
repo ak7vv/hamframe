@@ -1,3 +1,6 @@
+
+## NOT MAINTAINED: Using GitHub Actions instead. See ../.github/workflows
+
 all: hamframe-api
 
 hamframe-api:
