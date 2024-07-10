@@ -2,4 +2,6 @@
 
 from couchbase.auth import PasswordAuthenticator
 
-check_couchbase()
+def check_couchbase():
+    return
+
