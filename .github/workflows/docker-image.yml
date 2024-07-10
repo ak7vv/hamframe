@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: build and push containers to GHCR.io
 
 on:
   push:
@@ -7,12 +7,37 @@ on:
     branches: [ "main" ]
 
 jobs:
+  login:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        container:
+          - api
+          - cli
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file api/Dockerfile --tag hamframe-api:$(date +%s)
+    - name: checkout repo
+      uses: actions/checkout@v4
+
+  # # Add support for more platforms with QEMU (optional)
+  #       # https://github.com/docker/setup-qemu-action
+  #       name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v3
+      
+    - name: setup docker buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build the Docker image ${{ matrix.container }}
+      run: docker build --tag ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.container }}:latest ./${{ matrix.container }}
