@@ -43,6 +43,9 @@ jobs:
 
     - name: Cache Docker layers
       uses: actions/cache@v3
+      env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
+
       with:
         path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
         # key: ${{ runner.os }}-buildx-${{ github.sha }}
