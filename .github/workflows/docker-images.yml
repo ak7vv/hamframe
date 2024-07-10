@@ -25,9 +25,9 @@ jobs:
     strategy:
       matrix:
 #        directory: [ api, cli ]
+#        platform: [ linux/amd64, linux/arm64 ]
         directory: [ cli ]
         platform: [ linux/amd64 ]
-#        platform: [ linux/amd64, linux/arm64 ]
 
     steps:
     - name: checkout repo
