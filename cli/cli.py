@@ -6,9 +6,8 @@ import argparse
 # local constants
 
 AVAILABLE_CONFIG_OPS = [ "import", "export" ]
-AVAILABLE_CONFIG_SECTIONS = ["clublog", "n0nbh", "qrz", "redis"]
-
-
+# AVAILABLE_CONFIG_SECTIONS = ["clublog", "n0nbh", "qrz", "redis"]
+AVAILABLE_CONFIG_SECTIONS = ["couchbase"]
 
 # define a custom formatter to honor newlines in help text
 # inspired by https://stackoverflow.com/questions/3853722/how-to-insert-newlines-on-argparse-help-text
