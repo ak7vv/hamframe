@@ -32,23 +32,23 @@ jobs:
         password: ${{ secrets.GHCR_TOKEN }}
         logout: false 
 
-    - name: Create a variable with platform '${{ matrix.platform }}' value
-      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
+    # - name: Create a variable with platform '${{ matrix.platform }}' value
+    #   run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
     
-    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
-      id: local_platform
-      run: |
-        LOCAL_PLATFORM="${PLATFORM//\/\-}"
-        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
-        echo "::set-output name=local_platform::${LOCAL_PLATFORM}"
+    # - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
+    #   id: local_platform
+    #   run: |
+    #     LOCAL_PLATFORM="${PLATFORM//\/\-}"
+    #     echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
+    #     echo "::set-output name=local_platform::${LOCAL_PLATFORM}"
 
     - name: Cache Docker layers
       uses: actions/cache@v3
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-${{ steps.local_platform.outputs.local_platform }}-buildx-${{ github.sha }}
+        key: ${{ runner.os }}-${{ matrix.directory }}-buildx-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-${{ steps.local_platform.outputs.local_platform }}-buildx-
+          ${{ runner.os }}-${{ matrix.directory }}-buildx-
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
