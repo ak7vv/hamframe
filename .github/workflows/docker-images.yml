@@ -12,10 +12,8 @@ jobs:
 
     strategy:
       matrix:
-#        directory: [ api, cli ]
-#        platform: [ linux/amd64, linux/arm64 ]
-        directory: [ cli ]
-        platform: [ linux/amd64 ]
+        directory: [ api, cli ]
+        platform: [ linux/amd64, linux/arm64 ]
 
     steps:
     - name: Login to GitHub Container Registry
