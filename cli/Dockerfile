@@ -6,7 +6,7 @@ RUN apk add --update --no-cache python3 py3-pip
 
 WORKDIR /hamframe
 
-COPY cli/* .
+COPY /cli/* .
 
 RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
 
