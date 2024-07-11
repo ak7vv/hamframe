@@ -42,6 +42,7 @@ jobs:
         password: ${{ secrets.GHCR_TOKEN }}
 
     - name: Cache Docker layers
+      id: cache-docker-layers
       uses: actions/cache@v4
       with:
         path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
@@ -67,6 +68,7 @@ jobs:
       run: docker run --rm ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
 
     - name: Build and push
+      if: success()
       uses: docker/build-push-action@v6
       with:
         context: ./${{ matrix.component }}
