@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        directory: [ api, cli ]
+        component: [ api, cli ]
         platform: [ linux/amd64, linux/arm64 ]
 
     steps:
@@ -44,7 +44,7 @@ jobs:
     - name: Cache Docker layers
       uses: actions/cache@v4
       with:
-        path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
+        path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
         # key: ${{ runner.os }}-buildx-${{ github.sha }}
         key: ${{ runner.os }}-buildx
         restore-keys: |
@@ -53,12 +53,26 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       
+    - name: Build and push (for test)
+      uses: docker/build-push-action@v6
+      with:
+        context: ./${{ matrix.component }}
+        push: false
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+        platforms: ${{ matrix.platform }}
+        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+        cache-to: type=local,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+
+    - name: Run tests in container
+      run: docker run --rm ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: ./${{ matrix.directory }}
+        context: ./${{ matrix.component }}
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.directory }}:latest
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest
         platforms: ${{ matrix.platform }}
-        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
-        cache-to: type=local,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.directory }}
+        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+        cache-to: type=local,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+  
