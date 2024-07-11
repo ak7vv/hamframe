@@ -154,4 +154,4 @@ if __name__ == '__main__':
         handle_config(parser, args)
     else:
         parser.print_help()
-        exit(1)
+        exit(0)
