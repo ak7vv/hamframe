@@ -11,7 +11,7 @@ api = FastAPI()
 # Configuration operations
 
 @api.get("/config/${config_op}", status_code=status.HTTP_200_OK)
-async def config(response: Response, 
+async def get_config(response: Response, 
                  config_op: str,
                  instance_param: str =  Query(None, alias='instance'),
                  redis_param: str = Query(None, alias='redis'),
@@ -55,7 +55,7 @@ async def config(response: Response,
 ## import or delete configuration
 
 @api.post("/config/${config_op}", status_code=status.HTTP_200_OK)
-async def config(response: Response,
+async def post_config(response: Response,
                  request: Request,
                  config_op: str,
                  instance_param: str =  Query(None, alias='instance'),
@@ -124,7 +124,7 @@ async def config(response: Response,
 
 
 @api.get("/db/${db_op}", status_code=status.HTTP_200_OK)
-async def db(response: Response, 
+async def get_db(response: Response, 
                  db_op: str,
                  instance_param: str =  Query(None, alias='instance'),
                  redis_param: str = Query(None, alias='redis')):
@@ -141,7 +141,7 @@ async def db(response: Response,
 
 
 @api.post("/db/${db_op}", status_code=status.HTTP_200_OK)
-async def config(response: Response,
+async def post_db(response: Response,
                  request: Request,
                  db_op: str,
                  instance_param: str =  Query(None, alias='instance'),
