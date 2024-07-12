@@ -15,18 +15,23 @@ jobs:
         component: [ api, cli ]
         platform: [ linux/amd64, linux/arm64 ]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    concurrency:
+      group: ${{ matrix.component }}-${{ matrix.platform }}
+      cancel-in-progress: true
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: 'pip'
-      - run: |
-          cd ./${{ matrix.component }}
-          pip install -r requirements.txt
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+    - run: |
+        cd ./${{ matrix.component }}
+        pip install -r requirements.txt
+
 
   containers:
     runs-on: ubuntu-latest
