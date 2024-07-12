@@ -16,7 +16,7 @@ jobs:
         platform: [ linux/amd64, linux/arm64 ]
 
     concurrency:
-      group: ${{ matrix.component }}-${{ matrix.platform }}
+      group: pyright-${{ matrix.component }}-${{ matrix.platform }}
       cancel-in-progress: true
 
     steps:
@@ -43,7 +43,7 @@ jobs:
 
     # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
-      group: ${{ matrix.component }}-${{ matrix.platform }}
+      group: containers-${{ matrix.component }}-${{ matrix.platform }}
       cancel-in-progress: true
 
     steps:
