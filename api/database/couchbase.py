@@ -4,14 +4,22 @@ from couchbase.exceptions import CouchbaseException
 
 def check_couchbase(couchbase_param):
     """
-    Check if the Couchbase configuration endpoint is alive and return a handle if successful.
+    Check if the Couchbase configuration endpoint is alive, if bucket exists, and return a handle if successful.
+    If no bucket is specified, check 'default' bucket.
     
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
     :return: (status_code, couchbase) tuple where status_code is boolean for the check success, and bucket is the Couchbase bucket if successful
     """
-# check if we have a valid couchbase cluster connection and a valid bucket
+    
+    # check if we were told about a specific bucket to check
+    if not couchbase_param.bucket:
+        couchbase_param.bucket = 'default'
 
-    status_code = None
+    # did we get all required params?
+    if not couchbase_param.endpoint or couchbase_param.username or couchbase_param.password:
+          return False, None
+
+    # check if what we were given actually works    
     try:
         cluster = Cluster(couchbase_param.endpoint,
                             ClusterOptions(
