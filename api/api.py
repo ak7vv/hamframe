@@ -21,7 +21,7 @@ async def get_config(response: Response,
 
     if config_op == "export" and instance_param and redis_param:
         # do we have a working Redis connection?
-        redis_status, r = check_conf_server(redis_param,instance_param)
+        redis_status, r = check_conf_server(redis_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return { 'status': 'failure', 'message': 'redis connection failed' }
@@ -73,7 +73,7 @@ async def post_config(response: Response,
             return { 'status': 'failure', 'message': 'body is not valid JSON' }
 
         # do we have a working Redis connection?
-        redis_status, r = check_conf_server(redis_param,instance_param)
+        redis_status, r = check_conf_server(redis_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return { 'status': 'failure', 'message': 'redis connection failed' }
@@ -90,7 +90,7 @@ async def post_config(response: Response,
 
     elif config_op == "delete" and instance_param and redis_param:
         # do we have a working Redis connection?
-        redis_status, r = check_conf_server(redis_param,instance_param)
+        redis_status, r = check_conf_server(redis_param)
         if not redis_status:
             response.status_code = status.HTTP_502_BAD_GATEWAY
             return { 'status': 'failure', 'message': 'redis connection failed' }
@@ -130,7 +130,7 @@ async def get_db(response: Response,
                  redis_param: str = Query(None, alias='redis')):
 
         # do we have a working Redis connection?
-        redis_status, r = check_conf_server(redis_param,instance_param)
+        redis_status, r = check_conf_server(redis_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return { 'status': 'failure', 'message': 'redis connection failed' }
@@ -158,7 +158,7 @@ async def post_db(response: Response,
             return { 'status': 'failure', 'message': 'body is not valid JSON' }
     
         # do we have a working Redis connection?
-        redis_status, r = check_conf_server(redis_param,instance_param)
+        redis_status, r = check_conf_server(redis_param)
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return { 'status': 'failure', 'message': 'redis connection failed' }
