@@ -1,4 +1,4 @@
-name: build and push containers to GHCR.io
+name: build
 
 on:
   push:
