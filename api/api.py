@@ -164,7 +164,7 @@ async def config(response: Response,
             return { 'status': 'failure', 'message': 'redis connection failed' }
 
         json = body_json
-        json |= { 'status': 'success', 'message': len(keys) + ' submitted keys' }
+        json |= { 'status': 'success', 'message': 'submitted' }
         
         return json
 
