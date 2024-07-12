@@ -1,11 +1,15 @@
-# module contains couchbase related code
-
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
 from couchbase.bucket import Bucket
 from couchbase.exceptions import CouchbaseException
 
 def check_couchbase(couchbase_param):
+    """
+    Check if the Couchbase configuration endpoint is alive and return a handle if successful.
+    
+    :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
+    :return: (status_code, couchbase) tuple where status_code is boolean for the check success, and bucket is the Couchbase bucket if successful
+    """
 # check if we have a valid couchbase cluster connection and a valid bucket
 
     status_code = None
