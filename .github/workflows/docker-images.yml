@@ -20,6 +20,16 @@ jobs:
       cancel-in-progress: true
 
     steps:
+    - name: Create a variable with platform '${{ matrix.platform }}' value
+      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
+    
+    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
+      id: local_platform
+      run: |
+        LOCAL_PLATFORM="${PLATFORM//\//-}"
+        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
+        echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
+
     - name: Checkout code
       uses: actions/checkout@v4
 
