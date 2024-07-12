@@ -38,14 +38,17 @@ def check_couchbase(couchbase_param):
     
     
 
-# Inspired by https://www.couchbase.com/blog/how-implement-document-versioning-couchbase/
-# reimplemented in Python
 
-# Create a new document
 
 def version_document(couchbase_collection, key, value):
-# we are being provided a valid couchbase_collection handle, a key, 
-# and a value to populate the key with
+    """
+    Version a Couchbase document with a new value
+
+    :param couchbase_collection: handle for a valid Couchbase collection
+    :return: boolean on whether op was successful (FIXME https://github.com/ckuhtz/hamframe/issues/3)
+    """
+    # Inspired by https://www.couchbase.com/blog/how-implement-document-versioning-couchbase/
+    # reimplemented in Python
 
     # Step 1: Get the current version of the document
     try:
@@ -71,11 +74,16 @@ def version_document(couchbase_collection, key, value):
     # Step 4: Save the document current version
     couchbase_collection.upsert(key, value)
 
+
 # Delete all versions of a document
 
 def delete_document(couchbase_collection, key):
-# we are being provided a valid couchbase_collection handle, a key, 
-# and a value to populate the key with
+    """
+    Delete all versions of a Couchbase document
+
+    :param couchbase_collection: handle for a valid Couchbase collection
+    :return: boolean on whether op was successful (FIXME https://github.com/ckuhtz/hamframe/issues/4)
+    """
 
     # Step 1: Get the current version of the document
     try:
