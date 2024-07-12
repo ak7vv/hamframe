@@ -3,7 +3,7 @@
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
 from redis import *
-from configuration.redis import check_conf_server
+from database.redis import check_conf_server
 import json
 
 api = FastAPI()
