@@ -3,9 +3,29 @@
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
 from couchbase.bucket import Bucket
+from couchbase.exceptions import CouchbaseException
 
 def check_couchbase(couchbase_param):
-    return couchbase_handle, status_code
+# check if we have a valid couchbase cluster connection and a valid bucket
+
+    status_code = None
+    try:
+        cluster = Cluster(couchbase_param.endpoint,
+                            ClusterOptions(
+                                PasswordAuthenticator(
+                                    couchbase_param.username,
+                                    couchbase_param.password)))
+
+        bucket = cluster.bucket(couchbase_param.bucket)
+        
+        bucket.on_connect()
+
+        return True, bucket
+
+    except CouchbaseException as e:
+        return False, None
+    
+    
 
 # Inspired by https://www.couchbase.com/blog/how-implement-document-versioning-couchbase/
 # reimplemented in Python
@@ -13,7 +33,7 @@ def check_couchbase(couchbase_param):
 # Create a new document
 
 def version_document(couchbase_collection, key, value):
-# assumes we are being provided a valid couchbase_collection handle, a key, 
+# we are being provided a valid couchbase_collection handle, a key, 
 # and a value to populate the key with
 
     # Step 1: Get the current version of the document
@@ -43,7 +63,7 @@ def version_document(couchbase_collection, key, value):
 # Delete all versions of a document
 
 def delete_document(couchbase_collection, key):
-# assumes we are being provided a valid couchbase_collection handle, a key, 
+# we are being provided a valid couchbase_collection handle, a key, 
 # and a value to populate the key with
 
     # Step 1: Get the current version of the document
