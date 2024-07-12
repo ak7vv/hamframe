@@ -8,7 +8,7 @@ import json
 
 api = FastAPI()
 
-# configuration operations
+# Configuration operations
 
 @api.get("/config/${config_op}", status_code=status.HTTP_200_OK)
 async def config(response: Response, 
@@ -117,3 +117,57 @@ async def config(response: Response,
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
         return { 'status': 'failure', 'message': 'operation \'' + config_op + '\' not recognized' }
+
+
+# Database operations
+
+
+
+@api.get("/db/${db_op}", status_code=status.HTTP_200_OK)
+async def db(response: Response, 
+                 db_op: str,
+                 instance_param: str =  Query(None, alias='instance'),
+                 redis_param: str = Query(None, alias='redis')):
+
+        # do we have a working Redis connection?
+        redis_status, r = check_conf_server(redis_param,instance_param)
+        if not redis_status:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return { 'status': 'failure', 'message': 'redis connection failed' }
+        # we have a working redis connection
+
+        return {'status': 'success', 'message': 'noop'}
+
+
+
+@api.post("/db/${db_op}", status_code=status.HTTP_200_OK)
+async def config(response: Response,
+                 request: Request,
+                 db_op: str,
+                 instance_param: str =  Query(None, alias='instance'),
+                 redis_param: str = Query(None, alias='redis')):
+
+    if db_op == "foo" and instance_param and redis_param:
+        body = await request.body()
+
+        # did we get valid JSON in body?
+        try:
+            body_json = json.loads(body)
+        except ValueError:
+            response.status_code = status.HTTP_418_IM_A_TEAPOT # you didn't try to make tea
+            return { 'status': 'failure', 'message': 'body is not valid JSON' }
+    
+        # do we have a working Redis connection?
+        redis_status, r = check_conf_server(redis_param,instance_param)
+        if not redis_status:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return { 'status': 'failure', 'message': 'redis connection failed' }
+
+        json = body_json
+        json |= { 'status': 'success', 'message': len(keys) + ' submitted keys' }
+        
+        return json
+
+    else:
+        response.status_code = status.HTTP_501_NOT_IMPLEMENTED
+        return { 'status': 'failure', 'message': 'operation \'' + db_op + '\' not recognized' }
