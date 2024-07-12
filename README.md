@@ -21,6 +21,7 @@ And it probably goes without saying.. feedback is very welcome.
 
 ## **Contributing**
 
+- Optional: Check the [open issues](https://github.com/ckuhtz/hamframe/issues) to see if there's anything interesting just in case.
 - Clone the repo.
 - Open the _hamframe.code-workspace_ file in Visual Studio Code.
 - Open _command palette_, Python: Create Environment, follow prompts
