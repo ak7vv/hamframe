@@ -10,14 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Only cancel in-progress jobs or runs for the current workflow
-    # https://docs.github.com/en/actions/using-jobs/using-concurrency#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
-
     strategy:
       matrix:
         component: [ api, cli ]
         platform: [ linux/amd64, linux/arm64 ]
 
+    # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
       group: ${{ matrix.component }}-${{ matrix.platform }}
       cancel-in-progress: true
