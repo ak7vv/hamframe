@@ -2,28 +2,30 @@
 
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
-from couchbase_core.cluster import PasswordAuthenticator
 from couchbase.bucket import Bucket
 
-def check_couchbase(couchbase):
-    return
+def check_couchbase(couchbase_param):
+    return couchbase_handle, status_code
 
-# https://www.couchbase.com/blog/how-implement-document-versioning-couchbase/
+# Inspired by https://www.couchbase.com/blog/how-implement-document-versioning-couchbase/
 # reimplemented in Python
 
 # Create a new document
 
-def version_document(key, value):
+def version_document(couchbase_collection, key, value):
+# assumes we are being provided a valid couchbase_collection handle, a key, 
+# and a value to populate the key with
+
     # Step 1: Get the current version of the document
     try:
-        current_doc = collection.get(key).content_as[str]
+        current_doc = couchbase_collection.get(key).content_as[str]
     except:
         current_doc = None
     
     if current_doc:
         # Step 2: Increment the version number
         try:
-            version = collection.binary().increment(f"{key}_version", 1, initial=1)
+            version = couchbase_collection.binary().increment(f"{key}_version", 1, initial=1)
         except:
             version = 1
 
@@ -31,36 +33,39 @@ def version_document(key, value):
 
         # Step 3: Create the version with the new key
         try:
-            collection.upsert(version_key, current_doc)
+            couchbase_collection.upsert(version_key, current_doc)
         except Exception as e:
             print(f"Cannot save version {version} for key {key} – Error: {e}")
 
     # Step 4: Save the document current version
-    collection.upsert(key, value)
+    couchbase_collection.upsert(key, value)
 
 # Delete all versions of a document
 
-def delete_document(key):
+def delete_document(couchbase_collection, key):
+# assumes we are being provided a valid couchbase_collection handle, a key, 
+# and a value to populate the key with
+
     # Step 1: Get the current version of the document
     try:
-        current_doc = collection.get(key).content_as[str]
+        current_doc = couchbase_collection.get(key).content_as[str]
     except:
         current_doc = None
 
     if current_doc:
         # Step 2: Get the highest version number
         try:
-            version = int(collection.get(f"{key}_version").content_as[str])
+            version = int(couchbase_collection.get(f"{key}_version").content_as[str])
         except:
             version = 0
 
         # Step 3: Delete all versions
         for i in range(1, version + 1):
             version_key = f"{key}::v{i}"
-            collection.remove(version_key)
+            couchbase_collection.remove(version_key)
 
         # Step 4: Delete the version counter
-        collection.remove(f"{key}_version")
+        couchbase_collection.remove(f"{key}_version")
 
     # Step 5: Delete the current version
-    collection.remove(key)
+    couchbase_collection.remove(key)
