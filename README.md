@@ -2,7 +2,7 @@
 
 [![container build status](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)](https://github.com/ckuhtz/hamframe/actions/)
 
-![GitHub issue custom search](https://img.shields.io/github/issues-search?query=repo%3Ackuhtz%2Fhamframe%20state%3Aopen&logo=github&label=open%20issues&link=https%3A%2F%2Fgithub.com%2Fckuhtz%2Fhamframe%2Fissues%3Fq%3Dis%253Aopen%2Bis%253Aissue)
+![GitHub issues current open count](https://img.shields.io/github/issues-search?query=repo%3Ackuhtz%2Fhamframe%20state%3Aopen&logo=github&label=current%20open%20issues%20count&color=teal)
 
 ![GitHub commit activity per week (main branch)](https://img.shields.io/github/commit-activity/w/ckuhtz/hamframe/main)
 ![GitHub commit activity per month (main branch)](https://img.shields.io/github/commit-activity/m/ckuhtz/hamframe/main)
