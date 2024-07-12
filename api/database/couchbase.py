@@ -1,14 +1,14 @@
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
-from couchbase.exceptions import CouchbaseException
+from couchbase.exceptions import CouchbaseException, DocumentNotFoundException, TimeoutException
 
 def check_couchbase(couchbase_param):
     """
     Check if the Couchbase configuration endpoint is alive, if bucket exists, and return a handle to bucket if successful.
-    If no bucket is specified, check 'default' bucket.
+    Default collection in specified bucket is checked for a document "nonexistant-document-placebo"
     
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
-    :return: (status_code, couchbase) tuple where status_code is boolean for the check success, and bucket is the Couchbase bucket if successful
+    :return: (status_code, couchbase) tuple where status_code is text with cause for connection fails, and bucket is the Couchbase bucket if successful
     """
 
     # did we get all required params?
@@ -16,7 +16,7 @@ def check_couchbase(couchbase_param):
          not couchbase_param.username or 
          not couchbase_param.password or 
          not couchbase_param.bucket ):
-        return False, None
+        return "missing required parameter", None
 
     # check if what we were given actually works    
     try:
@@ -26,17 +26,22 @@ def check_couchbase(couchbase_param):
                                     couchbase_param.username,
                                     couchbase_param.password)))
 
+        # access a specific bucket and default collection
         couchbase_bucket = couchbase_cluster.bucket(couchbase_param.bucket)
-        
-        couchbase_bucket.on_connect()
+        couchbase_collection = couchbase_bucket.default_collection()
 
-        return True, couchbase_bucket
+        # try to access a non-existent document to check if couchbase endpoint works
+        try:
+            couchbase_collection.get("nonexistant-document-placebo")
+        except DocumentNotFoundException:
+            pass
 
-    except CouchbaseException as e:
-        return False, None
-    
-    
+        # valid couchbase endpoint (document didn't exist, but we were able to connect)
+        return None, couchbase_bucket
 
+    except (CouchbaseException, TimeoutException) as e:
+        # not a valid couchbase endpoint
+        return e, None
 
 
 def version_document(couchbase_collection, key, value):
