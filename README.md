@@ -1,6 +1,10 @@
 # A Framework for Ham Radio
 
 [![container build status](https://github.com/ckuhtz/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)](https://github.com/ckuhtz/hamframe/actions/)
+![GitHub commit activity per week (main branch)](https://img.shields.io/github/commit-activity/w/ckuhtz/hamframe/main)
+![GitHub commit activity per month (main branch)](https://img.shields.io/github/commit-activity/m/ckuhtz/hamframe/main)
+![GitHub commit activity per year (main branch)](https://img.shields.io/github/commit-activity/y/ckuhtz/hamframe/main)
+
 
 This repo contains an experimental framework for automating the workflow of an amateur radio operator (ham). This work is currently in the early stages and probably not terribly useful as-is. The goal is to develop a disaggregated software stack that allows the end user to easily tailor the specific structure to a particular need by removing, modifying, or adding components.
 
