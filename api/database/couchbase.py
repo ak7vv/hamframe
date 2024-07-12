@@ -1,6 +1,5 @@
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
-from couchbase.bucket import Bucket
 from couchbase.exceptions import CouchbaseException
 
 def check_couchbase(couchbase_param):
