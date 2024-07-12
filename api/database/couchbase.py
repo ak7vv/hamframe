@@ -4,7 +4,7 @@ from couchbase.exceptions import CouchbaseException
 
 def check_couchbase(couchbase_param):
     """
-    Check if the Couchbase configuration endpoint is alive, if bucket exists, and return a handle if successful.
+    Check if the Couchbase configuration endpoint is alive, if bucket exists, and return a handle to bucket if successful.
     If no bucket is specified, check 'default' bucket.
     
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
@@ -21,17 +21,17 @@ def check_couchbase(couchbase_param):
 
     # check if what we were given actually works    
     try:
-        cluster = Cluster(couchbase_param.endpoint,
+        couchbase_cluster = Cluster(couchbase_param.endpoint,
                             ClusterOptions(
                                 PasswordAuthenticator(
                                     couchbase_param.username,
                                     couchbase_param.password)))
 
-        bucket = cluster.bucket(couchbase_param.bucket)
+        couchbase_bucket = couchbase_cluster.bucket(couchbase_param.bucket)
         
-        bucket.on_connect()
+        couchbase_bucket.on_connect()
 
-        return True, bucket
+        return True, couchbase_bucket
 
     except CouchbaseException as e:
         return False, None
