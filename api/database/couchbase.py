@@ -10,14 +10,13 @@ def check_couchbase(couchbase_param):
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
     :return: (status_code, couchbase) tuple where status_code is boolean for the check success, and bucket is the Couchbase bucket if successful
     """
-    
-    # check if we were told about a specific bucket to check
-    if not couchbase_param.bucket:
-        couchbase_param.bucket = 'default'
 
     # did we get all required params?
-    if not couchbase_param.endpoint or couchbase_param.username or couchbase_param.password:
-          return False, None
+    if ( not couchbase_param.endpoint or 
+         not couchbase_param.username or 
+         not couchbase_param.password or 
+         not couchbase_param.bucket ):
+        return False, None
 
     # check if what we were given actually works    
     try:
