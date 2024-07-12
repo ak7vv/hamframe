@@ -28,7 +28,7 @@ jobs:
           cd ./${{ matrix.component }}
           pip install -r requirements.txt
 
-  build:
+  containers:
     runs-on: ubuntu-latest
 
     strategy:
