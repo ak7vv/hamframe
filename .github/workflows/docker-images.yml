@@ -23,20 +23,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Cache pip
-      id: cache-pip
-      uses: actions/cache@v4
-      with:
-          path: ~/.cache/pip--${{ steps.local_platform.outputs.local_platform }}
-          key: ${{ runner.os }}-pip
-          restore-keys: |
-            ${{ runner.os }}-pip      
-
-    # - name: Set up Python
-    #   uses: actions/setup-python@v5
+    # - name: Cache pip
+    #   id: cache-pip
+    #   uses: actions/cache@v4
     #   with:
-    #     python-version: '3.x'
-    #     cache: 'pip'
+    #       path: ~/.cache/pip--${{ steps.local_platform.outputs.local_platform }}
+    #       key: ${{ runner.os }}-pip
+    #       restore-keys: |
+    #         ${{ runner.os }}-pip      
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: 'pip'
   
     - name: Install PIP prereqs
       run: |
