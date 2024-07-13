@@ -201,7 +201,7 @@ if __name__ == "__main__":
     
     if fail:
         print("Sleeping 5 seconds and exiting.")
-        sleep(5) # tamp down restart thrashing
+        sleep(5) # slow down restart thrashing
         exit(1)
 
     uvicorn.run(api, host="0.0.0.0", port=65432)
