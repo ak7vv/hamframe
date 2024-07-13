@@ -204,5 +204,9 @@ if __name__ == "__main__":
         sleep(5) # slow down restart thrashing
         exit(1)
 
+    # retrieve hamframe.toml info via redis
+    # - set the number of workers
+    # - start app on host and port
+
     uvicorn.run(api, host="0.0.0.0", port=65432)
  
