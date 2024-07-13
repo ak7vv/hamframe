@@ -32,10 +32,10 @@ jobs:
     #       - amd64
     #       - arm64/v8
 
-    # # Cancel in-progress jobs if matching component and platform when new PR arrives.
-    # concurrency:
-    #   group: containers-api-${{ matrix.architecture }}
-    #   cancel-in-progress: true
+    # Cancel in-progress jobs if matching component and platform when new PR arrives.
+    concurrency:
+      group: api
+      cancel-in-progress: true
 
     steps:
     - name: Checkout repo
