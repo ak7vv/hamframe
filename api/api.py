@@ -205,3 +205,4 @@ if __name__ == "__main__":
         exit(1)
 
     uvicorn.run(api, host="0.0.0.0", port=65432)
+    
