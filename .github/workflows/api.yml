@@ -34,7 +34,7 @@ jobs:
 
     # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
-      group: containers-api-${{ matrix.platform }}
+      group: containers-api-${{ matrix.architecture }}
       cancel-in-progress: true
 
     steps:
@@ -64,4 +64,4 @@ jobs:
         push: true
         cache-from: type=gha,scope=${{ matrix.architecture }}
         cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
-        tags: ${{ env.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:${{ github.sha }}-linux-${{ matrix.architecture }}
+        tags: ${{ env.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
