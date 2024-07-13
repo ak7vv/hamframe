@@ -2,7 +2,6 @@
 
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
-# from redis import * 
 from database.redis import check_conf_server
 import json
 
@@ -18,7 +17,7 @@ async def get_config(response: Response,
                  config_section: str | None = None ):
 
 ## export configuration
-
+    
     if config_op == "export" and instance_param and redis_param:
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param)

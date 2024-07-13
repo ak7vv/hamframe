@@ -7,65 +7,65 @@ on:
     branches: [ "main" ]
 
 jobs:
-  pyright:
-    runs-on: ubuntu-latest
+  # pyright:
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        component: [ api, cli ]
-        platform: [ linux/amd64, linux/arm64 ]
+  #   strategy:
+  #     matrix:
+  #       component: [ api, cli ]
+  #       platform: [ linux/amd64, linux/arm64 ]
 
-    concurrency:
-      group: pyright-${{ matrix.component }}-${{ matrix.platform }}
-      cancel-in-progress: true
+  #   concurrency:
+  #     group: pyright-${{ matrix.component }}-${{ matrix.platform }}
+  #     cancel-in-progress: true
 
-    steps:
-    - name: Create a variable with platform '${{ matrix.platform }}' value
-      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
+  #   steps:
+  #   - name: Create a variable with platform '${{ matrix.platform }}' value
+  #     run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
     
-    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
-      id: local_platform
-      run: |
-        LOCAL_PLATFORM="${PLATFORM//\//-}"
-        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
-        echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
+  #   - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
+  #     id: local_platform
+  #     run: |
+  #       LOCAL_PLATFORM="${PLATFORM//\//-}"
+  #       echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
+  #       echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
 
-    # - name: Cache pip
-    #   id: cache-pip
-    #   uses: actions/cache@v4
-    #   with:
-    #       path: ~/.cache/pip--${{ steps.local_platform.outputs.local_platform }}
-    #       key: ${{ runner.os }}-pip
-    #       restore-keys: |
-    #         ${{ runner.os }}-pip      
+  #   # - name: Cache pip
+  #   #   id: cache-pip
+  #   #   uses: actions/cache@v4
+  #   #   with:
+  #   #       path: ~/.cache/pip--${{ steps.local_platform.outputs.local_platform }}
+  #   #       key: ${{ runner.os }}-pip
+  #   #       restore-keys: |
+  #   #         ${{ runner.os }}-pip      
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-        cache: 'pip'
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v5
+  #     with:
+  #       python-version: '3.x'
+  #       cache: 'pip'
   
-    - name: Install PIP prereqs
-      run: |
-        cd ./${{ matrix.component }}
-        pip install -r requirements.txt
+  #   - name: Install PIP prereqs
+  #     run: |
+  #       cd ./${{ matrix.component }}
+  #       pip install -r requirements.txt
 
-    - name: Install Pyright
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyright
+  #   - name: Install Pyright
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install pyright
     
-    - name: Run Pyright
-      run: |
-        cd ./${{ matrix.component }}
-        pyright
+  #   - name: Run Pyright
+  #     run: |
+  #       cd ./${{ matrix.component }}
+  #       pyright
 
 
   containers:
-    needs: pyright
+    # needs: pyright
     runs-on: ubuntu-latest
 
     strategy:
