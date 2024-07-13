@@ -37,11 +37,11 @@ def check_couchbase(couchbase_param):
             pass
 
         # valid couchbase endpoint (document didn't exist, but we were able to connect)
-        return None, couchbase_bucket
+        return True, couchbase_bucket
 
     except (CouchbaseException, TimeoutException) as e:
         # not a valid couchbase endpoint
-        return e, None
+        False, None
 
 
 def version_document(couchbase_collection, key, value):
