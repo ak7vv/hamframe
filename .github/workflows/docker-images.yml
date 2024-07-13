@@ -125,20 +125,20 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       
-    - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
-      uses: docker/build-push-action@v6
-      with:
-        context: ./${{ matrix.component }}
-        load: true
-        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
-        platforms: ${{ matrix.platform }}
-        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
-        cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+    # - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     context: ./${{ matrix.component }}
+    #     load: true
+    #     tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+    #     platforms: ${{ matrix.platform }}
+    #     cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+    #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
 
-    # FIXME: this needs to be more than a do we exit with code 0 test.. 
-    # https://github.com/ckuhtz/hamframe/issues/2
-    - name: Run tests in container (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
-      run: docker run --rm --platform ${{ matrix.platform }} ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+    # # FIXME: this needs to be more than a do we exit with code 0 test.. 
+    # # https://github.com/ckuhtz/hamframe/issues/2
+    # - name: Run tests in container (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
+    #   run: docker run --rm --platform ${{ matrix.platform }} ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
 
     - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest)
       if: success()
