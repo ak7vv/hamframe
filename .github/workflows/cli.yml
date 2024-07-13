@@ -59,7 +59,7 @@ jobs:
         push: true
         # cache-from: type=gha,scope=${{ matrix.architecture }}
         # cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: type=gha,scope=cli
+        cache-to: type=gha,mode=max,scope=cli
         platforms: linux/amd64, linux/arm64
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
