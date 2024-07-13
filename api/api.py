@@ -1,6 +1,7 @@
 # implement REST API using FastAPI
 
-from os import environ
+import sys
+import os
 from time import sleep
 from fastapi import FastAPI
 import uvicorn
@@ -16,8 +17,8 @@ if __name__ == "__main__":
     print(f'Hamframe API')
     print('- bootstrap')
 
-    redis_host = environ['REDIS_HOST']
-    redis_port = environ['REDIS_PORT']
+    redis_host = os.environ['REDIS_HOST']
+    redis_port = os.environ['REDIS_PORT']
 
     if not redis_host:
         print(f'ERROR: REDIS_HOST default not found. Bad container image.')
