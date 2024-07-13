@@ -18,31 +18,19 @@ on:
       - 'api/**/requirements.txt'
       - '**/api.yml'
 
-permissions:
-  contents: read
-  packages: write
-
 env:
-  REGISTRY: "ghcr.io"
-  REGISTRY_IMAGE: "ghcr.io/ak7vv/hamframe-api"
-  BUILDX_NO_DEFAULT_ATTESTATIONS: 1
-  IMAGE_TITLE: "Hamframe API"
-  IMAGE_AUTHORS: "Christian Kuhtz <christian@kuhtz.com>"
-  IMAGE_SOURCE: "http://github.com/ak7vv/hamframe"
-  IMAGE_DESCRIPTION: "Hamframe API"
-  IMAGE_LICENSES: MIT
+  COMPONENT: api
 
 jobs:
-  build:
-    name: Build image
+  build-and-push:
+    name: Build and push image
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
+        architecture:
+          - amd64
+          - arm64
 
     # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
@@ -50,163 +38,30 @@ jobs:
       cancel-in-progress: true
 
     steps:
-    - name: Create a variable with platform '${{ matrix.platform }}' value
-      run: echo "PLATFORM=${{ matrix.platform }}" >> $GITHUB_ENV
-    
-    - name: Swap / for - in '${{ matrix.platform }}' and create local_platform variable
-      id: local_platform
-      run: |
-        LOCAL_PLATFORM="${PLATFORM//\//-}"
-        echo "LOCAL_PLATFORM=${LOCAL_PLATFORM}" >> $GITHUB_ENV
-        echo "local_platform=${LOCAL_PLATFORM}" >> $GITHUB_STATE
-
-    - name: checkout repo
+    - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: setup docker buildx
-      id: buildx
+    - name: Set up QEMU
+      if: matrix.architecture != 'amd64'
+      uses: docker/setup-qemu-action@v3
+      
+    - name: Setup Docker buildx
       uses: docker/setup-buildx-action@v3
       # with:
       #   buildkitd-flags: --debug
 
-    - name: Login to GitHub Container Registry
+    - name: Login to Docker Hub Container Registry
       uses: docker/login-action@v3
       with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.AUTOMATION }}
-        logout: false
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        # logout: false
 
-    # - name: Cache Docker layers
-    #   id: cache-docker-layers
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
-    #     key: ${{ runner.os }}-buildx
-    #     restore-keys: |
-    #       ${{ runner.os }}-buildx
-
-    - name: Set up QEMU
-      if: matrix.platform == 'linux/arm64'
-      uses: docker/setup-qemu-action@v3
-      
-    # - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-api:test)
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     context: ./api
-    #     load: true
-    #     tags: ghcr.io/${{ github.repository_owner }}/hamframe-api:test
-    #     platforms: ${{ matrix.platform }}
-    #     cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
-    #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
-
-    # # FIXME: this needs to be more than a do we exit with code 0 test.. 
-    # # https://github.com/ckuhtz/hamframe/issues/2
-    # - name: Run tests in container (ghcr.io/${{ github.repository_owner }}/hamframe-api:test)
-    #   run: docker run --rm --platform ${{ matrix.platform }} ghcr.io/${{ github.repository_owner }}/hamframe-api:test
-
-    # - name: Build and push
-    #   # if: success()
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     context: ./api
-    #     push: true
-    #     tags: ghcr.io/${{ github.repository_owner }}/hamframe-api:latest
-    #     platforms: ${{ matrix.platform }}
-    #     cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
-    #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
-
-
-    - name: Docker Metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY_IMAGE }}
-
-    - name: Build Docker image
-      id: build
+    - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
-        context: ./api
-        platforms: ${{ matrix.platform }}
-        provenance: false
-        labels: ${{ steps.meta.output.labels }}
-        # tags: ${{ env.REGISTRY_IMAGE }}:latest
-        cache-from: type=gha,scope=${{ matrix.platform }}
-        cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
-        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true,annotation.org.opencontainers.image.title=${{ env.IMAGE_TITLE }},annotation.org.opencontainers.image.authors=${{ env.IMAGE_AUTHORS }},annotation.org.opencontainers.image.source=${{ env.IMAGE_SOURCE }},annotation.org.opencontainers.image.description=${{ env.IMAGE_DESCRIPTION }},annotation.org.opencontainers.image.licenses=${{ env.IMAGE_LICENSES }}
-
-    - name: Export Image Digest
-      run: |
-        mkdir -p /tmp/build-digest
-        digest="${{ steps.build.outputs.digest }}"
-        digest="${digest#sha256:}"
-        touch "/tmp/build-digest/$digest"
-      shell: bash
-
-    - name: Upload digest
-      uses: actions/upload-artifact@v4
-      with:
-        name: digests
-        path: /tmp/build-digest/*
-        if-no-files-found: error
-        retention-days: 1
-
-    - name: Clear temporary directory
-      run: |
-        rm -rf /tmp/build-digest/*
-      shell: bash
-
-  merge:
-    name: Merge manifest
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
-      - name: Download digests
-        uses: actions/download-artifact@v4
-        with:
-          name: digests
-          path: /tmp/build-digest
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          # TODO: Remove once buildx v0.12.0 is released with https://github.com/docker/buildx/pull/1965
-          version: https://github.com/docker/buildx.git#e5cee892ed4fa2e0af53c54c09131c96c68383ff
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY_IMAGE }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-          labels: |
-            org.opencontainers.image.source=${{ env.IMAGE_SOURCE }}
-            org.opencontainers.image.authors=${{ env.IMAGE_AUTHORS }}
-            org.opencontainers.image.title=${{ env.IMAGE_TITLE }}
-            org.opencontainers.image.description=${{ env.IMAGE_DESCRIPTION }}
-            org.opencontainers.image.licenses=${{ env.IMAGE_LICENSES }}
-
-      - name: Create manifest list and push
-        working-directory: /tmp/build-digest
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *) \
-            --annotation index:org.opencontainers.image.title=${{ env.IMAGE_TITLE }}"
-
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
-
-      - name: Delete artifact
-        uses: geekyeggo/delete-artifact@v5
-        with:
-          name: my-artifact
-          failOnError: false
+        context: ./${{ env.COMPONENT }}
+        push: true
+        cache-from: type=gha,scope=${{ matrix.architecture }}
+        cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
+        tags: ${{ env.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:${{ github.sha }}-linux-${{ matrix.architecture }}
