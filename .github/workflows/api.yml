@@ -88,7 +88,7 @@ jobs:
 
     - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest)
       # if: success()
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@v5
       with:
         context: ./${{ matrix.component }}
         push: true
