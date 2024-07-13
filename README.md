@@ -1,5 +1,7 @@
 # A Framework for Ham Radio
 
+## Intro
+
 ![GitHub Actions Workflow Status for CLI build](https://img.shields.io/github/actions/workflow/status/ak7vv/hamframe/cli.yml?branch=main&style=plastic&logo=github&label=CLI%20docker%20build-n-push&labelColor=purple&cacheSeconds=30&link=https%3A%2F%2Fgithub.com%2Fak7vv%2Fhamframe%2Factions%2Fworkflows%2Fcli.yml)<br>
 ![GitHub Actions Workflow Status for API build](https://img.shields.io/github/actions/workflow/status/ak7vv/hamframe/api.yml?branch=main&style=plastic&logo=github&label=API%20docker%20build-n-push&labelColor=purple&cacheSeconds=30&link=https%3A%2F%2Fgithub.com%2Fak7vv%2Fhamframe%2Factions%2Fworkflows%2Fapi.yml)
 
@@ -18,7 +20,49 @@ You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06
 
 And it probably goes without saying.. feedback is very welcome.
 
----
+## Repo layout
+
+.
+├── api
+│   ├── api.py
+│   ├── api.sh
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── requirements.txt
+│   └── routers
+│       ├── configuration
+│       │   ├── operations.py
+│       │   ├── get.py
+│       │   ├── put.py
+│       │   └── delete.py
+│       ├── database
+│       │   ├── operations.py
+│       │   └── ..
+│       └── internal
+│           ├── operations.py
+│           └── ..
+├── cli
+│   ├── cli.py
+│   ├── Dockerfile
+│   ├── Makefile
+│   └── requirements.txt
+├── config
+│   ├── ak7vv
+│   │   └── ..
+│   └── instance_name
+│       ├── clublog.toml
+│       ├── couchbase.toml
+│       ├── hamframe.toml
+│       ├── n0nbh.toml
+│       ├── qrz.toml
+│       ├── redis.toml
+│       └── ..
+├── doc
+│   └── README.md
+├── hamframe.code-workspace
+├── LICENSE
+├── README.md
+└── requirements.txt
 
 ## **Contributing**
 

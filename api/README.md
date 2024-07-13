@@ -1,5 +1,7 @@
 # API
 
+# **OUT OF DATE**
+
 ## TOC
 
 [Architecture](#architecture)
@@ -9,8 +11,6 @@
 [Background](#background)
 
 [FastAPI dev mode](#fastapi-dev-mode)
-
-## Architecture
 
 ### Configuration 
 
