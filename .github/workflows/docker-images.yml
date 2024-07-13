@@ -8,6 +8,7 @@ on:
       - '**/*.sh'
       - '**/Dockerfile'
       - '**/requirements.txt'
+      - '**/docker-images.yml'
   pull_request:
     branches: [ "main" ]
     paths:
@@ -15,6 +16,7 @@ on:
       - '**/*.sh'
       - '**/Dockerfile'
       - '**/requirements.txt'
+      - '**/docker-images.yml'
 
 jobs:
   # pyright:
