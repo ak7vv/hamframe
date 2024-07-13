@@ -28,8 +28,7 @@ jobs:
 
     # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
-      # group: containers-api-${{ matrix.platform }}
-      group: containers-api
+      group: containers-api-${{ matrix.platform }}
       cancel-in-progress: true
 
     steps:
