@@ -45,7 +45,7 @@ if __name__ == "__main__":
     api.include_router(swissarmy_router, prefix="/internal")
 
     print(f'- launching API endpoint')
-    print(f'listener at {listener_ip_address}:{listener_port}
+    print(f'listener at {listener_ip_address}:{listener_port'}
     print(f'starting {listener_workers} workers')
 
     uvicorn.run("api:app", host=listener_ip_address, port=listener_port, workers=listener_workers)
