@@ -5,9 +5,9 @@ from time import sleep
 from fastapi import FastAPI
 import uvicorn
 
-from routers.configuration.operations import router as configuration_router
-from routers.database.operations import router as database_router
-from routers.internal.operations import router as swissarmy_router
+from .routers.configuration.operations import router as configuration_router
+from .routers.database.operations import router as database_router
+from .routers.internal.operations import router as swissarmy_router
 
 if __name__ == "__main__":
 
