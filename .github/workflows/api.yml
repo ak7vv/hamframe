@@ -127,7 +127,7 @@ jobs:
         context: ./api
         platforms: ${{ matrix.platform }}
         provenance: false
-        # push: true
+        push: true
         labels: ${{ steps.meta.output.labels }}
         # tags: ${{ env.REGISTRY_IMAGE }}:latest
         cache-from: type=gha,scope=${{ matrix.platform }}
