@@ -24,12 +24,12 @@ jobs:
 
     strategy:
       matrix:
-        component: [ api ]
         platform: [ linux/amd64, linux/arm64 ]
 
     # Cancel in-progress jobs if matching component and platform when new PR arrives.
     concurrency:
-      group: containers-${{ matrix.component }}-${{ matrix.platform }}
+      # group: containers-api-${{ matrix.platform }}
+      group: containers-api
       cancel-in-progress: true
 
     steps:
@@ -62,7 +62,7 @@ jobs:
       id: cache-docker-layers
       uses: actions/cache@v4
       with:
-        path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+        path: /tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
         key: ${{ runner.os }}-buildx
         restore-keys: |
           ${{ runner.os }}-buildx
@@ -71,29 +71,29 @@ jobs:
       if: matrix.platform == 'linux/arm64'
       uses: docker/setup-qemu-action@v3
       
-    # - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
+    # - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-api:test)
     #   uses: docker/build-push-action@v6
     #   with:
-    #     context: ./${{ matrix.component }}
+    #     context: ./api
     #     load: true
-    #     tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+    #     tags: ghcr.io/${{ github.repository_owner }}/hamframe-api:test
     #     platforms: ${{ matrix.platform }}
-    #     cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
-    #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+    #     cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
+    #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
 
     # # FIXME: this needs to be more than a do we exit with code 0 test.. 
     # # https://github.com/ckuhtz/hamframe/issues/2
-    # - name: Run tests in container (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
-    #   run: docker run --rm --platform ${{ matrix.platform }} ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test
+    # - name: Run tests in container (ghcr.io/${{ github.repository_owner }}/hamframe-api:test)
+    #   run: docker run --rm --platform ${{ matrix.platform }} ghcr.io/${{ github.repository_owner }}/hamframe-api:test
 
-    - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest)
+    - name: Build and push
       # if: success()
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
-        context: ./${{ matrix.component }}
+        context: ./api
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-api:latest
         platforms: ${{ matrix.platform }}
-        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
-        cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
+        cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
+        cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
 
