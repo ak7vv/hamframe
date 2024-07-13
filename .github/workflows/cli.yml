@@ -49,7 +49,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        # logout: false
   
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
@@ -57,9 +56,7 @@ jobs:
         context: .
         file: ./${{ env.COMPONENT }}/Dockerfile
         push: true
-        # cache-from: type=gha,scope=${{ matrix.architecture }}
-        # cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
-        cache-from: type=gha,scope=cli
-        cache-to: type=gha,mode=max,scope=cli
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,src=/tmp/.buildx-cache,mode=max
         platforms: linux/amd64, linux/arm64
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
