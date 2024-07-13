@@ -23,9 +23,11 @@ RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
 
 # COPY /api/database/* /hamframe/database/
 
-# set default to 65432/tcp and allow user to override with API_PORT environment variable
-ARG API_PORT_DEFAULT=65432
-ENV API_PORT=${API_PORT_DEFAULT}
+ARG REDIS_HOST_DEFAULT=localhost
+ARG REDIS_PORT_DEFAULT=6379
+
+ENV REDIS_HOST=${REDIS_HOST_DEFAULT}
+ENV REDIS_PORT=${REDIS_PORT_DEFAULT}
 
 # ENTRYPOINT [ "sh", "/hamframe/api.sh" ]
-ENTRYPOINT ["gunicorn", "--workers, "4", "--port", "${API_PORT}"]
+ENTRYPOINT ["gunicorn", "--workers, "4" ]

@@ -1,6 +1,8 @@
 # implement REST API using FastAPI
 
 import uvicorn
+from os import environ
+from time import sleep
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
 from database.redis import check_conf_server
@@ -182,5 +184,24 @@ async def post_db(response: Response,
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
         return { 'status': 'failure', 'message': 'operation \'' + db_op + '\' not recognized' }
 
+
+## API launcher
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port="8000")
+
+    redis_host = environ['REDIS_HOST']
+    redis_port = environ['REDIS_PORT']
+    
+    if not redis_host:
+        print("REDIS_HOST default not found. Bad container image.")
+        fail = True
+    if not redis_port:
+        print("REDIS_PORT default not found. Bad container image.")
+        fail = True
+    
+    if fail:
+        print(Sleeping 5 seconds and exiting.")
+        sleep(5) # stop restart thrashing
+        exit(1)
+
+    uvicorn.run(app, host="0.0.0.0", port=65432)
