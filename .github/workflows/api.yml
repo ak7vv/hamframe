@@ -91,7 +91,7 @@ jobs:
       with:
         context: ./api
         push: true
-        tags: ${{ github.repository_owner }}/hamframe-api:latest
+        tags: ghcr.io/${{ github.repository_owner }}/hamframe-api:latest
         platforms: ${{ matrix.platform }}
         cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
         cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-api
