@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
     listener_ip_address = "0.0.0.0"
-    listener_port = "65432"
+    listener_port = 65432
     listener_workers = 4
 
     uvicorn.run("api:app", host=listener_ip_address, port=listener_port, workers=listener_workers)
