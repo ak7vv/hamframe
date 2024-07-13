@@ -6,11 +6,15 @@ on:
     paths:
       - '**/*.py'
       - '**/*.sh'
+      - '**/Dockerfile'
+      - '**/requirements.txt'
   pull_request:
     branches: [ "main" ]
     paths:
       - '**/*.py'
       - '**/*.sh'
+      - '**/Dockerfile'
+      - '**/requirements.txt'
 
 jobs:
   # pyright:
