@@ -2,7 +2,9 @@
 
 FROM tiangolo/uvicorn-gunicorn-fastapi
 
-LABEL org.opencontainers.image.source https://github.com/ckuhtz/hamframe
+LABEL org.opencontainers.image.source=https://github.com/ckuhtz/hamframe
+LABEL org.opencontainers.image.descriptiob="Hamframe API"
+LABEL org.opencontainers.image.license=MIT
 
 ENV PYTHONUNBUFFERED=1
 
