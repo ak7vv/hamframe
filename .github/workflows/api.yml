@@ -68,7 +68,7 @@ jobs:
           ${{ runner.os }}-buildx
 
     - name: Set up QEMU
-      if: ${{ matrix.platform }} == "linux/arm64"
+      if: matrix.platform == 'linux/arm64'
       uses: docker/setup-qemu-action@v3
       
     # - name: Build and push (ghcr.io/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:test)
