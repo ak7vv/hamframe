@@ -16,18 +16,20 @@ api.include_router(swissarmy_router, prefix="/internal")
 
 if __name__ == "__main__":
 
+    print(f'Hamframe API initializing.')
+
     redis_host = environ['REDIS_HOST']
     redis_port = environ['REDIS_PORT']
 
     if not redis_host:
-        print("REDIS_HOST default not found. Bad container image.")
+        print(f'REDIS_HOST default not found. Bad container image.')
         fail = True
     if not redis_port:
-        print("REDIS_PORT default not found. Bad container image.")
+        print(f'REDIS_PORT default not found. Bad container image.')
         fail = True
 
     if fail:
-        print("Sleeping 5 seconds and exiting.")
+        print(f'Sleeping 5 seconds and exiting.')
         sleep(5) # slow down restart thrashing
         exit(1)
 
@@ -37,4 +39,5 @@ if __name__ == "__main__":
     listener_port = 65432
     listener_workers = 4
 
+    print(f'API endpoint listening {listener_ip_address}:{listener_port} with {listener_workers} workers.')
     uvicorn.run("api:app", host=listener_ip_address, port=listener_port, workers=listener_workers)
