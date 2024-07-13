@@ -1,5 +1,6 @@
 # implement REST API using FastAPI
 
+import uvicorn
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
 from database.redis import check_conf_server
@@ -180,3 +181,6 @@ async def post_db(response: Response,
     else:
         response.status_code = status.HTTP_501_NOT_IMPLEMENTED
         return { 'status': 'failure', 'message': 'operation \'' + db_op + '\' not recognized' }
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port="8000")
