@@ -8,7 +8,7 @@ def check_couchbase(couchbase_param):
     Default collection in specified bucket is checked for a document "nonexistant-document-placebo"
     
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
-    :return: (status_code, couchbase) tuple where status_code is text with cause for connection fails, and bucket is the Couchbase bucket if successful
+    :return: (status_code, couchbase) tuple where status_code is boolean if connection fails, and bucket is the Couchbase bucket if successful
     """
 
     # did we get all required params?
