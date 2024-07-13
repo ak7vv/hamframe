@@ -3,6 +3,7 @@
 from fastapi import FastAPI, Response, status, Request, Query
 import urllib.parse
 from database.redis import check_conf_server
+from database.couchbase import check_couchbase
 import json
 
 api = FastAPI()
@@ -18,7 +19,7 @@ async def get_config(response: Response,
 
 ## export configuration
     
-    if config_op == "export" and instance_param and redis_param:
+    if config_op == "get" and instance_param and redis_param:
         # do we have a working Redis connection?
         redis_status, r = check_conf_server(redis_param)
         if not redis_status:
@@ -61,7 +62,7 @@ async def post_config(response: Response,
                  redis_param: str = Query(None, alias='redis'),
                  config_section: str = Query(None, alias='section') ):
 
-    if config_op == "import" and instance_param and redis_param:
+    if config_op == "put" and instance_param and redis_param:
         body = await request.body()
 
         # did we get valid JSON in body?
@@ -161,6 +162,15 @@ async def post_db(response: Response,
         if not redis_status:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return { 'status': 'failure', 'message': 'redis connection failed' }
+
+
+        # get Couchbase config from Redis
+
+
+
+        # do we have a working Couchbase connection?
+                
+        # couchbase_status, couchbase = check_conf_server(couchbase_param)
 
         json = body_json
         json |= { 'status': 'success', 'message': 'submitted' }
