@@ -34,4 +34,4 @@ ENV REDIS_PORT=${REDIS_PORT_DEFAULT}
 ENV WORKERS=${WORKERS_DEFAULT}
 
 # ENTRYPOINT [ "sh", "/hamframe/api.sh" ]
-ENTRYPOINT ["gunicorn", "--workers, "${WORKERS}" ]
+ENTRYPOINT ["gunicorn", "--workers", "${WORKERS}" ]
