@@ -28,4 +28,4 @@ ARG API_PORT_DEFAULT=65432
 ENV API_PORT=${API_PORT_DEFAULT}
 
 # ENTRYPOINT [ "sh", "/hamframe/api.sh" ]
-ENTRYPOINT ["gunicorn", "--workers, "4", "--port", "${API_PORT_DEFAULT}"]
+ENTRYPOINT ["gunicorn", "--workers, "4", "--port", "${API_PORT}"]
