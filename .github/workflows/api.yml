@@ -26,23 +26,23 @@ jobs:
     name: Build and push image
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        architecture:
-          - amd64
-          - arm64/v8
+    # strategy:
+    #   matrix:
+    #     architecture:
+    #       - amd64
+    #       - arm64/v8
 
-    # Cancel in-progress jobs if matching component and platform when new PR arrives.
-    concurrency:
-      group: containers-api-${{ matrix.architecture }}
-      cancel-in-progress: true
+    # # Cancel in-progress jobs if matching component and platform when new PR arrives.
+    # concurrency:
+    #   group: containers-api-${{ matrix.architecture }}
+    #   cancel-in-progress: true
 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
 
     - name: Set up QEMU
-      if: matrix.architecture != 'amd64'
+      # if: matrix.architecture != 'amd64'
       uses: docker/setup-qemu-action@v3
       
     - name: Setup Docker buildx
@@ -56,13 +56,14 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         # logout: false
-
+  
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
-        context: ./${{ env.COMPONENT }}
+        context: .
+        file: ./${{ env.COMPONENT }}/Dockerfile
         push: true
-        platforms: linux/${{ matrix.architecture }}
-        cache-from: type=gha,scope=${{ matrix.architecture }}
-        cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
+        # cache-from: type=gha,scope=${{ matrix.architecture }}
+        # cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
+        platforms: linux/amd64, linux/arm64
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
