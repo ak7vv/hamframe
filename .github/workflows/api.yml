@@ -70,7 +70,7 @@ jobs:
       #   buildkitd-flags: --debug
 
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -119,7 +119,7 @@ jobs:
 
     - name: Docker Metadata
       id: meta
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: ${{ env.REGISTRY_IMAGE }}
 
