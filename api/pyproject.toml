@@ -1,2 +1,2 @@
-[tool.pyright]
-reportWildcardImportFromLibrary = false
+# [tool.pyright]
+# reportWildcardImportFromLibrary = false
