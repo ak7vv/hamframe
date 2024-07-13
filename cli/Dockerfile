@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL org.opencontainers.image.source=https://github.com/ckuhtz/hamframe
+LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.descriptiob="Hamframe CLI"
 LABEL org.opencontainers.image.license=MIT
 
