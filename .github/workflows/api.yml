@@ -125,7 +125,7 @@ jobs:
 
     - name: Build Docker image
       id: build
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v6
       with:
         context: ./api
         platforms: ${{ matrix.platform }}
@@ -144,20 +144,20 @@ jobs:
       - build
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: digests
           path: /tmp/build-digest
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
         with:
           # TODO: Remove once buildx v0.12.0 is released with https://github.com/docker/buildx/pull/1965
           version: https://github.com/docker/buildx.git#e5cee892ed4fa2e0af53c54c09131c96c68383ff
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
@@ -180,11 +180,13 @@ jobs:
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *) \
             --annotation index:org.opencontainers.image.title=${{ env.IMAGE_TITLE }}"
+
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
+
       - name: Delete artifact
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v5
         with:
           name: my-artifact
           failOnError: false
