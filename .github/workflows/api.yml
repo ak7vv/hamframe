@@ -62,7 +62,7 @@ jobs:
       with:
         context: ./${{ env.COMPONENT }}
         push: true
-        platforms: linux-${{ matrix.architecture }}
+        platforms: linux/${{ matrix.architecture }}
         cache-from: type=gha,scope=${{ matrix.architecture }}
         cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
