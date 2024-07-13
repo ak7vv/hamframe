@@ -23,7 +23,7 @@ env:
 
 jobs:
   build-and-push:
-    name: Build and push image
+    name: Build and push images
     runs-on: ubuntu-latest
 
     # strategy:
@@ -65,5 +65,7 @@ jobs:
         push: true
         # cache-from: type=gha,scope=${{ matrix.architecture }}
         # cache-to: type=gha,mode=max,scope=${{ matrix.architecture }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         platforms: linux/amd64, linux/arm64
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hamframe-${{ env.COMPONENT}}:latest
