@@ -8,7 +8,7 @@ on:
       - 'cli/**/*.sh'
       - 'cli/**/Dockerfile'
       - 'cli/**/requirements.txt'
-      - 'cli/**/dev.yml'
+      - '**/cli.yml'
   pull_request:
     branches: [ "main" ]
     paths:
@@ -16,7 +16,7 @@ on:
       - 'cli/**/*.sh'
       - 'cli/**/Dockerfile'
       - 'cli/**/requirements.txt'
-      - 'cli/**/dev.yml'
+      - '**/cli.yml'
 
 jobs:
   containers:
