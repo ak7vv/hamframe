@@ -13,6 +13,7 @@ import json
 
 def toml_import(logger, toml_file) :
     
+    toml_dict = None
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     
     # dump the dict we're supposed to write to kv store as JSON
