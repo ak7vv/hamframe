@@ -138,17 +138,17 @@ jobs:
 
     - name: Export Image Digest
       run: |
-        mkdir -p /tmp/build-digest-${{ matrix.platform }}
+        mkdir -p /tmp/build-digest
         digest="${{ steps.build.outputs.digest }}"
         digest="${digest#sha256:}"
-        touch "/tmp/build-digest-${{ matrix.platform }}/$digest"
+        touch "/tmp/build-digest/$digest"
       shell: bash
 
     - name: Upload digest
       uses: actions/upload-artifact@v4
       with:
         name: digests
-        path: /tmp/build-digest-${{ matrix.platform }}/*
+        path: /tmp/build-digest/*
         if-no-files-found: error
         retention-days: 1
 
