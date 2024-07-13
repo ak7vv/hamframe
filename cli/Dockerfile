@@ -1,5 +1,7 @@
 FROM alpine
 
+LABEL org.opencontainers.image.source https://github.com/ckuhtz/hamframe
+
 ENV PYTHONUNBUFFERED=1
 
 RUN apk add --update --no-cache python3 py3-pip

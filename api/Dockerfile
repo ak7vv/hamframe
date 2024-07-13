@@ -2,6 +2,8 @@
 
 FROM tiangolo/uvicorn-gunicorn-fastapi
 
+LABEL org.opencontainers.image.source https://github.com/ckuhtz/hamframe
+
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
