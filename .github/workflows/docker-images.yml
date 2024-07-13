@@ -157,10 +157,3 @@ jobs:
         cache-from: type=local,src=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
         cache-to: type=local,mode=max,dest=/tmp/.buildx-cache--${{ steps.local_platform.outputs.local_platform }}-${{ matrix.component }}
 
-    # - name: Make Docker image public
-    #   run: |
-    #     curl -X PATCH \
-    #       -H "Authorization: Bearer ${{ secrets.GHCR_TOKEN }}" \
-    #       -H "Accept: application/vnd.github.v3+json" \
-    #       https://api.github.com/user/packages/container/${{ github.repository_owner }}/hamframe-${{ matrix.component }}:latest/visibility \
-    #       -d '{"visibility":"public"}'
