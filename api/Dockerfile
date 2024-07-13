@@ -14,7 +14,7 @@ COPY . .
 
 # COPY /api/requirements.txt /hamframe/requirements.txt
 
-RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
+RUN pip3 install --break-system-packages -r requirements.txt
 
 # COPY /api/api.py /hamframe/api.py
 # COPY /api/api.sh /hamframe/api.sh
