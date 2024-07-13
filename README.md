@@ -1,6 +1,7 @@
 # A Framework for Ham Radio
 
-[![container build status](https://github.com/ak7vv/hamframe/actions/workflows/docker-images.yml/badge.svg?event=push)](https://github.com/ak7vv/hamframe/actions/)
+[![container build status](https://github.com/ak7vv/hamframe/actions/workflows/cli.yml/badge.svg?event=push)](https://github.com/ak7vv/hamframe/actions/)
+[![container build status](https://github.com/ak7vv/hamframe/actions/workflows/api.yml/badge.svg?event=push)](https://github.com/ak7vv/hamframe/actions/)
 
 ![GitHub issues current open count](https://img.shields.io/github/issues-search?query=repo%3Aak7vv%2Fhamframe%20state%3Aopen&logo=github&label=current%20open%20issues%20count&color=teal)
 
