@@ -23,13 +23,13 @@ permissions:
   packages: write
 
 env:
-  - REGISTRY_IMAGE=ghcr.io/ak7vv/hamframe-api
-  - BUILDX_NO_DEFAULT_ATTESTATIONS=1
-  - IMAGE_TITLE="Hamframe API"
-  - IMAGE_AUTHORS="Christian Kuhtz <christian@kuhtz.com>"
-  - IMAGE_SOURCE="http://github.com/ak7vv/hamframe"
-  - IMAGE_DESCRIPTION="Hamframe API"
-  - IMAGE_LICENSES="MIT"
+  REGISTRY_IMAGE: "ghcr.io/ak7vv/hamframe-api"
+  BUILDX_NO_DEFAULT_ATTESTATIONS: 1
+  IMAGE_TITLE: "Hamframe API"
+  IMAGE_AUTHORS: "Christian Kuhtz <christian@kuhtz.com>"
+  IMAGE_SOURCE: "http://github.com/ak7vv/hamframe"
+  IMAGE_DESCRIPTION: "Hamframe API"
+  IMAGE_LICENSES: MIT
 
 jobs:
   containers:
