@@ -15,14 +15,14 @@ print(f'called as: {__name__}')
 if __name__ == "__main__":
 
     print(f'Hamframe API')
-    print('- bootstrap')
+    print('* bootstrap')
 
     redis_host = os.environ['REDIS_HOST']
     redis_port = os.environ['REDIS_PORT']
 
     if not ( redis_host and redis_port ):
-        print(f'ERROR: Redis endpoint not defined. Bad container image.')
-        print(f'(Sleeping 5 seconds and exiting)')
+        print(f'\tERROR: Redis endpoint not defined. Bad container image.')
+        print(f'\t(Sleeping 5 seconds and exiting)')
         sleep(5) # slow down restart thrashing
         exit(1)
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     listener_port = 65432
     listener_workers = 4
 
-    print (f'- building FastAPI routes.')
+    print (f'\t- building FastAPI routes.')
 
     api = FastAPI()
 
@@ -40,9 +40,9 @@ if __name__ == "__main__":
     api.include_router(database_router, prefix="/db")
     api.include_router(swissarmy_router, prefix="/internal")
 
-    print(f'- launching API endpoint')
-    print(f'listener at {listener_ip_address}:{listener_port}')
-    print(f'starting {listener_workers} workers')
+    print(f'\t- launching API endpoint')
+    print(f'\t\tlistener at {listener_ip_address}:{listener_port}')
+    print(f'\t\tstarting {listener_workers} workers')
 
     uvicorn.run(api, host=listener_ip_address, port=listener_port, workers=listener_workers)
 
