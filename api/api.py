@@ -44,8 +44,8 @@ if __name__ == '__main__':
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
     listener_ipaddr = os.environ.get('LISTENER_IPADDR')
-    listener_port = os.environ.get('LISTENER_PORT')
-    listener_workers = os.environ.get('LISTENER_WORKERS')
+    listener_port = int(os.environ.get('LISTENER_PORT'))
+    listener_workers = int(os.environ.get('LISTENER_WORKERS'))
 
     # see thread https://github.com/tiangolo/fastapi/issues/1495
     uvicorn.run(app='__main__:api', host=listener_ipaddr, port=listener_port, workers=listener_workers)
