@@ -14,7 +14,11 @@ WORKDIR /hamframe
 
 RUN apt-get update && \
     apt-get upgrade --yes
-    
+
+# Get the Python version and store it in a file
+RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
+
+
     
 FROM stage-1 AS stage-2
 
@@ -25,9 +29,6 @@ RUN apt-get install --yes \
         git \
         libssl-dev \
         zlib1g-dev
-
-# Get the Python version and store it in a file
-RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
 
 # upgrade pip just in case
 RUN pip3 install --upgrade pip
