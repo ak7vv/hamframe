@@ -13,14 +13,21 @@ WORKDIR /hamframe
 # prereq for couchbase python sdk
 
 RUN apt-get update && \
-    apt-get upgrade --yes
+    apt-get upgrade --yes && \
+    apt install --yes apt-utils
 
 # Get the Python version and store it in a file
 RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
-
+RUN cat /python_version
 
     
 FROM stage-1 AS stage-2
+
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /hamframe
+
+RUN cat /python_version
 
 RUN apt-get install --yes \
         ccache \
@@ -35,7 +42,7 @@ RUN pip3 install --upgrade pip
 
 # build couchbase wheel
 
-RUN pip3 install --no-cache-dir --break-system-packages couchbase
+RUN pip3 install --no-cache-dir ---root-user-action couchbase
 
 
 
@@ -45,9 +52,11 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
+RUN cat /python_version
+
 COPY requirements.txt .
 
-RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
+RUN pip3 install --no-cache-dir --root-user-action -r requirements.txt
 
 # remove unneccessary stuff
 RUN apt-get remove --yes \
