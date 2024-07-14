@@ -18,7 +18,7 @@ RUN pip3 install --upgrade pip && \
 
 
 ### stage 2: app
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11 AS final
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
 # if python burps, we want to see it immediately
 ENV PYTHONUNBUFFERED=1
