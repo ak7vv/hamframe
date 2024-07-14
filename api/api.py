@@ -23,7 +23,8 @@ if __name__ == "__main__":
     if not redis_host:
         print(f'ERROR: REDIS_HOST default not found. Bad container image.')
         fail = True
-    elif not redis_port:
+    
+    if not redis_port:
         print(f'ERROR: REDIS_PORT default not found. Bad container image.')
         fail = True
     else:
