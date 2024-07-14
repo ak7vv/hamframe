@@ -35,7 +35,7 @@ def check_env_vars():
     # we got everything, image is sane
 
 
-api = FastAPI()
+api = FastAPI(lifespan=lifespan)
 
 if __name__ == "__main__":
 
