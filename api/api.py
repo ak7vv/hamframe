@@ -28,16 +28,14 @@ async def lifespan(api: FastAPI):
 def check_env_vars():
     required_vars = [ "REDIS_HOST",
                       "REDIS_PORT", 
-                      "WORKERS" ]
+                      "WORKERS", "FOO" ]
     for var in required_vars:
         if var not in os.environ:
             raise EnvironmentError(f'env variable {var} is not set. bad image.')
-    print(f'got all expected env vars.')
+    # we got everything, image is sane
 
 
 api = FastAPI()
-
-
 
 if __name__ == "__main__":
 
