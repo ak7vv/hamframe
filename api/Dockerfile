@@ -9,10 +9,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-RUN apt-get update && \
-    apt-get upgrade --yes && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN apt-get update && \
+#     apt-get upgrade --yes && \
+#     apt-get autoremove --yes && \
+#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
 
