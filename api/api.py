@@ -10,6 +10,8 @@ from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
 
+api = FastAPI()
+
 print(f'called as: {__name__}')
 
 if __name__ == "__main__":
@@ -34,7 +36,6 @@ if __name__ == "__main__":
 
     print (f'\t- building FastAPI routes.')
 
-    api = FastAPI()
 
     api.include_router(configuration_router, prefix="/config")
     api.include_router(database_router, prefix="/db")
