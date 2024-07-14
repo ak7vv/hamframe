@@ -42,7 +42,7 @@ RUN pip3 install --upgrade pip
 
 # build couchbase wheel
 
-RUN pip3 install --no-cache-dir ---root-user-action couchbase
+RUN pip3 install --no-cache-dir --root-user-action couchbase
 
 
 
