@@ -50,7 +50,7 @@ def shutdown():
     sys.exit(1)  # Exit with a status code indicating failure
 
 def handle_signal(sig, frame):
-    print(f'Received signal {sig}.')
+    logger.critical(f'Received signal {sig}.')
     shutdown()
 
 
