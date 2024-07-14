@@ -11,9 +11,14 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
+RUN apt-get update && \
+    apt-get upgrade --yes && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 COPY requirements.txt .
 
-# RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip
 RUN pip3 install --break-system-packages -r requirements.txt
 
 ### stage 2: app
