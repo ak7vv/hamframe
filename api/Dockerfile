@@ -26,7 +26,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /hamframe
 
 # populate prereq's from stage 1
-COPY --from=prereq /usr/local/lib/python3.11/site-packages/* /usr/local/lib/python3.11/site-packages/
+COPY --from=prereq /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=prereq /usr/local/bin /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
