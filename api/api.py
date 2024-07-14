@@ -51,9 +51,10 @@ if __name__ == '__main__':
 
     listener_host = os.environ.get('LISTENER_HOST')
     listener_port = int(os.environ.get('LISTENER_PORT'))
+    # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
     listener_workers = int(os.environ.get('LISTENER_WORKERS'))
 
     logger.debug(f'listener: {listener_host}:${listener_port} with {listener_workers} workers.')
 
-    # see thread https://github.com/tiangolo/fastapi/issues/1495
+    # see thread https://github.com/tiangolo/fastapi/issues/1495 for uvicorn call
     uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
