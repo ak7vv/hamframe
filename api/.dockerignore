@@ -1,6 +1,6 @@
 *
 !api.py
 !api.sh
-!configuration
-!database
+!routers
+# !__init__.py
 !requirements.txt
