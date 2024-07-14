@@ -55,7 +55,7 @@ def check_env_vars():
     # we got everything, image is sane
 
 def api_shutdown():
-    signal.raise_signal(signal.SIGINT)
+    signal.raise_signal(signal.SIGKILL)
 
 
 if __name__ == '__main__':
