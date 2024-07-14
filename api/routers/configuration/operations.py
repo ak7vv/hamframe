@@ -1,6 +1,7 @@
 # Configuration operations
 
 from fastapi import APIRouter
+
 from .get import get_config
 from .put import put_config
 from .delete import delete_config
