@@ -66,6 +66,7 @@ WORKDIR /hamframe
 # Read the Python version into an ARG
 COPY --from=stage-1 /python_version /python_version
 ARG PYTHON_VERSION
+RUN cat /python_version
 RUN PYTHON_VERSION=$(cat /python_version)
 
 COPY --from=stage-2 /usr/local/lib/python${PYTHON_VERSION}/site-packages /usr/local/lib/python${PYTHON_VERSION}/site-packages
