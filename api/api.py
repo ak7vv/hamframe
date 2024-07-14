@@ -22,7 +22,7 @@ async def lifespan(api: FastAPI):
     api.include_router(swissarmy_router, prefix="/internal")
     yield
     # shutdown
-    print("shutdown.") # this never actually happens if you ctrl-c out of it..
+    print(f'shutdown.')
 
 
 def check_env_vars():
