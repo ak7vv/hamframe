@@ -42,7 +42,7 @@ RUN pip3 install --upgrade pip
 
 # build couchbase wheel
 
-RUN pip3 install --no-cache-dir --root-user-action couchbase
+RUN pip3 install --no-cache-dir --root-user-action ignore couchbase
 
 
 
@@ -56,7 +56,7 @@ RUN cat /python_version
 
 COPY requirements.txt .
 
-RUN pip3 install --no-cache-dir --root-user-action -r requirements.txt
+RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
 # remove unneccessary stuff
 RUN apt-get remove --yes \
