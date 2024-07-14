@@ -1,6 +1,7 @@
 # Get Configuration operation
 
 from fastapi import Request, Response, status, Query
+from ..database.redis import check_conf_server
 
 async def get_config(request: Request,
                      response: Response, 

@@ -1,6 +1,8 @@
 # Put Configuration operation
 
-from fastapi import Request, Response, status
+import json
+from fastapi import Request, Response, status, Query
+from ..database.redis import check_conf_server
 
 async def put_config(request: Request,
                      response: Response,
