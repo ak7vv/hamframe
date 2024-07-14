@@ -1,6 +1,6 @@
 # Get Configuration operation
 
-from fastapi import Request, Response, status
+from fastapi import Request, Response, status, Query
 
 async def get_config(request: Request,
                      response: Response, 
