@@ -12,21 +12,27 @@ from routers.internal.operations import router as swissarmy_router
 
 api = FastAPI()
 
-print(f'called as: {__name__}')
+async def lifespan(api: FastAPI):
+    # startup
+    check_env_vars()
+    api.include_router(configuration_router, prefix="/config")
+    api.include_router(database_router, prefix="/db")
+    api.include_router(swissarmy_router, prefix="/internal")
+    yield
+    # shutdown
+    print("shutdown.")
+
+api.router.lifespan_context = lifespan
+
+def check_env_vars():
+    required_vars = [ "REDIS_HOST",
+                      "REDIS_PORT", 
+                      "WORKERS" ]
+    for var in required_vars:
+        if var not in os.environ:
+            raise EnvironmentError(f'env variable {var} is not set. bad image.')
 
 if __name__ == "__main__":
-
-    print(f'Hamframe API')
-    print('* bootstrap')
-
-    redis_host = os.environ['REDIS_HOST']
-    redis_port = os.environ['REDIS_PORT']
-
-    if not ( redis_host and redis_port ):
-        print(f'\tERROR: Redis endpoint not defined. Bad container image.')
-        print(f'\t(Sleeping 5 seconds and exiting)')
-        sleep(5) # slow down restart thrashing
-        exit(1)
 
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
@@ -34,18 +40,5 @@ if __name__ == "__main__":
     listener_port = 65432
     listener_workers = 4
 
-    print (f'\t- building FastAPI routes.')
-
-
-    api.include_router(configuration_router, prefix="/config")
-    api.include_router(database_router, prefix="/db")
-    api.include_router(swissarmy_router, prefix="/internal")
-
-    print(f'\t- launching API endpoint')
-    print(f'\t\tlistener at {listener_ip_address}:{listener_port}')
-    print(f'\t\tstarting {listener_workers} workers')
-
     # see thread https://github.com/tiangolo/fastapi/issues/1495
     uvicorn.run(app="__main__:api", host=listener_ip_address, port=listener_port, workers=listener_workers)
-
-    print(f'exiting.')
