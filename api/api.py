@@ -1,6 +1,7 @@
 # implement REST API using FastAPI
 
-import sys
+from multiprocessing import parent_process
+import psutil
 import os
 import logging
 import signal
@@ -62,9 +63,11 @@ def check_env_vars():
     # we got everything, image is sane
 
 def api_shutdown():
-    # signal.raise_signal(signal.SIGKILL)
     ppid = os.getppid()
-    os.kill(ppid, signal.SIGKILL)
+    parent_process = psutil.Process(ppid)
+    parent_process.kill()
+    os.exit(1)
+
 
 
 
