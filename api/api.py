@@ -17,6 +17,8 @@ from routers.test.operations import router as test_router
 
 logger = logging.getLogger('uvicorn.error')
 
+# Define lifespan
+
 @asynccontextmanager
 async def lifespan(api: FastAPI):
     # startup
@@ -34,9 +36,11 @@ async def lifespan(api: FastAPI):
     # shutdown
     logger.info('bye.')
 
+# Define API app as 'api'
 
 api = FastAPI(lifespan=lifespan)
 
+# Exception handling
 
 @api.exception_handler(Exception)
 async def global_exception_handler(request, exc):
@@ -70,6 +74,8 @@ def check_env_vars():
 
 if __name__ == '__main__':
 
+    # Setup signal handlers
+    
     signal.signal(signal.SIGINT, handle_signal)
     signal.signal(signal.SIGTERM, handle_signal)
 
@@ -81,6 +87,8 @@ if __name__ == '__main__':
     listener_workers = int(os.environ.get('LISTENER_WORKERS'))
 
     logger.debug(f'listener: {listener_host}:${listener_port} with {listener_workers} workers.')
+
+    # start API
 
     # see thread https://github.com/tiangolo/fastapi/issues/1495 for uvicorn call
     try:
