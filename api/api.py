@@ -3,10 +3,11 @@
 import sys
 import os
 from time import sleep
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from contextlib import asynccontextmanager
 import uvicorn
 import logging
+import signal
 
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
@@ -19,18 +20,39 @@ logger = logging.getLogger('uvicorn.error')
 @asynccontextmanager
 async def lifespan(api: FastAPI):
     # startup
+    logger.debug('lifespan startup.')
     check_env_vars()
     api.include_router(configuration_router, prefix='/config')
-    logger.debug('/config route defined')
+    logger.debug('/config route defined.')
     api.include_router(database_router, prefix='/db')
-    logger.debug('/db route defined')
+    logger.debug('/db route defined.')
     api.include_router(swissarmy_router, prefix='/internal')
-    logger.debug('/internal route defined')
+    logger.debug('/internal route defined.')
     api.include_router(test_router, prefix='/test')
-    logger.debug('/test route defined')
+    logger.debug('/test route defined.')
     yield
     # shutdown
     logger.info('bye.')
+
+
+api = FastAPI(lifespan=lifespan)
+
+
+@api.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    logger.critical(f'unrecoverable error occured: {exc}')
+    shutdown()
+    return {'message': 'Internal Server Error.'}
+
+def shutdown():
+    # Perform any necessary cleanup before shutdown
+    logger.critical(f'shutdown().')
+    sys.exit(1)  # Exit with a status code indicating failure
+
+def handle_signal(sig, frame):
+    print(f'Received signal {sig}.')
+    shutdown()
+
 
 def check_env_vars():
     required_vars = [ 'REDIS_HOST',
@@ -42,13 +64,14 @@ def check_env_vars():
         if var not in os.environ:
             logger.error(f'env variable {var} is not set. bad image.')
             exit(1) # bail now
+    logger.debug(f'env is sane.')
     # we got everything, image is sane
 
 
-
-api = FastAPI(lifespan=lifespan)
-
 if __name__ == '__main__':
+
+    signal.signal(signal.SIGINT, handle_signal)
+    signal.signal(signal.SIGTERM, handle_signal)
 
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
@@ -60,4 +83,9 @@ if __name__ == '__main__':
     logger.debug(f'listener: {listener_host}:${listener_port} with {listener_workers} workers.')
 
     # see thread https://github.com/tiangolo/fastapi/issues/1495 for uvicorn call
-    uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
+    try:
+        uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
+    except Exception as e:
+        print(f'Exception occured while running server: {e}.')
+        shutdown()
+
