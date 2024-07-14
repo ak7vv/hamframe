@@ -12,9 +12,9 @@ WORKDIR /hamframe
 
 # prereq for couchbase python sdk
 
-RUN apt update && \
-    apt upgrade --yes && \
-    apt install --yes \
+RUN apt-get update && \
+    apt-get upgrade --yes && \
+    apt-get install --yes \
         ccache \
         cmake \
         g++ \
@@ -45,7 +45,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 # remove unneccessary stuff
-RUN apt remove --yes \
+RUN apt-get remove --yes \
         ccache \
         cmake \
         g++ \
@@ -53,7 +53,7 @@ RUN apt remove --yes \
         libssl-dev \
         zlib1g-dev \
         && \
-    apt autoremove --yes
+    apt-get autoremove --yes
 
 
 FROM python:slim AS stage-3
