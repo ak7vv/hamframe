@@ -27,7 +27,7 @@ if __name__ == "__main__":
         print(f'ERROR: REDIS_PORT default not found. Bad container image.')
         fail = True
     else:
-        fail = False
+        fail = False # defaults or user settings found (good)
 
     if fail:
         print(f'(Sleeping 5 seconds and exiting)')
