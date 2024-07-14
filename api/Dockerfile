@@ -2,7 +2,8 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11 AS prereq
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
-LABEL org.opencontainers.image.descriptiob="Hamframe API"
+LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
+LABEL org.opencontainers.image.description="Hamframe API"
 LABEL org.opencontainers.image.license=MIT
 
 # if python burps, we want to see it immediately
@@ -12,9 +13,8 @@ WORKDIR /hamframe
 
 COPY requirements.txt .
 
-RUN pip3 install --upgrade pip
-
-RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
+# RUN pip3 install --upgrade pip
+RUN pip3 install --break-system-packages -r requirements.txt
 
 ### stage 2: app
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11

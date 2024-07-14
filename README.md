@@ -31,8 +31,9 @@ And it probably goes without saying.. feedback is very welcome.
 │   └── routers
 │       ├── configuration
 │       │   ├── operations.py
-│       │   ├── get.py
 │       │   ├── put.py
+│       │   ├── get.py
+|       |   ├── update
 │       │   └── delete.py
 │       ├── database
 │       │   ├── operations.py
