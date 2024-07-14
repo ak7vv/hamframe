@@ -88,5 +88,5 @@ if __name__ == '__main__':
     try:
         uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
     except Exception as e:
-        print(f'Exception occured while running server: {e}.')
+        logger.critical(f'Exception occured while running server: {e}.')
         api_shutdown()
