@@ -8,6 +8,7 @@ on:
       - 'api/**/*.sh'
       - 'api/**/Dockerfile'
       - 'api/**/requirements.txt'
+      - 'api/**/.dockerignore'
       - '**/api.yml'
   pull_request:
     branches: [ "main" ]
@@ -16,6 +17,7 @@ on:
       - 'api/**/*.sh'
       - 'api/**/Dockerfile'
       - 'api/**/requirements.txt'
+      - 'api/**/.dockerignore'
       - '**/api.yml'
 
 env:
