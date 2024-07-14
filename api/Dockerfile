@@ -1,5 +1,5 @@
 ### stage 1: build prereq
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11 AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
