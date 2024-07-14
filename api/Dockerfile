@@ -1,5 +1,5 @@
 ### stage 1: build prereq
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11 AS prereq
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -25,8 +25,8 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /hamframe
 
 # populate prereq's from stage 1
-COPY --from=prereq /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY --from=prereq /usr/local/bin /usr/local/bin
+COPY --from=stage-1 /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=stage-1 /usr/local/bin /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
 COPY . .
