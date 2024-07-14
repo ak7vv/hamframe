@@ -11,6 +11,7 @@ import logging
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
+from routers.test.operations import router as test_router
 
 
 logger = logging.getLogger('uvicorn.error')
@@ -25,6 +26,8 @@ async def lifespan(api: FastAPI):
     logger.debug('/db route defined')
     api.include_router(swissarmy_router, prefix='/internal')
     logger.debug('/internal route defined')
+    api.include_router(test_router, prefix='/test')
+    logger.debug('/test route defined')
     yield
     # shutdown
     logger.info('bye.')
