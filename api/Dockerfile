@@ -13,7 +13,14 @@ WORKDIR /hamframe
 # prereq for couchbase python sdk
 
 RUN apt update && \
-    apt upgrade --yes
+    apt upgrade --yes && \
+    apt install --yes \
+        ccache \
+        cmake \
+        g++ \
+        git \
+        libssl-dev \
+        zlib1g-dev
 
 # Get the Python version and store it in a file
 RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
@@ -35,15 +42,21 @@ WORKDIR /hamframe
 
 COPY requirements.txt .
 
-
-
 RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 # remove unneccessary stuff
-# RUN apk del make gcc g++ linux-headers libcouchbase-dev python3-dev py3-pip
+RUN apt remove --yes \
+        ccache \
+        cmake \
+        g++ \
+        git \
+        libssl-dev \
+        zlib1g-dev \
+        && \
+    apt autoremove --yes
 
 
-FROM python:slim
+FROM python:slim AS stage-3
 
 ENV PYTHONUNBUFFERED=1
 
