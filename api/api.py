@@ -22,13 +22,14 @@ async def lifespan(api: FastAPI):
     api.include_router(swissarmy_router, prefix='/internal')
     yield
     # shutdown
-    print(f'shutdown.')
-
+    print(f'bye.')
 
 def check_env_vars():
     required_vars = [ 'REDIS_HOST',
-                      'REDIS_PORT', 
-                      'WORKERS', 'FOO' ]
+                      'REDIS_PORT',
+                      'LISTENER_IPADDR',
+                      'LISTENER_PORT',
+                      'LISTENER_WORKERS' ]
     for var in required_vars:
         if var not in os.environ:
             raise EnvironmentError(f'env variable {var} is not set. bad image.')
@@ -41,9 +42,9 @@ if __name__ == '__main__':
 
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
-    listener_ip_address = '0.0.0.0'
-    listener_port = 65432
-    listener_workers = 4
+    listener_ip_address = os.environ('LISTENER_IPADDR')
+    listener_port = os.environ('LISTENER_PORT')
+    listener_workers = os.environ('LISTENER_WORKERS')
 
     # see thread https://github.com/tiangolo/fastapi/issues/1495
     uvicorn.run(app='__main__:api', host=listener_ip_address, port=listener_port, workers=listener_workers)
