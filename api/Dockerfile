@@ -74,8 +74,8 @@ ARG PYTHON_VERSION
 RUN cat /python_version
 RUN PYTHON_VERSION=$(cat /python_version)
 
-COPY --from=stage-2 /usr/local/lib/python${PYTHON_VERSION}/site-packages /usr/local/lib/python${PYTHON_VERSION}/site-packages
-COPY --from=stage-2 /usr/local/bin /usr/local/bin
+COPY --from=stage-3 /usr/local/lib/python${PYTHON_VERSION}/site-packages /usr/local/lib/python${PYTHON_VERSION}/site-packages
+COPY --from=stage-3 /usr/local/bin /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
 COPY . .
