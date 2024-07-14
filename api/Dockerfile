@@ -1,5 +1,5 @@
 # FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
-FROM python:latest AS stage-1
+FROM python:slim AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -9,6 +9,19 @@ LABEL org.opencontainers.image.license=MIT
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
+
+# prereq for couchbase python sdk
+
+RUN apt update && \
+    apt upgrade --yes
+
+# Get the Python version and store it in a file
+RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
+
+# upgrade pip just in case
+RUN pip3 install --upgrade pip
+
+# build couchbase wheel
 
 RUN pip3 install --no-cache-dir --break-system-packages couchbase
 
@@ -22,19 +35,26 @@ WORKDIR /hamframe
 
 COPY requirements.txt .
 
-#RUN pip3 install --upgrade pip
+
 
 RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
+# remove unneccessary stuff
+# RUN apk del make gcc g++ linux-headers libcouchbase-dev python3-dev py3-pip
 
 
-FROM stage-1
+FROM python:slim
 
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-COPY --from=stage-2 /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+# Read the Python version into an ARG
+COPY --from=stage-1 /python_version /python_version
+ARG PYTHON_VERSION
+RUN PYTHON_VERSION=$(cat /python_version)
+
+COPY --from=stage-2 /usr/local/lib/python${PYTHON_VERSION}/site-packages /usr/local/lib/python${PYTHON_VERSION}/site-packages
 COPY --from=stage-2 /usr/local/bin /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
