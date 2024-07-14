@@ -2,12 +2,14 @@
 
 import sys
 import os
+import logging
+import signal
 from time import sleep
 from fastapi import FastAPI,HTTPException
 from contextlib import asynccontextmanager
 import uvicorn
-import logging
-import signal
+
+
 
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
@@ -16,6 +18,8 @@ from routers.test.operations import router as test_router
 
 
 logger = logging.getLogger('uvicorn.error')
+
+
 
 # Define lifespan, setup routes
 
@@ -36,9 +40,12 @@ async def lifespan(api: FastAPI):
     # shutdown
     logger.info('bye.')
 
+
+
 # Define API app as 'api'
 
 api = FastAPI(lifespan=lifespan)
+
 
 
 def check_env_vars():
@@ -55,7 +62,10 @@ def check_env_vars():
     # we got everything, image is sane
 
 def api_shutdown():
-    signal.raise_signal(signal.SIGKILL)
+    # signal.raise_signal(signal.SIGKILL)
+    ppid = os.getppid()
+    os.kill(ppid, signal.SIGKILL)
+
 
 
 if __name__ == '__main__':
