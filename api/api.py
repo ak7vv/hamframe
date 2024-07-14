@@ -2,9 +2,9 @@
 
 from multiprocessing import parent_process
 import psutil
+import sys
 import os
 import logging
-import signal
 from time import sleep
 from fastapi import FastAPI,HTTPException
 from contextlib import asynccontextmanager
@@ -66,7 +66,7 @@ def api_shutdown():
     ppid = os.getppid()
     parent_process = psutil.Process(ppid)
     parent_process.kill()
-    os.exit(1)
+    sys.os.exit(1)
 
 
 
