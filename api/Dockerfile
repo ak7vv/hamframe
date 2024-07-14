@@ -1,5 +1,5 @@
 # FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
-FROM alpine AS stage-1
+FROM python AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -15,11 +15,11 @@ WORKDIR /hamframe
 #     apt-get autoremove --yes && \
 #     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apk add gcc python3-dev musl-dev linux-headers
+# RUN apk add gcc python3-dev musl-dev linux-headers
 
-RUN apk update && \
-    apk --no-cache add \
-        python3 cmd:pip3
+# RUN apk update && \
+#     apk --no-cache add \
+#         python3 cmd:pip3
 
 
 
