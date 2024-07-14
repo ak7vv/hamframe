@@ -45,6 +45,6 @@ if __name__ == "__main__":
     print(f'\t\tstarting {listener_workers} workers')
 
     # see thread https://github.com/tiangolo/fastapi/issues/1495
-    uvicorn.run("__main__:api", host=listener_ip_address, port=listener_port, workers=listener_workers)
+    uvicorn.run(app="api:api", host=listener_ip_address, port=listener_port, workers=listener_workers)
 
     print(f'exiting.')
