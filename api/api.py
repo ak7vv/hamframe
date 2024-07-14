@@ -40,7 +40,7 @@ def check_env_vars():
                       'LISTENER_WORKERS' ]
     for var in required_vars:
         if var not in os.environ:
-            logger.error('env variable {var} is not set. bad image.')
+            logger.error(f'env variable {var} is not set. bad image.')
             exit(1) # bail now
     # we got everything, image is sane
 
