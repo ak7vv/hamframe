@@ -49,8 +49,8 @@ def check_env_vars():
                       'LISTENER_WORKERS' ]
     for var in required_vars:
         if var not in os.environ:
-            logger.error(f'env variable {var} is not set. bad image.')
-            api_shutdown # bail now
+            logger.critical(f'env variable {var} is not set. bad image.')
+            api_shutdown() # bail now
     logger.debug(f'env is sane.')
     # we got everything, image is sane
 
@@ -76,4 +76,4 @@ if __name__ == '__main__':
         uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
     except Exception as e:
         print(f'Exception occured while running server: {e}.')
-        api_shutdown
+        api_shutdown()
