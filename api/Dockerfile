@@ -15,9 +15,12 @@ WORKDIR /hamframe
 #     apt-get autoremove --yes && \
 #     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apk add gcc python3-dev musl-dev linux-headers
+
 RUN apk update && \
     apk --no-cache add \
         python3 cmd:pip3
+
 
 
 FROM stage-1 AS stage-2
