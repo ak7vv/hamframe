@@ -20,17 +20,8 @@ if __name__ == "__main__":
     redis_host = os.environ['REDIS_HOST']
     redis_port = os.environ['REDIS_PORT']
 
-    if not redis_host:
-        print(f'ERROR: REDIS_HOST default not found. Bad container image.')
-        fail = True
-    
-    if not redis_port:
-        print(f'ERROR: REDIS_PORT default not found. Bad container image.')
-        fail = True
-    else:
-        fail = False # defaults or user settings found (good)
-
-    if fail:
+    if not ( redis_host and redis_port ):
+        print(f'ERROR: Redis endpoint not defined. Bad container image.')
         print(f'(Sleeping 5 seconds and exiting)')
         sleep(5) # slow down restart thrashing
         exit(1)
