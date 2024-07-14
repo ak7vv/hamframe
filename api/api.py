@@ -11,6 +11,8 @@ from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
 
+
+
 @asynccontextmanager
 async def lifespan(api: FastAPI):
     # startup
@@ -20,9 +22,8 @@ async def lifespan(api: FastAPI):
     api.include_router(swissarmy_router, prefix="/internal")
     yield
     # shutdown
-    print("shutdown.")
+    print("shutdown.") # this never actually happens if you ctrl-c out of it..
 
-api = FastAPI()
 
 def check_env_vars():
     required_vars = [ "REDIS_HOST",
@@ -31,6 +32,12 @@ def check_env_vars():
     for var in required_vars:
         if var not in os.environ:
             raise EnvironmentError(f'env variable {var} is not set. bad image.')
+    print(f'got all expected env vars.')
+
+
+api = FastAPI()
+
+
 
 if __name__ == "__main__":
 
