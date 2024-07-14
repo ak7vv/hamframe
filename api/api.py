@@ -4,14 +4,14 @@ import sys
 import os
 from time import sleep
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 import uvicorn
 
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
 
-api = FastAPI()
-
+@asynccontextmanager
 async def lifespan(api: FastAPI):
     # startup
     check_env_vars()
@@ -22,7 +22,7 @@ async def lifespan(api: FastAPI):
     # shutdown
     print("shutdown.")
 
-api.router.lifespan_context = lifespan
+api = FastAPI()
 
 def check_env_vars():
     required_vars = [ "REDIS_HOST",
