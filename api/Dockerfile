@@ -19,6 +19,7 @@ RUN apt-get update && \
 # Get the Python version and store it in a file
 RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
 RUN cat /python_version
+RUN cat /etc/hosts
 
     
 FROM stage-1 AS stage-2
