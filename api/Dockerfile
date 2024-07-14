@@ -13,8 +13,12 @@ WORKDIR /hamframe
 # prereq for couchbase python sdk
 
 RUN apt-get update && \
-    apt-get upgrade --yes && \
-    apt-get install --yes \
+    apt-get upgrade --yes
+    
+    
+FROM stage-1 AS stage-2
+
+RUN apt-get install --yes \
         ccache \
         cmake \
         g++ \
@@ -34,7 +38,7 @@ RUN pip3 install --no-cache-dir --break-system-packages couchbase
 
 
 
-FROM stage-1 AS stage-2
+FROM stage-2 AS stage-3
 
 ENV PYTHONUNBUFFERED=1
 
@@ -57,7 +61,7 @@ RUN apt-get remove --yes \
 
 
 
-FROM python:slim AS stage-3
+FROM stage-1 AS stage-4
 
 ENV PYTHONUNBUFFERED=1
 
