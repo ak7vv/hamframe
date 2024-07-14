@@ -17,7 +17,7 @@ from routers.test.operations import router as test_router
 
 logger = logging.getLogger('uvicorn.error')
 
-# Define lifespan
+# Define lifespan, setup routes
 
 @asynccontextmanager
 async def lifespan(api: FastAPI):
@@ -40,23 +40,6 @@ async def lifespan(api: FastAPI):
 
 api = FastAPI(lifespan=lifespan)
 
-# Exception handling
-
-@api.exception_handler(Exception)
-async def global_exception_handler(request, exc):
-    logger.critical(f'unrecoverable error occured: {exc}')
-    shutdown()
-    return {'message': 'Internal Server Error.'}
-
-def shutdown():
-    # Perform any necessary cleanup before shutdown
-    logger.critical(f'shutdown().')
-    sys.exit(1)  # Exit with a status code indicating failure
-
-def handle_signal(sig, frame):
-    logger.critical(f'Received signal {sig}.')
-    shutdown()
-
 
 def check_env_vars():
     required_vars = [ 'REDIS_HOST',
@@ -67,17 +50,15 @@ def check_env_vars():
     for var in required_vars:
         if var not in os.environ:
             logger.error(f'env variable {var} is not set. bad image.')
-            exit(1) # bail now
+            api_shutdown # bail now
     logger.debug(f'env is sane.')
     # we got everything, image is sane
 
+def api_shutdown():
+    signal.raise_signal(signal.SIGINT)
+
 
 if __name__ == '__main__':
-
-    # Setup signal handlers
-    
-    signal.signal(signal.SIGINT, handle_signal)
-    signal.signal(signal.SIGTERM, handle_signal)
 
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
 
@@ -95,5 +76,4 @@ if __name__ == '__main__':
         uvicorn.run(app='__main__:api', host=listener_host, port=listener_port, workers=listener_workers)
     except Exception as e:
         print(f'Exception occured while running server: {e}.')
-        shutdown()
-
+        api_shutdown
