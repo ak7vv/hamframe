@@ -18,7 +18,9 @@ RUN apt-get update && \
 
 # Get the Python version and store it in env
 RUN PY_VERSION=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") \
-    && echo "PY_VERSION=$PY_VERSION" >> /etc/environment
+    && echo "PY_VERSION=$PY_VERSION" >> /etc/environment \
+    && echo "export PY_VERSION=$PYTHON_VERSION" >> ~/.bashrc
+
 RUN . /etc/environment
 RUN echo "python version: $PY_VERSION"
 
