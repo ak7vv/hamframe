@@ -1,5 +1,5 @@
 # FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
-FROM python:3.12-slim AS stage-1
+FROM python:3.11-slim AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -70,7 +70,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-COPY --from=stage-3 /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/
+COPY --from=stage-3 /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.12/
 COPY --from=stage-3 /usr/local/bin/ /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
