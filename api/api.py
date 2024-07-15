@@ -65,8 +65,7 @@ if __name__ == '__main__':
     api.include_router(test_router, prefix='/test')
     logger.debug('/test route defined.')
 
-    # see thread https://github.com/tiangolo/fastapi/issues/1495 for uvicorn app call
-    uv_cfg = uvicorn.Config(
+    api.run(
         app='__main__:api', 
         host=listener_host,
         port=listener_port,
@@ -74,7 +73,4 @@ if __name__ == '__main__':
         log_level=log_level,
         timeout_graceful_shutdown=2
     )
-    
-    server = uvicorn.Server( config=uv_cfg )
-    server.run()
 
