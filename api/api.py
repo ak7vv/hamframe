@@ -8,6 +8,7 @@ import logging
 from time import sleep
 from fastapi import FastAPI,HTTPException
 from contextlib import asynccontextmanager
+from pytest import ExitCode
 import uvicorn
 
 
@@ -63,10 +64,11 @@ def check_env_vars():
     # we got everything, image is sane
 
 def api_shutdown():
+    logger.critical(f'sleeping for 10 seconds.')
     ppid = os.getppid()
     parent_process = psutil.Process(ppid)
     parent_process.kill()
-    sys.os.exit(1)
+    sys.exit(1)
 
 
 

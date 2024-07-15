@@ -37,7 +37,7 @@ RUN pip3 install --upgrade pip
 
 # build couchbase wheel
 
-RUN pip3 install --no-cache-dir --root-user-action ignore couchbase
+RUN pip3 install --verbose --no-cache-dir --root-user-action ignore couchbase
 
 
 
