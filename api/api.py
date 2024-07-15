@@ -64,7 +64,8 @@ def check_env_vars():
     # we got everything, image is sane
 
 def api_shutdown():
-    logger.critical(f'sleeping for 10 seconds.')
+    logger.critical(f'sleeping for 5 seconds.') # stop thrashing
+    sleep(5)
     ppid = os.getppid()
     parent_process = psutil.Process(ppid)
     parent_process.kill()
