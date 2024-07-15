@@ -20,15 +20,6 @@ from routers.test.operations import router as test_router
 
 logger = logging.getLogger('uvicorn.error')
 
-# from https://stackoverflow.com/questions/75975807/how-to-stop-a-loop-on-shutdown-in-fastapi
-
-class RuntimeVals:
-    shutdown = False
-    restart = False
-    shutdown_complete = False
-
-runtime_cfg = RuntimeVals
-
 # Define API app as 'api'
 
 api = FastAPI()
@@ -45,65 +36,6 @@ def check_env_vars():
 
     logger.debug(f'env is sane.')
     # we got everything, image is sane
-
-async def worker(n):
-    while not runtime_cfg.shutdown:
-        await asyncio.sleep(0.1)
-    if n == 1:
-        raise RuntimeError(f'This is a demo error in worker {n}')
-    else:
-        print(f'Worker {n} shutdown cleanly')
-
-async def mainloop():
-    loop = asyncio.get_running_loop()
-    done = []
-    pending = [loop.create_task(worker(1)), loop.create_task(worker(2))]
-
-    # Handle results in the order the task are completed
-    # if exeption you can handle that as well.
-    while len(pending) > 0:
-        done, pending = await asyncio.wait(pending)
-        for task in done:
-            e = task.exception()
-            if e is not None:
-                # This will print the exception as stack trace
-                task.print_stack()
-            else:
-                result = task.result()
-    # This is needed to kill the Uvicorn server and communicate the
-    # exit code
-    if runtime_cfg.restart:
-        logger.info('RESTART')
-    else:
-        logger.info('SHUTDOWN')
-    runtime_cfg.shutdown_complete = True
-    os.kill(os.getpid(), signal.SIGINT)
-
-
-@api.get("/shutdown")
-async def clean_shutdown():
-    runtime_cfg.shutdown = True
-
-
-@api.get("/restart")
-async def clean_restart():
-    runtime_cfg.restart = True
-    runtime_cfg.shutdown = True
-
-@api.on_event("startup")
-async def startup_event():
-    loop = asyncio.get_running_loop()
-    loop.create_task(mainloop())
-
-
-@api.on_event("shutdown")
-async def shutdown_event():
-    # This is a hook point where the event
-    # loop has completely shut down
-    runtime_cfg.shutdown = True
-    while runtime_cfg.shutdown_complete is False:
-        logger.info(f'waiting')
-        await asyncio.sleep(1)
 
 if __name__ == '__main__':
 
