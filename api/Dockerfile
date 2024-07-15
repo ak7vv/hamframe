@@ -17,18 +17,17 @@ RUN apt-get update && \
     apt install --yes apt-utils
 
 # Get the Python version and store it in env
-RUN PY_VERSION=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") \
-    && echo "PY_VERSION=$PY_VERSION" >> /etc/environment \
-    && echo "export PY_VERSION=$PYTHON_VERSION" >> ~/.bashrc
+RUN python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
 
-RUN . /etc/environment
-RUN echo "python version: $PY_VERSION"
+RUN echo "/python_version: $(cat /python_version)"
+
+
 
 FROM stage-1 AS stage-2
 
 ENV PYTHONUNBUFFERED=1
 
-RUN echo "python version: $PY_VERSION"
+RUN echo "python version: $(cat /python_version)"
 
 WORKDIR /hamframe
 
@@ -53,7 +52,7 @@ FROM stage-2 AS stage-3
 
 ENV PYTHONUNBUFFERED=1
 
-RUN echo "python version: $PY_VERSION"
+RUN echo "/python_version: $(cat /python_version)"
 
 
 WORKDIR /hamframe
@@ -79,12 +78,11 @@ FROM stage-1 AS stage-4
 
 ENV PYTHONUNBUFFERED=1
 
-RUN echo "python version: $PY_VERSION"
-RUN echo "python version: ${PY_VERSION}"
+RUN echo "/python_version: $(cat /python_version)"
 
 WORKDIR /hamframe
 
-COPY --from=stage-3 /usr/local/lib/python${PY_VERSION}/site-packages /usr/local/lib/python${PY_VERSION}/site-packages
+COPY --from=stage-3 /usr/local/lib/python$(cat /python_version)/site-packages/ /usr/local/lib/python$(cat /python_version)/
 COPY --from=stage-3 /usr/local/bin /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
