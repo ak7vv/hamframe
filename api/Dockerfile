@@ -12,9 +12,9 @@ WORKDIR /hamframe
 
 # prereq for couchbase python sdk
 
-RUN apt-get update && \
-    apt-get upgrade --yes && \
-    apt install --yes apt-utils
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
+    DEBIAN_FRONTEND="noninteractive" apt-get upgrade --yes && \
+    DEBIAN_FRONTEND="noninteractive" apt install --yes apt-utils
 
 
 
@@ -24,7 +24,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hamframe
 
-RUN apt-get install --yes \
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
         ccache \
         cmake \
         g++ \
@@ -52,7 +52,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
 # remove unneccessary stuff
-RUN apt-get remove --yes \
+RUN DEBIAN_FRONTEND="noninteractive" apt-get remove --yes \
         ccache \
         cmake \
         g++ \
@@ -60,7 +60,7 @@ RUN apt-get remove --yes \
         libssl-dev \
         zlib1g-dev \
         && \
-    apt-get autoremove --yes
+    DEBIAN_FRONTEND="noninteractive" apt-get autoremove --yes
 
 
 
