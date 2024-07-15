@@ -1,5 +1,5 @@
-# FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
-FROM python:3.11-slim AS stage-1
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
+# FROM python:3.11-slim AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -12,66 +12,66 @@ WORKDIR /hamframe
 
 # prereq for couchbase python sdk
 
-RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
-    DEBIAN_FRONTEND="noninteractive" apt-get upgrade --yes && \
-    DEBIAN_FRONTEND="noninteractive" apt install --yes apt-utils
+# RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
+#     DEBIAN_FRONTEND="noninteractive" apt-get upgrade --yes && \
+#     DEBIAN_FRONTEND="noninteractive" apt install --yes apt-utils
 
 
 
-FROM stage-1 AS stage-2
+# FROM stage-1 AS stage-2
 
-ENV PYTHONUNBUFFERED=1
+# ENV PYTHONUNBUFFERED=1
 
-WORKDIR /hamframe
+# WORKDIR /hamframe
 
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
-        ccache \
-        cmake \
-        g++ \
-        git \
-        libssl-dev \
-        zlib1g-dev
+# RUN DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
+#         ccache \
+#         cmake \
+#         g++ \
+#         git \
+#         libssl-dev \
+#         zlib1g-dev
 
 # upgrade pip just in case
-RUN pip3 install --upgrade pip
+# RUN pip3 install --upgrade pip
 
 # build couchbase wheel
 
-RUN pip3 install --verbose --no-cache-dir --root-user-action ignore couchbase
+# RUN pip3 install --verbose --no-cache-dir --root-user-action ignore couchbase
 
 
 
-FROM stage-2 AS stage-3
+# FROM stage-2 AS stage-3
 
-ENV PYTHONUNBUFFERED=1
+# ENV PYTHONUNBUFFERED=1
 
-WORKDIR /hamframe
+# WORKDIR /hamframe
 
 COPY requirements.txt .
 
 RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
 # remove unneccessary stuff
-RUN DEBIAN_FRONTEND="noninteractive" apt-get remove --yes \
-        ccache \
-        cmake \
-        g++ \
-        git \
-        libssl-dev \
-        zlib1g-dev \
-        && \
-    DEBIAN_FRONTEND="noninteractive" apt-get autoremove --yes
+# RUN DEBIAN_FRONTEND="noninteractive" apt-get remove --yes \
+#         ccache \
+#         cmake \
+#         g++ \
+#         git \
+#         libssl-dev \
+#         zlib1g-dev \
+#         && \
+#     DEBIAN_FRONTEND="noninteractive" apt-get autoremove --yes
 
 
 
-FROM stage-1 AS stage-4
+# FROM stage-1 AS stage-4
 
-ENV PYTHONUNBUFFERED=1
+# ENV PYTHONUNBUFFERED=1
 
-WORKDIR /hamframe
+# WORKDIR /hamframe
 
-COPY --from=stage-3 /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.12/
-COPY --from=stage-3 /usr/local/bin/ /usr/local/bin
+# COPY --from=stage-3 /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.12/
+# COPY --from=stage-3 /usr/local/bin/ /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
 COPY . .
@@ -82,6 +82,7 @@ ARG REDIS_PORT_DEFAULT=6379
 ARG LISTENER_HOST_DEFAULT=0.0.0.0
 ARG LISTENER_PORT_DEFAULT=65432
 ARG LISTENER_WORKERS_DEFAULT=4
+ARG LOG_LEVEL_DEFAULT=info
 
 # let user override defaults
 ENV REDIS_HOST=${REDIS_HOST_DEFAULT}
@@ -89,5 +90,6 @@ ENV REDIS_PORT=${REDIS_PORT_DEFAULT}
 ENV LISTENER_HOST=${LISTENER_HOST_DEFAULT}
 ENV LISTENER_PORT=${LISTENER_PORT_DEFAULT}
 ENV LISTENER_WORKERS=${LISTENER_WORKERS_DEFAULT}
+ENV LOG_LEVEL=${LOG_LEVEL_DEFAULT}
 
 ENTRYPOINT [ "python", "api.py" ]
