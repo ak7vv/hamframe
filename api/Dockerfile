@@ -1,5 +1,5 @@
 # FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim AS stage-1
-FROM python:slim AS stage-1
+FROM python:3.12-slim AS stage-1
 
 LABEL org.opencontainers.image.source=https://github.com/ak7vv/hamframe
 LABEL org.opencontainers.image.authors="Christian AK7VV <ak7vv@arrl.net>"
@@ -16,18 +16,11 @@ RUN apt-get update && \
     apt-get upgrade --yes && \
     apt install --yes apt-utils
 
-# Get the Python version and store it in env
-RUN python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
-
-RUN echo "/python_version: $(cat /python_version)"
-
 
 
 FROM stage-1 AS stage-2
 
 ENV PYTHONUNBUFFERED=1
-
-RUN echo "python version: $(cat /python_version)"
 
 WORKDIR /hamframe
 
@@ -52,9 +45,6 @@ FROM stage-2 AS stage-3
 
 ENV PYTHONUNBUFFERED=1
 
-RUN echo "/python_version: $(cat /python_version)"
-
-
 WORKDIR /hamframe
 
 COPY requirements.txt .
@@ -78,12 +68,10 @@ FROM stage-1 AS stage-4
 
 ENV PYTHONUNBUFFERED=1
 
-RUN echo "/python_version: $(cat /python_version)"
-
 WORKDIR /hamframe
 
-COPY --from=stage-3 /usr/local/lib/python$(cat /python_version)/site-packages/ /usr/local/lib/python$(cat /python_version)/
-COPY --from=stage-3 /usr/local/bin /usr/local/bin
+COPY --from=stage-3 /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/
+COPY --from=stage-3 /usr/local/bin/ /usr/local/bin
 
 # copy everything explicitly 'allowed' in .dockerignore
 COPY . .
