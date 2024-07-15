@@ -1,8 +1,6 @@
 # implement REST API using FastAPI
 
 from multiprocessing import parent_process
-import psutil
-import sys
 import os
 import signal
 import logging
@@ -23,6 +21,7 @@ from routers.test.operations import router as test_router
 logger = logging.getLogger('uvicorn.error')
 
 # from https://stackoverflow.com/questions/75975807/how-to-stop-a-loop-on-shutdown-in-fastapi
+
 class RuntimeVals:
     shutdown = False
     restart = False
@@ -32,7 +31,7 @@ runtime_cfg = RuntimeVals
 
 # Define API app as 'api'
 
-api = FastAPI(lifespan=lifespan)
+api = FastAPI()
 
 def check_env_vars():
     required_vars = [ 'REDIS_HOST',
@@ -43,7 +42,7 @@ def check_env_vars():
     for var in required_vars:
         if var not in os.environ:
             logger.critical(f'env variable {var} is not set. bad image.')
-            api_shutdown() # bail now
+
     logger.debug(f'env is sane.')
     # we got everything, image is sane
 
@@ -74,9 +73,9 @@ async def mainloop():
     # This is needed to kill the Uvicorn server and communicate the
     # exit code
     if runtime_cfg.restart:
-        print("RESTART")
+        logger.info('RESTART')
     else:
-        print("SHUTDOWN")
+        logger.info('SHUTDOWN')
     runtime_cfg.shutdown_complete = True
     os.kill(os.getpid(), signal.SIGINT)
 
