@@ -16,15 +16,17 @@ RUN apt-get update && \
     apt-get upgrade --yes && \
     apt install --yes apt-utils
 
-# Get the Python version and store it in a file
-RUN python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" > /python_version
-RUN cat /python_version
-RUN cat /etc/hosts
+# Get the Python version and store it in env
+RUN PYTHON_VERSION=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") \
+    && echo "PYTHON_VERSION=$PYTHON_VERSION" >> /etc/environment
+RUN . /etc/environment
+RUN echo "python version: $PYTHON_VERSION"
 
-    
 FROM stage-1 AS stage-2
 
 ENV PYTHONUNBUFFERED=1
+
+RUN echo "python version: $PYTHON_VERSION"
 
 WORKDIR /hamframe
 
@@ -51,9 +53,10 @@ FROM stage-2 AS stage-3
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /hamframe
+RUN echo "python version: $PYTHON_VERSION"
 
-RUN cat /python_version
+
+WORKDIR /hamframe
 
 COPY requirements.txt .
 
@@ -76,13 +79,10 @@ FROM stage-1 AS stage-4
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /hamframe
+RUN echo "python version: $PYTHON_VERSION"
+RUN echo "python version: ${PYTHON_VERSION}"
 
-# Read the Python version into an ARG
-COPY --from=stage-1 /python_version /python_version
-ARG PYTHON_VERSION
-RUN cat /python_version
-RUN PYTHON_VERSION=$(cat /python_version)
+WORKDIR /hamframe
 
 COPY --from=stage-3 /usr/local/lib/python${PYTHON_VERSION}/site-packages /usr/local/lib/python${PYTHON_VERSION}/site-packages
 COPY --from=stage-3 /usr/local/bin /usr/local/bin
