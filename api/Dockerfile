@@ -30,8 +30,6 @@ RUN echo "python version: $PYTHON_VERSION"
 
 WORKDIR /hamframe
 
-RUN cat /python_version
-
 RUN apt-get install --yes \
         ccache \
         cmake \
