@@ -69,7 +69,7 @@ def api_shutdown():
     ppid = os.getppid()
     parent_process = psutil.Process(ppid)
     parent_process.kill()
-    sys.exit(1)
+    sys._exit(1)
 
 
 
