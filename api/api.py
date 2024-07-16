@@ -41,7 +41,8 @@ if __name__ == '__main__':
 
     # dump environment we care about
 
-    logger.info(env)
+    for var in env:
+        logger.info(var)
 
     # add REST routes
 
