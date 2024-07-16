@@ -28,7 +28,7 @@ def check_env_vars(logger: Logger = None) -> Dict:
     var_defaults = {
         'REDIS_HOST': '127.0.0.1',
         'REDIS_PORT': 6379,
-        'LISTENER_HOST': '0.0.0.0',
+        'LISTENER_HOST': '127.0.0.1',
         'LISTENER_PORT': 65432,
         'LISTENER_WORKERS': 4,
         'LOG_LEVEL': 'info'

@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
-    logger = logger_init('DEBUG') # specify 'DEBUG' if early debugging (env) is needed
+    logger = logger_init() # specify 'DEBUG' if early debugging (env) is needed
 
     # check env and use defaults if not present
 
