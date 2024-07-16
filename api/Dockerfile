@@ -13,8 +13,6 @@ COPY requirements.txt .
 
 RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
-FROM stage-1 AS stage-2
-
 COPY . .
 
 ENTRYPOINT [ "python", "api.py" ]
