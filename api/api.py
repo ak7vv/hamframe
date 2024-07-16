@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # dump environment we care about
 
     for var in env:
-        logger.debug(f'{var}={env[var]}')
+        logger.debug(f'env: {var}={env[var]}')
 
     # add REST routes
 
