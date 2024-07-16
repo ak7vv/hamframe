@@ -30,7 +30,7 @@ class ANSIColors:
 
 # Define custom formats for each severity level
 level_formats = {
-    logging.DEBUG: ANSIColors.green + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.reset + ' %(message)s',
+    logging.DEBUG: ANSIColors.green + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.green + ' %(message)s' + ANSIColors.reset,
     logging.INFO: ANSIColors.cyan + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
     logging.WARNING: ANSIColors.yellow + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
     logging.ERROR: ANSIColors.red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
