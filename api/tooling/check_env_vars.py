@@ -39,10 +39,11 @@ def check_env_vars(logger: Logger) -> Dict:
     env = {}
 
     for var in vars:
-        if not all_env_vars[var]:
-            env[var] = var_defaults[var]
-            logger.info(f'{var} = \'{env[var]}\' (default)')
-        else:
+        if var in all_env_vars:
             env[var] = all_env_vars[var]
             logger.info(f'{var} = \'{env[var]}\'')
+        else:
+            env[var] = var_defaults[var]
+            logger.info(f'{var} = \'{env[var]}\' (default)')
+
     return env
