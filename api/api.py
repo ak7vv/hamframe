@@ -5,7 +5,7 @@ import logging
 from fastapi import FastAPI
 import uvicorn
 
-from api.tooling.logger_init import logger
+from .tooling.logger_init import logger
 from routers.configuration.operations import init_router as init_configuration_router
 from routers.database.operations import init_router as init_database_router
 from routers.internal.operations import init_router as init_swissarmy_router
