@@ -3,10 +3,10 @@
 # WARNING:
 # unsupported for operations outside of API itself, do not call from outside of API codebase
 
-import logging
+from ...tooling.logger_init import logger
 from fastapi import APIRouter
 
-def init_router(logger: logging.Logger):
+def init_router():
 
     router = APIRouter()
 

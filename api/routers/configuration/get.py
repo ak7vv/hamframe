@@ -1,11 +1,10 @@
 # Get Configuration operation
 
-import logging
+from ...tooling.logger_init import logger
 from fastapi import Request, Response, status, Query
 from ..database.redis import check_conf_server
 
 async def get_config(
-        logger: logging.Logger,
         request: Request,
         response: Response, 
         config_op: str,

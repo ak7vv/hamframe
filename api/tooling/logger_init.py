@@ -37,7 +37,7 @@ level_formats = {
     logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s'
 }
 
-def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
+def define_logger(startup_logging_level: str = 'INFO') -> logging.Logger:
     """
     Initialize logging.Logger with custom logging format based on logging severity level.
 
@@ -60,3 +60,5 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
     logger.setLevel(logging.getLevelName(startup_logging_level))
 
     return logger
+
+logger = define_logger() # specify 'DEBUG' if early debugging (env) is needed

@@ -1,9 +1,9 @@
 # Database operations
 
-import logging
+from ...tooling.logger_init import logger
 from fastapi import APIRouter
 
-def init_router(logger: logging.Logger):
+def init_router():
 
     router = APIRouter()
 
