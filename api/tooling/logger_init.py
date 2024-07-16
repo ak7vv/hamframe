@@ -3,6 +3,8 @@
 import logging
 import sys
 
+
+
 class CustomFormatter(logging.Formatter):
     """
     logging.Formatter to modify the logging format based on logging level
@@ -16,6 +18,8 @@ class CustomFormatter(logging.Formatter):
             self._style._fmt = self.level_formats[record.levelno]
         return super().format(record)
 
+
+
 class ANSIColors:
     """ANSI escape sequences for colors to use in console text strings
     """
@@ -28,6 +32,8 @@ class ANSIColors:
     cyan = '\036m'
     reset = '\033[0m'
 
+
+
 # Define custom formats for each severity level
 level_formats = {
     logging.DEBUG: ANSIColors.green + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.green + ' %(message)s' + ANSIColors.reset,
@@ -36,6 +42,8 @@ level_formats = {
     logging.ERROR: ANSIColors.red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
     logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s'
 }
+
+
 
 def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
     """
@@ -61,3 +69,6 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
 
     return logger
 
+
+
+logger = logger_init() # specify 'DEBUG' if early debugging (env) is needed
