@@ -3,11 +3,14 @@ import os
 from logging import Logger
 
 
-def check_env_vars() -> Dict:
+def check_env_vars(logger: Logger = None) -> Dict:
     """
     Checks if environment variables we care about are present.
     If so, accept them.
     If not, substitute a reasonable default.
+
+    Args:
+        logger (Logger, optional): provide a Logger to use (for debug messages). Defaults to None.
 
     Returns:
         Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
@@ -35,8 +38,9 @@ def check_env_vars() -> Dict:
     
     env = {}
 
-    print(all_env_vars)
-    print(env)
+    if logger:
+        logger.debug(f'all_env_vars: {all_env_vars}')
+        logger.debug(f'env: {env}')
 
     for var in vars:
         if var in all_env_vars:
@@ -44,6 +48,7 @@ def check_env_vars() -> Dict:
         else:
             env[var] = var_defaults[var]
 
-    print(env)
+    if logger:
+        logger.debug(f'env: {env}')
 
     return env

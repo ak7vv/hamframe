@@ -30,15 +30,15 @@ if __name__ == '__main__':
     log_formatter = logging.Formatter('%(levelname)s:\t  %(message)s')
     stream_handler.setFormatter(log_formatter)
     logger.addHandler(stream_handler)
+    set_log_level(logger, 'debug')
 
     # check env and use defaults if not present
 
-    env = check_env_vars()
+    env = check_env_vars(logger)
 
     # set logger level based on what we got back
 
-    # set_log_level(logger, env['LOG_LEVEL'])
-    set_log_level(logger, 'debug')
+    set_log_level(logger, env['LOG_LEVEL'])
 
     # dump environment we care about
 
