@@ -18,7 +18,7 @@ def set_log_level(logger: Logger, level_str: str) -> None:
         'DEBUG'
     ]
 
-    if level_str not in log_levels:
+    if not level_str in log_levels:
         level_str = 'DEBUG'
 
     logger.setLevel(getLevelName(level_str))
