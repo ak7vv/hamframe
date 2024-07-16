@@ -14,3 +14,5 @@ def set_log_level(logger: Logger, level_str: str) -> None:
         logger.setLevel(_nameToLevel[level_str])
     else: # if the name got borked, default to debug
         logger.setLevel(_nameToLevel['DEBUG'])
+
+    logger.info(f'logging level: {level_str}')
