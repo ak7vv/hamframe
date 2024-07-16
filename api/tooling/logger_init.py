@@ -3,11 +3,6 @@
 import logging
 import sys
 
-# class CustomFilter(logging.Filter):
-#     def filter(self, record):
-#         # option for additional filter logic
-#         return True
-
 class CustomFormatter(logging.Formatter):
     def __init__(self, fmt=None, datefmt=None, style='%', level_formats=None):
         super().__init__(fmt, datefmt, style)
@@ -41,7 +36,6 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
     formatter = CustomFormatter(level_formats=level_formats)
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
-    # handler.addFilter(CustomFilter)
 
     logger = logging.getLogger(__name__)
     logger.addHandler(handler)
