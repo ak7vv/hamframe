@@ -13,6 +13,8 @@ COPY requirements.txt .
 
 RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 COPY . .
 
 ENTRYPOINT [ "python", "api.py" ]
