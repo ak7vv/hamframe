@@ -15,7 +15,7 @@ class CustomFormatter(logging.Formatter):
 
 # Define custom formats for each severity level
 level_formats = {
-    logging.DEBUG: '%(levelname)s:\t  %(asctime)s %(module)s %(funcName)s %(message)s',
+    logging.DEBUG: '%(levelname)s:\t  %(asctime)s %(module)s %(message)s',
     logging.INFO: '%(levelname)s:\t  %(message)s',
     logging.WARNING: '%(levelname)s:\t  %(message)s',
     logging.ERROR: '%(levelname)s:\t  %(message)s',

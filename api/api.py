@@ -43,11 +43,11 @@ if __name__ == '__main__':
     # add REST routes
 
     api.include_router(configuration_router, prefix='/config')
-    logger.debug('/config route defined.')
+    logger.debug('route added: /config')
     api.include_router(database_router, prefix='/db')
-    logger.debug('/db route defined.')
+    logger.debug('route added: /db')
     api.include_router(swissarmy_router, prefix='/internal', include_in_schema=False) # undocumented
-    logger.debug('/internal route defined.')
+    logger.debug('route added: /internal (undocumented)')
     # api.include_router(test_router, prefix='/test')
     # logger.debug('/test route defined.')
 
