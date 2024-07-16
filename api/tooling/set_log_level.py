@@ -1,8 +1,8 @@
-from logging import Logger, _nameToLevel
+from logging import Logger, _nameToLevel, getLevelName, getLevelNamesMapping
 
 def set_log_level(logger: Logger, level_str: str) -> None:
     """
-    Sets logging level for a provided Logger
+    Sets logging level for a provided Logger. If string doesn't match one of the defined values in the function (excludes NOTSET), set to DEBUG.
 
     Args:
         logger (Logger): reference to an existing Logger
@@ -10,9 +10,17 @@ def set_log_level(logger: Logger, level_str: str) -> None:
     """
     level_str = level_str.upper()
 
-    if level_str in _nameToLevel:
-        logger.setLevel(_nameToLevel[level_str])
-    else: # if the name got borked, default to debug
-        logger.setLevel(_nameToLevel['DEBUG'])
+    log_levels = [
+        'CRITICAL',
+        'ERROR',
+        'WARNING',
+        'INFO',
+        'DEBUG'
+    ]
+
+    if level_str not in log_levels:
+        level_str = 'DEBUG'
+
+    logger.setLevel(getLevelNamesMapping(level_str))
 
     logger.info(f'logging level: {level_str}')
