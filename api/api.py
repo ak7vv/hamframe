@@ -5,7 +5,7 @@ import logging
 from fastapi import FastAPI
 import uvicorn
 
-from tooling import check_env_vars
+from tooling import check_env_vars, set_log_level
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     # set logger level based on what we got back
 
-    logger.setLevel(env['LOG_LEVEL'])
+    set_log_level(env['LOG_LEVEL'])
 
     # dump environment we care about
 
