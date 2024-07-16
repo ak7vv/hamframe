@@ -28,11 +28,11 @@ def check_env_vars() -> Dict:
         'LISTENER_HOST': '0.0.0.0',
         'LISTENER_PORT': 65432,
         'LISTENER_WORKERS': 4,
-        'LOG_LEVEL': 'debug'
+        'LOG_LEVEL': 'info'
     }
 
     all_env_vars = dict(os.environ)
-
+    
     env = {}
 
     for var in vars:
