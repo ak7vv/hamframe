@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     # set logger level based on what we got back
 
-    set_log_level(env['LOG_LEVEL'])
+    set_log_level(logger, env['LOG_LEVEL'])
 
     # dump environment we care about
 
