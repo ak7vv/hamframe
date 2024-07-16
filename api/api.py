@@ -25,9 +25,12 @@ if __name__ == '__main__':
 
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
-    # start API
+    # check env and use defaults if not present
 
     env = check_env_vars()
+
+    # add REST routes
+
     api.include_router(configuration_router, prefix='/config')
     logger.debug('/config route defined.')
     api.include_router(database_router, prefix='/db')
@@ -36,6 +39,8 @@ if __name__ == '__main__':
     logger.debug('/internal route defined.')
     api.include_router(test_router, prefix='/test')
     logger.debug('/test route defined.')
+
+    # start API
 
     api.run(
         app='__main__:api', 
