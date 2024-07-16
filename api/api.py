@@ -12,14 +12,6 @@ from routers.internal.operations import router as swissarmy_router
 from routers.test.operations import router as test_router
 
 
-# logger = logging.getLogger('uvicorn.error')
-
-logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
-stream_handler = logging.StreamHandler(sys.stdout)
-log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s")
-stream_handler.setFormatter(log_formatter)
-logger.addHandler(stream_handler)
 
 # Define API app as 'api'
 
@@ -31,9 +23,25 @@ if __name__ == '__main__':
 
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
+    # logger = logging.getLogger('uvicorn.error')
+
+    logger = logging.getLogger(__name__)
+    stream_handler = logging.StreamHandler(sys.stdout)
+    log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s")
+    stream_handler.setFormatter(log_formatter)
+    logger.addHandler(stream_handler)
+
     # check env and use defaults if not present
 
-    env = check_env_vars(logger=logger)
+    env = check_env_vars()
+
+    # set logger level based on what we got back
+
+    logger.setLevel(env['LOG_LEVEL'])
+
+    # dump environment we care about
+
+    logger.info(env)
 
     # add REST routes
 

@@ -3,7 +3,7 @@ import os
 from logging import Logger
 
 
-def check_env_vars(logger: Logger) -> Dict:
+def check_env_vars() -> Dict:
     """
     Checks if environment variables we care about are present.
     If so, accept them.
@@ -41,9 +41,7 @@ def check_env_vars(logger: Logger) -> Dict:
     for var in vars:
         if var in all_env_vars:
             env[var] = all_env_vars[var]
-            logger.info(f'{var} = \'{env[var]}\'')
         else:
             env[var] = var_defaults[var]
-            logger.info(f'{var} = \'{env[var]}\' (default)')
 
     return env
