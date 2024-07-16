@@ -3,7 +3,8 @@
 from multiprocessing import parent_process
 import logging
 from fastapi import FastAPI
-
+from uvicorn import run
+import uvicorn
 from tooling import check_env_vars
 
 
@@ -42,7 +43,7 @@ if __name__ == '__main__':
 
     # start API
 
-    api.run(
+    uvicorn.run(
         app='__main__:api', 
         host=str(env['LISTENER_HOST']),
         port=int(env['LISTENER_PORT']),
