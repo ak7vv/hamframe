@@ -13,13 +13,22 @@ class CustomFormatter(logging.Formatter):
             self._style._fmt = self.level_formats[record.levelno]
         return super().format(record)
 
+# https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
+green = '\x1b[32;47m'
+blue = '\x1b[34;47m'
+grey = '\x1b[38;20m'
+yellow = '\x1b[33;20m'
+red = '\x1b[31;20m'
+bold_red = '\x1b[31;1m'
+reset = '\x1b[0m'
+
 # Define custom formats for each severity level
 level_formats = {
-    logging.DEBUG: '%(levelname)s:\t  %(asctime)s %(module)s %(message)s',
-    logging.INFO: '%(levelname)s:\t  %(message)s',
-    logging.WARNING: '%(levelname)s:\t  %(message)s',
-    logging.ERROR: '%(levelname)s:\t  %(message)s',
-    logging.CRITICAL: '%(levelname)s:\t  %(message)s'
+    logging.DEBUG: green + '%(levelname)s:' + grey + '\t  %(asctime)s %(module)s' + reset + ' %(message)s',
+    logging.INFO: blue + '%(levelname)s:' + reset + '\t  %(message)s',
+    logging.WARNING: yellow + '%(levelname)s:' + reset + '\t  %(message)s',
+    logging.ERROR: red + '%(levelname)s:' + reset + '\t  %(message)s',
+    logging.CRITICAL: bold_red + '%(levelname)s:' + reset + '\t  %(message)s'
 }
 
 def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:

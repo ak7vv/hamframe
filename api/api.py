@@ -6,9 +6,9 @@ from fastapi import FastAPI
 import uvicorn
 
 from tooling import check_env_vars, set_log_level, logger_init
-from routers.configuration.operations import router as configuration_router
-from routers.database.operations import router as database_router
-from routers.internal.operations import router as swissarmy_router
+from routers.configuration.operations import init_router as init_configuration_router
+from routers.database.operations import init_router as init_database_router
+from routers.internal.operations import init_router as init_swissarmy_router
 # from routers.test.operations import router as test_router
 
 
@@ -42,13 +42,13 @@ if __name__ == '__main__':
 
     # add REST routes
 
-    api.include_router(configuration_router, prefix='/config')
+    api.include_router(init_configuration_router(logger=logger), prefix='/config')
     logger.debug('route added: /config')
-    api.include_router(database_router, prefix='/db')
+    api.include_router(init_database_router(logger=logger), prefix='/db')
     logger.debug('route added: /db')
-    api.include_router(swissarmy_router, prefix='/internal', include_in_schema=False) # undocumented
+    api.include_router(init_swissarmy_router(logger=logger), prefix='/internal', include_in_schema=False) # undocumented
     logger.debug('route added: /internal (undocumented)')
-    # api.include_router(test_router, prefix='/test')
+    # api.include_router(test_router(logger=logger), prefix='/test')
     # logger.debug('/test route defined.')
 
     # start API
@@ -58,6 +58,7 @@ if __name__ == '__main__':
         host=str(env['LISTENER_HOST']),
         port=int(env['LISTENER_PORT']),
         workers=int(env['LISTENER_WORKERS']),
-        log_level=str(env['LOG_LEVEL'])
+        log_level=str(env['LOG_LEVEL']),
+        logger=logger
     )
 

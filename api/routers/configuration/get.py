@@ -1,16 +1,22 @@
 # Get Configuration operation
 
+import logging
 from fastapi import Request, Response, status, Query
 from ..database.redis import check_conf_server
 
-async def get_config(request: Request,
-                     response: Response, 
-                     config_op: str,
-                     instance_param: str =  Query(None, alias='instance'),
-                     redis_param: str = Query(None, alias='redis'),
-                     config_section: str | None = None ):
+async def get_config(
+        logger: logging.Logger,
+        request: Request,
+        response: Response, 
+        config_op: str,
+        instance_param: str =  Query(None, alias='instance'),
+        redis_param: str = Query(None, alias='redis'),
+        config_section: str | None = None
+):
 
     route_path = request.url.path
+
+    logger.debug(f'route_path: ${route_path}')
 
 
 
