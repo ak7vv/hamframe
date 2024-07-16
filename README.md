@@ -23,19 +23,22 @@ And it probably goes without saying.. feedback is very welcome.
 │   ├── Dockerfile
 │   ├── README.md
 │   ├── requirements.txt
-│   └── routers
-│       ├── configuration
-│       │   ├── operations.py
-│       │   ├── put.py
-│       │   ├── get.py
-|       |   ├── update
-│       │   └── delete.py
-│       ├── database
-│       │   ├── operations.py
-│       │   └── ..
-│       └── internal
-│           ├── operations.py
-│           └── ..
+│   ├── routers
+│   │   ├── configuration
+│   │   │   ├── operations.py
+│   │   │   ├── put.py
+│   │   │   ├── get.py
+│   │   │   ├── update
+│   │   │   └── delete.py
+│   │   ├── database
+│   │   │   ├── operations.py
+│   │   │   └── ..
+│   │   └── internal
+│   │       ├── operations.py
+│   │       └── ..
+│   ├── tests
+│   └── tooling
+│
 ├── cli
 │   ├── cli.py
 │   ├── Dockerfile
