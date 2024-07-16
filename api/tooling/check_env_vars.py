@@ -35,10 +35,15 @@ def check_env_vars() -> Dict:
     
     env = {}
 
+    print(all_env_vars)
+    print(env)
+
     for var in vars:
         if var in all_env_vars:
             env[var] = all_env_vars[var]
         else:
             env[var] = var_defaults[var]
+
+    print(env)
 
     return env
