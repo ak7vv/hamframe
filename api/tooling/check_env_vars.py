@@ -45,8 +45,12 @@ def check_env_vars(logger: Logger = None) -> Dict:
     for var in vars:
         if var in all_env_vars:
             env[var] = all_env_vars[var]
+            if logger:
+                logger.debug(f'selected provided {env[var]} for {var}')
         else:
             env[var] = var_defaults[var]
+            if logger:
+                    logger.debug(f'selected default {env[var]} for {var}')
 
     if logger:
         logger.debug(f'env: {env}')

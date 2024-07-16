@@ -30,7 +30,8 @@ if __name__ == '__main__':
     log_formatter = logging.Formatter('%(levelname)s:\t  %(message)s')
     stream_handler.setFormatter(log_formatter)
     logger.addHandler(stream_handler)
-    # set_log_level(logger, 'debug') # enable for debugging of env variables only
+
+    # set_log_level(logger, 'debug') # normally not needed, enable for debugging of env variables only
 
     # check env and use defaults if not present
 
