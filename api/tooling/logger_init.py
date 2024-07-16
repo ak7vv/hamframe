@@ -4,6 +4,9 @@ import logging
 import sys
 
 class CustomFormatter(logging.Formatter):
+    """
+    logging.Formatter to modify the logging format based on logging level
+    """
     def __init__(self, fmt=None, datefmt=None, style='%', level_formats=None):
         super().__init__(fmt, datefmt, style)
         self.level_formats = level_formats or {}
@@ -13,22 +16,25 @@ class CustomFormatter(logging.Formatter):
             self._style._fmt = self.level_formats[record.levelno]
         return super().format(record)
 
-# https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
-green = '\033[32m'
-blue = '\033[34m'
-white = '\033[37m'
-yellow = '\033[33m'
-red = '\033[31m'
-bold_red = '\033[31;1m'
-reset = '\033[0m'
+class ANSIColors:
+    """ANSI escape sequences for colors to use in console text strings
+    """
+    green = '\033[32m'
+    blue = '\033[34m'
+    white = '\033[37m'
+    yellow = '\033[33m'
+    red = '\033[31m'
+    bold_red = '\033[31;1m'
+    cyan = '\033[47m'
+    reset = '\033[0m'
 
 # Define custom formats for each severity level
 level_formats = {
-    logging.DEBUG: green + '%(levelname)s:' + white + '\t  %(asctime)s %(module)s' + reset + ' %(message)s',
-    logging.INFO: blue + '%(levelname)s:' + reset + '\t  %(message)s',
-    logging.WARNING: yellow + '%(levelname)s:' + reset + '\t  %(message)s',
-    logging.ERROR: red + '%(levelname)s:' + reset + '\t  %(message)s',
-    logging.CRITICAL: bold_red + '%(levelname)s:' + reset + '\t  %(message)s'
+    logging.DEBUG: ANSIColors.green + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.reset + ' %(message)s',
+    logging.INFO: ANSIColors.cyan + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
+    logging.WARNING: ANSIColors.yellow + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
+    logging.ERROR: ANSIColors.red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
+    logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s'
 }
 
 def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
