@@ -1,4 +1,6 @@
 import logging
+import os
+from time import sleep
 
 def set_log_level(level_str: str) -> None:
     """
@@ -10,7 +12,7 @@ def set_log_level(level_str: str) -> None:
     """
 
     # access the 'global' logger
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('api')
 
     level_str = level_str.upper()
 
@@ -25,7 +27,10 @@ def set_log_level(level_str: str) -> None:
     logger.debug(f'level_str = {level_str}')
 
     if not level_str in log_levels:
-        level_str = 'DEBUG'
+        logger.critical('unrecognized LOG_LEVEL, FastAPI will probably throw up, exiting.')
+        logger.debug('sleeping for 5 seconds to reduce thrashing.')
+        sleep(5)
+        os.sys.exit()
 
     logger.setLevel(logging.getLevelName(level_str))
 

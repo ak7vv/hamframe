@@ -1,6 +1,8 @@
 import redis
 import urllib.parse
-# from ...tooling.logger import logger
+import logging
+
+
 
 def check_conf_server(host_param):
     """
@@ -10,6 +12,8 @@ def check_conf_server(host_param):
     :param db: the name of the Redis database to connect to
     :return: (status_code, r) tuple where status_code is boolean for the check success, and r is the Redis handle if successful
     """
+
+    logger = logging.getLogger('api')
 
     redissplit = urllib.parse.urlsplit('//' + host_param) # split parameter into .hostname and .port
     if redissplit.port:

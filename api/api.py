@@ -21,6 +21,7 @@ if __name__ == '__main__':
 
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
+    # logger = tooling.logger_init('DEBUG')
     logger = tooling.logger_init()
     
     # check env and use defaults if not present
@@ -28,7 +29,7 @@ if __name__ == '__main__':
     env = tooling.check_env_vars()
 
     # set logger level based on what we got back
-
+    
     tooling.set_log_level(env['LOG_LEVEL'])
 
     # dump environment we care about

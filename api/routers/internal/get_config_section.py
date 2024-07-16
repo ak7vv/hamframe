@@ -1,6 +1,9 @@
 import requests
+import logging
 
 def get_config_section(api_url, redis_url, instance, section):
+
+    logger = logging.getLogger('api')
 
     params = {
 

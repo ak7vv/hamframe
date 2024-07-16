@@ -8,11 +8,13 @@
 
 import sys
 import json
-
+import logging
 
 
 def toml_import(logger, toml_file) :
     
+    logger = logging.getLogger('api')
+
     toml_dict = None
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     
@@ -28,6 +30,8 @@ def toml_import(logger, toml_file) :
 
 
 def toml_export(logger, redis, instance_name, table_name) :
+
+    logger = logging.getLogger('api')
 
     logger.debug("> " + sys._getframe().f_code.co_name + "()")
     

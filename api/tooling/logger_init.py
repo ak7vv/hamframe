@@ -29,18 +29,19 @@ class ANSIColors:
     yellow = '\033[33m'
     red = '\033[31m'
     bold_red = '\033[31;1m'
-    cyan = '\036m'
+    cyan = '\033[36m'
     reset = '\033[0m'
 
 
 
 # Define custom formats for each severity level
 level_formats = {
-    logging.DEBUG: ANSIColors.green + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.green + ' %(message)s' + ANSIColors.reset,
-    logging.INFO: ANSIColors.cyan + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
+    # logging.DEBUG: ANSIColors.cyan + '%(levelname)s:' + ANSIColors.white + '\t  %(asctime)s %(module)s' + ANSIColors.cyan + ' %(message)s' + ANSIColors.reset,
+    logging.DEBUG: ANSIColors.cyan + '%(levelname)s:' + ANSIColors.white + '\t  %(module)s' + ANSIColors.cyan + ' %(message)s' + ANSIColors.reset,
+    logging.INFO: ANSIColors.green + '%(levelname)s:  \t  %(message)s' + ANSIColors.reset,
     logging.WARNING: ANSIColors.yellow + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
     logging.ERROR: ANSIColors.red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s',
-    logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s'
+    logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + ' %(message)s'
 }
 
 
@@ -56,10 +57,12 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
         logging.Logger: returns a Logger with custom formatter/handler and level set (see Args).
     """
 
-    # access the 'global' logger
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('api')
 
-    formatter = CustomFormatter(level_formats=level_formats)
+    # reduce datatimestamp {asctime} to HH:MM:SS without msec
+    date_format = '%H:%M:%S'
+
+    formatter = CustomFormatter(level_formats=level_formats,datefmt=date_format)
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
     

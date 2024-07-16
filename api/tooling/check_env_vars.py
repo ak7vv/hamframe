@@ -13,7 +13,7 @@ def check_env_vars() -> Dict:
     """
 
     # access the 'global' logger
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('api')
 
     vars = [
         'REDIS_HOST',

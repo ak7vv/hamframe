@@ -1,7 +1,10 @@
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
 from couchbase.exceptions import CouchbaseException, DocumentNotFoundException, TimeoutException
-# from api.tooling.logger import logger
+
+import logging
+
+
 
 def check_couchbase(couchbase_param):
     """
@@ -11,6 +14,8 @@ def check_couchbase(couchbase_param):
     :param couchbase_param: dictionary of the Couchbase endpoint (.endpoint), username (.username) and password (.password), and bucket (.bucket) to check
     :return: (status_code, couchbase) tuple where status_code is boolean if connection fails, and bucket is the Couchbase bucket if successful
     """
+
+    logger = logging.getLogger('api')
 
     # did we get all required params?
     if ( not couchbase_param.endpoint or 

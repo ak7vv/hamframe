@@ -1,7 +1,7 @@
 # Put Configuration operation
 
 import json
-# from ...tooling.logger_init import logger
+import logging
 from fastapi import Request, Response, status, Query
 from ..database.redis import check_conf_server
 
@@ -13,6 +13,8 @@ async def put_config(
         redis_param: str = Query(None, alias='redis'),
         config_section: str = Query(None, alias='section')
 ):
+
+    logger = logging.getLogger('api')
 
     route_path = request.url.path
 
