@@ -1,6 +1,4 @@
-from logging import getLevelName
-from .logger import logger
-
+import logging
 
 def set_log_level(level_str: str) -> None:
     """
@@ -10,6 +8,10 @@ def set_log_level(level_str: str) -> None:
         logger (Logger): reference to an existing Logger
         level_str (str): case-insensitive text string for logging level, e.g. 'debug' for LOG_DEBUG.
     """
+
+    # access the 'global' logger
+    logger = logging.getLogger(__name__)
+
     level_str = level_str.upper()
 
     log_levels = [
@@ -25,6 +27,6 @@ def set_log_level(level_str: str) -> None:
     if not level_str in log_levels:
         level_str = 'DEBUG'
 
-    logger.setLevel(getLevelName(level_str))
+    logger.setLevel(logging.getLevelName(level_str))
 
-    logger.info(f'logging level: {level_str} ({getLevelName(level_str)})')
+    logger.info(f'logging level: {level_str} ({logging.getLevelName(level_str)})')

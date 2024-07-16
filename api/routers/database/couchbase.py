@@ -1,7 +1,7 @@
 from couchbase.auth import PasswordAuthenticator
 from couchbase.cluster import Cluster, ClusterOptions
 from couchbase.exceptions import CouchbaseException, DocumentNotFoundException, TimeoutException
-from api.tooling.logger import logger
+# from api.tooling.logger import logger
 
 def check_couchbase(couchbase_param):
     """

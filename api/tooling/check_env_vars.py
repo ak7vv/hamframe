@@ -1,6 +1,6 @@
 from ast import Dict
 import os
-from .logger import logger
+import logging
 
 def check_env_vars() -> Dict:
     """
@@ -11,6 +11,9 @@ def check_env_vars() -> Dict:
     Returns:
         Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
     """
+
+    # access the 'global' logger
+    logger = logging.getLogger(__name__)
 
     vars = [
         'REDIS_HOST',
@@ -34,21 +37,17 @@ def check_env_vars() -> Dict:
     
     env = {}
 
-    if logger:
-        logger.debug(f'all_env_vars: {all_env_vars}')
-        logger.debug(f'env: {env}')
+    logger.debug(f'all_env_vars: {all_env_vars}')
+    logger.debug(f'env: {env}')
 
     for var in vars:
         if var in all_env_vars:
             env[var] = all_env_vars[var]
-            if logger:
-                logger.debug(f'env: {var}={env[var]}')
+            logger.debug(f'env: {var}={env[var]}')
         else:
             env[var] = var_defaults[var]
-            if logger:
-                logger.debug(f'env: {var}={env[var]} (default)')
+            logger.debug(f'env: {var}={env[var]} (default)')
 
-    if logger:
-        logger.debug(f'env: {env}')
+    logger.debug(f'env: {env}')
 
     return env

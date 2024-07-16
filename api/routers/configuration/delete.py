@@ -1,7 +1,7 @@
 ## Delete Configuration operation
 
 import json
-from ...tooling.logger import logger
+# from ...tooling.logger import logger
 from fastapi import Request, Response, status, Query
 from ..database.redis import check_conf_server
 

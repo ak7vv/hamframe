@@ -56,11 +56,13 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
         logging.Logger: returns a Logger with custom formatter/handler and level set (see Args).
     """
 
+    # access the 'global' logger
+    logger = logging.getLogger(__name__)
+
     formatter = CustomFormatter(level_formats=level_formats)
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
-
-    logger = logging.getLogger(__name__)
+    
     logger.addHandler(handler)
 
     # set_log_level(logger, 'debug') # normally not needed, enable for debugging of env variables only
@@ -68,7 +70,3 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
     logger.setLevel(logging.getLevelName(startup_logging_level))
 
     return logger
-
-
-
-logger = logger_init() # specify 'DEBUG' if early debugging (env) is needed

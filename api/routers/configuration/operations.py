@@ -1,13 +1,16 @@
 # Configuration operations
 
-from api.tooling.logger_init import logger
 from fastapi import APIRouter
+import logging
 
 from .get import get_config
 from .put import put_config
 from .delete import delete_config
 
-def init_router():
+def init_router() -> APIRouter:
+
+    # access the 'global' logger
+    logger = logging.getLogger(__name__)
 
     router = APIRouter()
     base_path = '/config'

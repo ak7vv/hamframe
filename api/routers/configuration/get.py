@@ -1,6 +1,6 @@
 # Get Configuration operation
 
-from ...tooling.logger_init import logger
+# from ...tooling import logger
 from fastapi import Request, Response, status, Query
 from ..database.redis import check_conf_server
 
