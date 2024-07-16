@@ -9,9 +9,6 @@ def check_env_vars() -> Dict:
     If so, accept them.
     If not, substitute a reasonable default.
 
-    Args:
-        logger (Logger): Provide a logging.Logger to use
-
     Returns:
         Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
     """
