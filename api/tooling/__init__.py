@@ -1,4 +1,3 @@
 # __init__.py
 
-# nothing to see here
-# (store package-level variables here if needed)
+from .check_env_vars import check_env_vars
