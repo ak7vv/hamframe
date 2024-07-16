@@ -2,5 +2,6 @@
 !api.py
 !api.sh
 !routers
+!tooling
 !__init__.py
 !requirements.txt
