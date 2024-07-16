@@ -46,7 +46,7 @@ if __name__ == '__main__':
     logger.debug('/config route defined.')
     api.include_router(database_router, prefix='/db')
     logger.debug('/db route defined.')
-    api.include_router(swissarmy_router, prefix='/internal')
+    api.include_router(swissarmy_router, prefix='/internal', include_in_schema=False) # undocumented
     logger.debug('/internal route defined.')
     # api.include_router(test_router, prefix='/test')
     # logger.debug('/test route defined.')
