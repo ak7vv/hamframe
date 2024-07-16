@@ -1,5 +1,6 @@
 import redis
 import urllib.parse
+from api.tooling.logger import logger
 
 def check_conf_server(host_param):
     """

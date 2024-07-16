@@ -1,16 +1,13 @@
 from ast import Dict
 import os
-from logging import Logger
+from api.tooling.logger import logger
 
 
-def check_env_vars(logger: Logger = None) -> Dict:
+def check_env_vars() -> Dict:
     """
     Checks if environment variables we care about are present.
     If so, accept them.
     If not, substitute a reasonable default.
-
-    Args:
-        logger (Logger, optional): provide a Logger to use (for debug messages). Defaults to None.
 
     Returns:
         Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.

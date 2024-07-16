@@ -1,6 +1,6 @@
 # Configuration operations
 
-from api.tooling.logger_init import logger
+from api.tooling.logger import logger
 from fastapi import APIRouter
 
 from .get import get_config
