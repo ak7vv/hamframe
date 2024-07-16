@@ -18,7 +18,7 @@ def set_log_level(logger: Logger, level_str: str) -> None:
         'DEBUG'
     ]
 
-    print(f'level_str = {level_str}')
+    logger.debug(f'level_str = {level_str}')
 
     if not level_str in log_levels:
         level_str = 'DEBUG'
