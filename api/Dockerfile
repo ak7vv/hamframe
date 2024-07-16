@@ -11,8 +11,7 @@ WORKDIR /hamframe
 
 COPY requirements.txt .
 
-RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt &&\
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
 COPY . .
 
