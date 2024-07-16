@@ -1,9 +1,9 @@
 ## Delete Configuration operation
 
 import json
-from ...tooling.logger_init import logger
+from api.tooling.logger_init import logger
 from fastapi import Request, Response, status, Query
-from ..database.redis import check_conf_server
+from api.routers.database.redis import check_conf_server
 
 
 async def delete_config(

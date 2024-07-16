@@ -1,6 +1,8 @@
 from logging import Logger, getLevelName
+from api.tooling.logger_init import logger
 
-def set_log_level(logger: Logger, level_str: str) -> None:
+
+def set_log_level(level_str: str) -> None:
     """
     Sets logging level for a provided Logger. If string doesn't match one of the defined values in the function (excludes NOTSET), set to DEBUG.
 

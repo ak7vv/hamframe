@@ -1,11 +1,11 @@
 # Configuration operations
 
-from ...tooling.logger_init import logger
+from api.tooling.logger_init import logger
 from fastapi import APIRouter
 
-from .get import get_config
-from .put import put_config
-from .delete import delete_config
+from api.routers.configuration.get import get_config
+from api.routers.configuration.put import put_config
+from api.routers.configuration.delete import delete_config
 
 def init_router():
 

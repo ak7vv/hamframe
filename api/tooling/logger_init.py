@@ -3,6 +3,8 @@
 import logging
 import sys
 
+from api.tooling import set_log_level
+
 class CustomFormatter(logging.Formatter):
     """
     logging.Formatter to modify the logging format based on logging level
@@ -57,7 +59,7 @@ def define_logger(startup_logging_level: str = 'INFO') -> logging.Logger:
 
     # set_log_level(logger, 'debug') # normally not needed, enable for debugging of env variables only
 
-    logger.setLevel(logging.getLevelName(startup_logging_level))
+    set_log_level(logging.getLevelName(startup_logging_level))
 
     return logger
 
