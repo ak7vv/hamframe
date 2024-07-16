@@ -2,7 +2,6 @@
 
 import logging
 import sys
-from tracemalloc import start
 
 class CustomFormatter(logging.Formatter):
     """
