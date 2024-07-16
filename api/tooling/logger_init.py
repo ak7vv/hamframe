@@ -2,8 +2,7 @@
 
 import logging
 import sys
-
-from api.tooling import set_log_level
+from tracemalloc import start
 
 class CustomFormatter(logging.Formatter):
     """
@@ -39,7 +38,7 @@ level_formats = {
     logging.CRITICAL: ANSIColors.bold_red + '%(levelname)s:' + ANSIColors.reset + '\t  %(message)s'
 }
 
-def define_logger(startup_logging_level: str = 'INFO') -> logging.Logger:
+def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
     """
     Initialize logging.Logger with custom logging format based on logging severity level.
 
@@ -59,8 +58,7 @@ def define_logger(startup_logging_level: str = 'INFO') -> logging.Logger:
 
     # set_log_level(logger, 'debug') # normally not needed, enable for debugging of env variables only
 
-    set_log_level(logging.getLevelName(startup_logging_level))
+    logger.setLevel(logging.getLevelName(startup_logging_level))
 
     return logger
 
-logger = define_logger() # specify 'DEBUG' if early debugging (env) is needed
