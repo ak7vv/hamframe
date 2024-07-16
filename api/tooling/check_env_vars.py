@@ -1,6 +1,7 @@
 from ast import Dict
-from os import environ
+import os
 from logging import Logger
+
 
 def check_env_vars(logger: Logger) -> Dict:
     """
@@ -14,6 +15,7 @@ def check_env_vars(logger: Logger) -> Dict:
     Returns:
         Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
     """
+
     vars = [
         'REDIS_HOST',
         'REDIS_PORT',
@@ -31,17 +33,17 @@ def check_env_vars(logger: Logger) -> Dict:
         'LISTENER_WORKERS': 4,
         'LOG_LEVEL': 'info'
     }
-    
+
     env = {}
 
     for var in vars:
-        if var not in environ:
+        if var not in os.environ:
             logger.info(f'{var} = \'{var_defaults[var]}\' (default)')
             # The problematic exiting of fastapi/uvicorn/gunicorn and restart behavior means
             # we will populate anything not specified in required with a sane default and leave it
             # to the user to override if they have other ideas of what's sane.  Bailing is not an option.
             env[var] = var_defaults[var]
         else:
-            logger.info(f'{var} = \'{environ(var)}\'')
-            env[var] = environ(var)
+            logger.info(f'{var} = \'{os.environ(var)}\'')
+            env[var] = os.environ(var)
     return env
