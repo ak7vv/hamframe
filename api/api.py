@@ -1,9 +1,9 @@
 # implement REST API using FastAPI
 
-from multiprocessing import parent_process
 import logging
+from pdb import run
 from fastapi import FastAPI
-from uvicorn import run
+from uvicorn import uvicorn
 import uvicorn
 from tooling import check_env_vars
 
