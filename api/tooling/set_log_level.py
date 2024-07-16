@@ -1,5 +1,5 @@
-from logging import Logger, getLevelName
-from api.tooling.logger import logger
+from logging import getLevelName
+from .logger import logger
 
 
 def set_log_level(level_str: str) -> None:

@@ -1,7 +1,6 @@
 from ast import Dict
 import os
-from api.tooling.logger import logger
-
+from .logger import logger
 
 def check_env_vars() -> Dict:
     """
