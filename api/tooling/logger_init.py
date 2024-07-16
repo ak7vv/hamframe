@@ -25,7 +25,7 @@ class ANSIColors:
     yellow = '\033[33m'
     red = '\033[31m'
     bold_red = '\033[31;1m'
-    cyan = '\033[47m'
+    cyan = '\036m'
     reset = '\033[0m'
 
 # Define custom formats for each severity level
