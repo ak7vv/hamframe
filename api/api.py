@@ -17,6 +17,8 @@ from routers.test.operations import router as test_router
 
 api = FastAPI()
 
+
+
 if __name__ == '__main__':
 
     # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
