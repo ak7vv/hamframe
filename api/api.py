@@ -5,7 +5,7 @@ import logging
 from fastapi import FastAPI
 import uvicorn
 
-from tooling import check_env_vars, set_log_level
+from tooling import check_env_vars, set_log_level, logger_init
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
@@ -25,13 +25,7 @@ if __name__ == '__main__':
 
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
-    logger = logging.getLogger(__name__)
-    stream_handler = logging.StreamHandler(sys.stdout)
-    log_formatter = logging.Formatter('%(levelname)s:\t  %(funcName)s %(message)s')
-    stream_handler.setFormatter(log_formatter)
-    logger.addHandler(stream_handler)
-
-    # set_log_level(logger, 'debug') # normally not needed, enable for debugging of env variables only
+    logger = logger_init() # specify 'DEBUG' if early debugging is needed
 
     # check env and use defaults if not present
 

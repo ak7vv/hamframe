@@ -1,4 +1,4 @@
-from logging import Logger, _nameToLevel, getLevelName, getLevelNamesMapping
+from logging import Logger, getLevelName
 
 def set_log_level(logger: Logger, level_str: str) -> None:
     """
