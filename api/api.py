@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     # check env and use defaults if not present
 
-    env = check_env_vars()
+    env = check_env_vars(logger=logger)
 
     # add REST routes
 
