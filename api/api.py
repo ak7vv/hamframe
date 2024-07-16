@@ -9,7 +9,7 @@ from tooling import check_env_vars, set_log_level
 from routers.configuration.operations import router as configuration_router
 from routers.database.operations import router as database_router
 from routers.internal.operations import router as swissarmy_router
-from routers.test.operations import router as test_router
+# from routers.test.operations import router as test_router
 
 
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     # dump environment we care about
 
     for var in env:
-        logger.info(f'{var}={env[var]}')
+        logger.debug(f'{var}={env[var]}')
 
     # add REST routes
 
@@ -52,8 +52,8 @@ if __name__ == '__main__':
     logger.debug('/db route defined.')
     api.include_router(swissarmy_router, prefix='/internal')
     logger.debug('/internal route defined.')
-    api.include_router(test_router, prefix='/test')
-    logger.debug('/test route defined.')
+    # api.include_router(test_router, prefix='/test')
+    # logger.debug('/test route defined.')
 
     # start API
 
