@@ -1,6 +1,5 @@
 # implement REST API using FastAPI
 
-import os
 import sys
 import logging
 from fastapi import FastAPI
@@ -33,8 +32,6 @@ if __name__ == '__main__':
     # see https://fastapi.tiangolo.com/deployment/docker/#replication-number-of-processes for comment on worker counts
 
     # check env and use defaults if not present
-
-    logger.info(os.environ())
 
     env = check_env_vars(logger=logger)
 

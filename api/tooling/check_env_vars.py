@@ -34,16 +34,15 @@ def check_env_vars(logger: Logger) -> Dict:
         'LOG_LEVEL': 'info'
     }
 
+    all_env_vars = dict(os.environ)
+
     env = {}
 
     for var in vars:
-        if var not in os.environ:
-            logger.info(f'{var} = \'{var_defaults[var]}\' (default)')
-            # The problematic exiting of fastapi/uvicorn/gunicorn and restart behavior means
-            # we will populate anything not specified in required with a sane default and leave it
-            # to the user to override if they have other ideas of what's sane.  Bailing is not an option.
+        if not all_env_vars[var]:
             env[var] = var_defaults[var]
+            logger.info(f'{var} = \'{env[var]}\' (default)')
         else:
-            logger.info(f'{var} = \'{os.environ(var)}\'')
-            env[var] = os.environ(var)
+            env[var] = all_env_vars[var]
+            logger.info(f'{var} = \'{env[var]}\'')
     return env
