@@ -36,7 +36,7 @@ def check_env_vars(logger: Logger) -> Dict:
 
     for var in vars:
         if var not in environ:
-            logger.critical(f'{var} = \'{var_defaults[var]}\' (default)')
+            logger.info(f'{var} = \'{var_defaults[var]}\' (default)')
             # The problematic exiting of fastapi/uvicorn/gunicorn and restart behavior means
             # we will populate anything not specified in required with a sane default and leave it
             # to the user to override if they have other ideas of what's sane.  Bailing is not an option.
