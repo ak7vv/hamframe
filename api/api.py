@@ -12,7 +12,14 @@ from routers.internal.operations import router as swissarmy_router
 from routers.test.operations import router as test_router
 
 
-logger = logging.getLogger('uvicorn.error')
+# logger = logging.getLogger('uvicorn.error')
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+stream_handler = logging.StreamHandler(sys.stdout)
+log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s")
+stream_handler.setFormatter(log_formatter)
+logger.addHandler(stream_handler)
 
 # Define API app as 'api'
 
