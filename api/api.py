@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     logger = logging.getLogger(__name__)
     stream_handler = logging.StreamHandler(sys.stdout)
-    log_formatter = logging.Formatter('%(levelname)s:\t  %(message)s')
+    log_formatter = logging.Formatter('%(levelname)s:\t  %(funcName)s %(message)s')
     stream_handler.setFormatter(log_formatter)
     logger.addHandler(stream_handler)
 
