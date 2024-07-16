@@ -3,8 +3,17 @@ from os import environ
 from logging import Logger
 
 def check_env_vars(logger: Logger) -> Dict:
-    '''
-    '''
+    """
+    Checks if environment variables we care about are present.
+    If so, accept them.
+    If not, substitute a reasonable default.
+
+    Args:
+        logger (Logger): Provide a logging.Logger to use
+
+    Returns:
+        Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
+    """
     vars = [
         'REDIS_HOST',
         'REDIS_PORT',
