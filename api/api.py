@@ -5,9 +5,20 @@ API_VERSION = 'v1'
 
 from fastapi import FastAPI, Response, status
 import logging
+import sys
 
 from internal import logger_init, check_env_vars, set_log_level
 from routers.configuration import router as configuration_router
+
+
+
+# check if python version is what this is written with:
+
+if sys.version_info < (3, 9):
+    print('ERROR: Python 3.9+ required.')
+    os._exit(1)
+
+# Set up logger and dance through the permutations of being main and being called as a module
 
 logger = logging.getLogger('api')
 
