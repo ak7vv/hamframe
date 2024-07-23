@@ -19,16 +19,17 @@ Further reading:
 ## Repo layout
 
 ```text
-.
 ├── api
 │   ├── api.py
 │   ├── Dockerfile
 │   ├── README.md
 │   ├── requirements.txt
-│   └── routers
-│       ├── configuration.py
-│       ├── log.py
-│       └── internal.py
+│   ├── routers
+│   │   ├── configuration.py
+│   │   ├── log.py
+│   │   └── internal.py
+│   └── tests
+│       └── test_api.py
 ├── cli
 │   ├── cli.py
 │   ├── Dockerfile
@@ -51,9 +52,7 @@ Further reading:
 ├── LICENSE
 ├── pytest.ini
 ├── README.md
-├── requirements.txt
-└── tests
-    └── test_api.py
+└── requirements.txt
 ```
 
 ## **Contributing**

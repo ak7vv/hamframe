@@ -68,7 +68,7 @@ and optionally you can pass environment variables like
 
 /tests contains the [pytest](https://docs.pytest.org/en/stable/) testing framework [integrated with FastAPI](https://fastapi.tiangolo.com/tutorial/testing/) and will be expanded over time. Currently, this has to be run manually from repo root with 'pytest' and has poor coverage.
 
-You can find the beginnings in [/tests/test_api.py](../tests/test_api.py).
+You can find the beginnings in [tests/test_api.py](tests/test_api.py).
 
 ## OpenAPI docs
 

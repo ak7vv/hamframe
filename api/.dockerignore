@@ -1,7 +1,8 @@
 *
 !api.py
 !api.sh
+!internal
 !routers
-!tooling
+!tests
 !__init__.py
 !requirements.txt
