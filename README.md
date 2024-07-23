@@ -46,8 +46,11 @@ And it probably goes without saying.. feedback is very welcome.
 │   └── README.md
 ├── hamframe.code-workspace
 ├── LICENSE
+├── pytest.ini
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── tests
+    └── test_api.py
 ```
 
 ## **Contributing**
