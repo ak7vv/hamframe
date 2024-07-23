@@ -8,7 +8,7 @@ import logging
 import sys
 
 from internal import logger_init, check_env_vars, set_log_level
-from routers.configuration import router as configuration_router
+from routers.configuration.operations import router as configuration_router
 
 
 
