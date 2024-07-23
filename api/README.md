@@ -2,13 +2,11 @@
 
 ## TOC
 
-[Architecture](#architecture)
 - [Configuration](#configuration)
-<P>
-
-[Background](#background)
-
-[FastAPI dev mode](#fastapi-dev-mode)
+- [Using the API](#using-the-api)\
+-- [Container](#container)\
+-- [Python from .venv](#python-from-venv)
+- [OpenAPI docs](#openapi-docs)
 
 ### Configuration 
 
