@@ -18,7 +18,8 @@ if sys.version_info < (3, 9):
     print('ERROR: Python 3.9+ required.')
     os._exit(1)
 
-# Set up logger and dance through the permutations of being main and being called as a module
+# Set up logger and dance through the permutations of being main and
+# being called as a module.
 
 logger = logging.getLogger('api')
 
@@ -30,7 +31,6 @@ if __name__ == '__main__':
 else:
     # logger = logging.getLogger('uvicorn.error')
     logger_init()
-
 
 # check env and use defaults if not present
 env = check_env_vars()
@@ -60,7 +60,7 @@ async def root(response: Response):
     response.status_code = status.HTTP_418_IM_A_TEAPOT
     return {'message': 'You\'re a tea pot?'}
 
-# start API
+# start API if we're main
 
 if __name__ == '__main__':
     import  uvicorn
