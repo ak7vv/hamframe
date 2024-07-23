@@ -20,8 +20,7 @@ If _section_ is not specified in the API call, the operation will assume _sectio
 
 ## Using the API
 
-The API is implemented as a Docker container running gunicorn/uvicorn/[FastAPI](https://fastapi.tiangolo.com/).  By default, the API will open 65432/tcp. 
-
+The API is implemented as a Docker container running [FastAPI](https://fastapi.tiangolo.com/).  By default, the API will open 65432/tcp.
 
 ### Container
 
@@ -64,6 +63,12 @@ and optionally you can pass environment variables like
     export LISTENER_HOST=0.0.0.0 \
     python api.py
 ```
+
+## Testing
+
+/tests contains the [pytest](https://docs.pytest.org/en/stable/) testing framework [integrated with FastAPI](https://fastapi.tiangolo.com/tutorial/testing/) and will be expanded over time. Currently, this has to be run manually from repo root with 'pytest' and has poor coverage.
+
+You can find the beginnings in [/tests/test_api.py](../tests/test_api.py).
 
 ## OpenAPI docs
 

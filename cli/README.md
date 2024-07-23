@@ -1,5 +1,7 @@
 ## **Operation**
 
+# _OUT OF DATE_
+
 ### CLI
 
 The directory _cli/_ contains the instructions and contents for building a [Docker](https://docker.io) container to contain and execute CLI commands to interact with the services.  It is also used to bootstrap the configuration.

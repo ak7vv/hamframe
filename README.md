@@ -11,7 +11,10 @@ This repo contains an experimental framework for automating the workflow of an a
 
 You can read more about some of my thoughts [here](https://holdmybeer.io/2024/06/04/ham-stack-modernizing-the-wheel/), which may or may not be in sync with this repo. ¯\\\_(ツ)\_/¯ But they may explain some of the insanity behind this well-intentioned effort.
 
-And it probably goes without saying.. feedback is very welcome.
+Further reading:
+
+- [Details on API](api/README.md)
+- [Details on CLI](cli/README.md)
 
 ## Repo layout
 
