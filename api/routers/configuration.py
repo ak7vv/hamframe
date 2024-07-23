@@ -18,7 +18,7 @@ class SectionName(str, Enum):
 # GET
 
 @router.get('/configuration')
-async def get_config():
+async def get_config_all():
     return {'message': 'that\'s everything.'}
 
 @router.get('/configuration/{instance}')
@@ -38,7 +38,7 @@ async def get_config_instance_section(instance: str, section: SectionName):
 # PUT
 
 @router.put('/configuration')
-async def put_config(body: dict = Body (...)):
+async def put_config_all(body: dict = Body (...)):
     return body
 
 @router.get('/configuration/{instance}')
@@ -54,7 +54,7 @@ async def put_config_instance_section(instance: str, section: SectionName, body:
 # PATCH
 
 @router.patch('/configuration')
-async def patch_config():
+async def patch_config_all():
     return {'instance': 'instance'}
 
 @router.patch('/configuration/{instance}')
@@ -70,7 +70,7 @@ async def patch_config_instance_section(instance: str, section: SectionName):
 # DELETE
 
 @router.delete('/configuration')
-async def delete_config():
+async def delete_config_all():
     return {'message': 'he\'s dead, jim.'}
 
 @router.delete('/configuration/{instance}')
