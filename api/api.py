@@ -3,27 +3,31 @@
 
 API_VERSION = 'v1'
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 import logging
 
 from internal import logger_init, check_env_vars, set_log_level
 from routers.configuration import router as configuration_router
 
+logger = logging.getLogger('api')
+
 if __name__ == '__main__':
-    logger = logging.getLogger('api')
+    # logger = logging.getLogger('api')
     
     # logger_init()
     logger_init('DEBUG')
 else:
-    logger = logging.getLogger('uvicorn.error')
+    # logger = logging.getLogger('uvicorn.error')
+    logger_init()
+
 
 # check env and use defaults if not present
 env = check_env_vars()
 
-if __name__ == '__main__':
-    # set logger level based on what we got back
-    set_log_level(env['LOG_LEVEL'])
+# set logger level based on what we got back
+set_log_level(env['LOG_LEVEL'])
 
+if __name__ == '__main__':
     # dump environment we care about in main process rather than each child
     for var in env:
         logger.debug(f'env: {var}={env[var]}')
@@ -40,8 +44,9 @@ api.include_router(
 )
 logger.debug('added routers.configuration')
 
-@api.get("/")
-async def root():
+@api.get("/", )
+async def root(response: Response):
+    response.status_code = status.HTTP_418_IM_A_TEAPOT
     return {'message': 'You\'re a tea pot?'}
 
 # start API

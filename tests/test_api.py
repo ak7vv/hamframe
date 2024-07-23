@@ -13,5 +13,5 @@ client = TestClient(api)
 
 def test_tea_pot():
     response = client.get('/')
-    assert response.status_code == 200
+    assert response.status_code == 418
     assert response.json() == {'message': 'You\'re a tea pot?'}
