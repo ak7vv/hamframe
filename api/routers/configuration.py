@@ -4,14 +4,14 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get('/config/')
-async def get_config():
-    return [{'instance': 'instance'}]
+@router.get('/configuration')
+async def get_configuration():
+    return {'instance': 'instance'}
 
-@router.get('/config/{instance}')
-async def get_config_instance_section(instance):
-    return [{'instance': instance}]
+@router.get('/configuration/{instance}')
+async def get_configuration_instance(instance):
+    return {'instance': instance}
 
-@router.get('/config/{instance}/{section}')
-async def get_config_instance_section(instance, section):
-    return [{'instance': instance}, {'section': section}]
+@router.get('/configuration/{instance}/{section}')
+async def get_configuration_instance_section(instance, section):
+    return {'instance': instance}, {'section': section}
