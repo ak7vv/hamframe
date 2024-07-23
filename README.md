@@ -19,26 +19,13 @@ And it probably goes without saying.. feedback is very welcome.
 .
 ├── api
 │   ├── api.py
-│   ├── api.sh
 │   ├── Dockerfile
 │   ├── README.md
 │   ├── requirements.txt
-│   ├── routers
-│   │   ├── configuration
-│   │   │   ├── operations.py
-│   │   │   ├── put.py
-│   │   │   ├── get.py
-│   │   │   ├── update
-│   │   │   └── delete.py
-│   │   ├── database
-│   │   │   ├── operations.py
-│   │   │   └── ..
-│   │   └── internal
-│   │       ├── operations.py
-│   │       └── ..
-│   ├── tests
-│   └── tooling
-│
+│   └── routers
+│       ├── configuration.py
+│       ├── log.py
+│       └── internal.py
 ├── cli
 │   ├── cli.py
 │   ├── Dockerfile
