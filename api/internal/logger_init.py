@@ -46,7 +46,8 @@ level_formats = {
 
 
 
-def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
+# def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
+def logger_init(startup_logging_level: str = 'INFO'):
     """
     Initialize logging.Logger with custom logging format based on logging severity level.
 
@@ -72,4 +73,4 @@ def logger_init(startup_logging_level: str = 'INFO') -> logging.Logger:
 
     logger.setLevel(logging.getLevelName(startup_logging_level))
 
-    return logger
+    # return logger

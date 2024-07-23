@@ -16,4 +16,4 @@ RUN pip3 install --no-cache-dir --root-user-action ignore -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT [ "python", "api.py" ]
+ENTRYPOINT [ "python", "main.py" ]
