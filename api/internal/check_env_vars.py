@@ -9,7 +9,8 @@ def check_env_vars() -> Dict:
     If not, substitute a reasonable default.
 
     Returns:
-        Dict: returns a dictionary of environment variables and their assigned values. NOT typesafe. Consumer is resonsible for typecasting as needed.
+        Dict: returns a dictionary of environment variables and their assigned
+        values. NOT typesafe. Consumer is resonsible for typecasting as needed.
     """
 
     # access the 'global' logger
