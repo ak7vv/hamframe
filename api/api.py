@@ -3,31 +3,24 @@
 # following the pattern described in 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
 
+API_VERSION = 'v1'
+
 from fastapi import FastAPI
 import logging
 
 from internal import logger_init, check_env_vars, set_log_level
-from routers import config
+from routers.configuration import router as configuration_router
 
-logger = logging.getLogger('api')
 
-# Define API app as 'api'
+# check env and use defaults if not present
 
-api = FastAPI()
-
-# start API
+env = check_env_vars()
 
 if __name__ == '__main__':
-    import  uvicorn
-
-    # stubs follow, this should be read from redis kvs for instance, section 'hamframe'
-
+    logger = logging.getLogger('api')
     # logger = tooling.logger_init('DEBUG')
+
     logger_init()
-
-    # check env and use defaults if not present
-
-    env = check_env_vars()
 
     # set logger level based on what we got back
 
@@ -37,14 +30,29 @@ if __name__ == '__main__':
 
     for var in env:
         logger.debug(f'env: {var}={env[var]}')
+else:
+    logger = logging.getLogger('uvicorn.error')
 
-    # add REST routes
+# Define API app as 'api'
 
-    api.include_router(
-        config.router,
-        responses={418: {"description": "I'm a teapot"}},
-    )
-    logger.debug('config_router added')
+api = FastAPI()
+
+# add REST routes
+
+api.include_router(
+    router = configuration_router,
+    prefix='/' + API_VERSION,
+)
+logger.debug('added routers.configuration')
+
+@api.get("/")
+async def root():
+    return {'message': 'You\'re a tea pot?'}
+
+# start API
+
+if __name__ == '__main__':
+    import  uvicorn
 
     uvicorn.run(
         app='__main__:api', 
