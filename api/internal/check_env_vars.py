@@ -39,7 +39,7 @@ def check_env_vars() -> Dict:
     env = {}
 
     logger.debug(f'all_env_vars: {all_env_vars}')
-    logger.debug(f'env: {env}')
+    logger.debug(f'env = {env}')
 
     for var in vars:
         if var in all_env_vars:
@@ -49,6 +49,6 @@ def check_env_vars() -> Dict:
             env[var] = var_defaults[var]
             logger.debug(f'env: {var}={env[var]} (default)')
 
-    logger.debug(f'env: {env}')
+    logger.debug(f'env = {env}')
 
     return env

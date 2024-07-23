@@ -1,6 +1,4 @@
 # implement REST API using FastAPI
-#
-# following the pattern described in 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
 
 API_VERSION = 'v1'
@@ -11,27 +9,24 @@ import logging
 from internal import logger_init, check_env_vars, set_log_level
 from routers.configuration import router as configuration_router
 
+if __name__ == '__main__':
+    logger = logging.getLogger('api')
+    
+    # logger_init()
+    logger_init('DEBUG')
+else:
+    logger = logging.getLogger('uvicorn.error')
 
 # check env and use defaults if not present
-
 env = check_env_vars()
 
 if __name__ == '__main__':
-    logger = logging.getLogger('api')
-    # logger = tooling.logger_init('DEBUG')
-
-    logger_init()
-
     # set logger level based on what we got back
-
     set_log_level(env['LOG_LEVEL'])
 
-    # dump environment we care about
-
+    # dump environment we care about in main process rather than each child
     for var in env:
         logger.debug(f'env: {var}={env[var]}')
-else:
-    logger = logging.getLogger('uvicorn.error')
 
 # Define API app as 'api'
 
