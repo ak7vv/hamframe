@@ -2,7 +2,7 @@
 
 ![GitHub Actions Workflow Status for CLI build](https://img.shields.io/github/actions/workflow/status/ak7vv/hamframe/cli.yml?branch=main&style=plastic&logo=github&label=CLI%20docker%20build-n-push&labelColor=purple&cacheSeconds=30&link=https%3A%2F%2Fgithub.com%2Fak7vv%2Fhamframe%2Factions%2Fworkflows%2Fcli.yml)\
 ![GitHub Actions Workflow Status for API build](https://img.shields.io/github/actions/workflow/status/ak7vv/hamframe/api.yml?branch=main&style=plastic&logo=github&label=API%20docker%20build-n-push&labelColor=purple&cacheSeconds=30&link=https%3A%2F%2Fgithub.com%2Fak7vv%2Fhamframe%2Factions%2Fworkflows%2Fapi.yml)\
-![GitHub issues current open count](https://img.shields.io/github/issues-search?query=repo%3Aak7vv%2Fhamframe%20state%3Aopen&logo=github&label=current%20open%20issues%20count&labelColor=purple&style=plastic&color=teal)
+![GitHub issues current open count](https://img.shields.io/github/issues-search?query=repo%3Aak7vv%2Fhamframe%20state%3Aopen&logo=github&label=current%20open%20issues%20count&labelColor=purple&style=plastic&color=teal)\
 ![GitHub commit activity per month (main branch)](https://img.shields.io/github/commit-activity/m/ak7vv/hamframe/main)
 
 ## Intro
