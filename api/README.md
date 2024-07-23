@@ -1,7 +1,5 @@
 # API
 
-# **OUT OF DATE**
-
 ## TOC
 
 [Architecture](#architecture)
@@ -22,36 +20,62 @@ One example of a consumer of the API are the CLI commands in [../cli](../cli) th
 
 If _section_ is not specified in the API call, the operation will assume _section_ to be a wildcard and potentially match multiple _sections_ within the same _instance_ if they exist. Each section is returned as a numbered enumeration of the resulting array.  The response message in the body of the request indicates number of sections were matched with the property _"sections:"_ with an integer value.
 
-## Background
+## Using the API
 
-The API is implemented as a Docker container running gunicorn/uvicorn/[FastAPI](https://fastapi.tiangolo.com/).  The container can be built with _make_ within the API directory.
+The API is implemented as a Docker container running gunicorn/uvicorn/[FastAPI](https://fastapi.tiangolo.com/).  By default, the API will open 65432/tcp. 
 
-You can run the container in FastAPI's _dev_ or _prod_ mode depending on whether you pass _'dev'_ as an argument to the _docker run_ command:
 
-    docker run --rm --name hamframe-api --publish 8000:8000 hamframe-api
+### Container
 
-or
+This repo will trigger a GitHub Actions workflow to build a new container (for linux/amd64 and linux/arm64) and push a successful build to [Docker Hub ak7vv/hamframe-api](https://hub.docker.com/r/ak7vv/hamframe-api) if anything that runs in the container is modified in the repo.
 
-    docker run --rm --name hamframe-api --publish 8000:8000 hamframe-api dev
+You can run this container with
 
-The API is then exposed on _8000/tcp_ and bound to _0.0.0.0_ (this means you can access it from outside of the host).
+```shell
+    docker run \
+        --name api \
+        --publish 65432:65432 \
+        ak7vv/hamframe-api
+```
+
+and optionally you can pass environment variables like
+
+```shell
+    docker run \
+        --name api \
+        --env LOG_LEVEL=debug \
+        --env LISTENER_HOST=0.0.0.0 \
+        --publish 65432:65432 \
+        ak7vv/hamframe-api
+```
+
+Remember that the environment variables always have to be defined before the container name and not after.
+
+### python from .venv:
+
+You can also run the API by starting it directly from python inside a virtual environment.  This is mainly intended for dev:
+
+```shell
+    python api.py
+```
+
+and optionally you can pass environment variables like
+
+```shell
+    export LOG_LEVEL=debug \
+    export LISTENER_HOST=0.0.0.0 \
+    python api.py
+```
+
+## OpenAPI docs
 
 FastAPI is self-documenting as [OpenAPI](https://www.openapis.org/) (the artist formerly known as Swagger), which can be found at
 
-    http://host_ip:8000/openapi.json
+http://_host_ip_:65432/openapi.json
 
 You can also find human-readable variants here:
 
-    http://host_ip:8000/docs
-    http://host_ip:8000/redoc
+http://_host_ip_:65432/docs\
+http://_host_ip_:65432/redoc
 
 where you can learn about the API verbs and attributes as well as exercise the API.
-
-## FastAPI dev mode
-
-If you've launched the API container as described above, you can iterate through code versions by executing this command:
-
-    docker cp api.py hamframe-api:/hamframe
-
-FastAPI will detect the change and relaunch with the new version.  You still need to rebuild the container image as described above if you want this change to persist.
-
