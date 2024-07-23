@@ -6,8 +6,8 @@
 from fastapi import FastAPI
 import logging
 
-from .internal import logger_init, check_env_vars, set_log_level
-from .routers import configuration
+from internal import logger_init, check_env_vars, set_log_level
+from routers import config
 
 logger = logging.getLogger('api')
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     # add REST routes
 
     api.include_router(
-        configuration.router,
+        config.router,
         responses={418: {"description": "I'm a teapot"}},
     )
     logger.debug('config_router added')
