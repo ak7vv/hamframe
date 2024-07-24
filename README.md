@@ -25,10 +25,13 @@ Further reading:
 │   ├── README.md
 │   ├── requirements.txt
 │   ├── routers
-│   │   ├── configuration.py
-│   │   ├── log.py
-│   │   └── internal.py
-│   └── tests
+│   │   └── configuration
+│   │       ├── operations.py
+│   │       ├── get.py
+│   │       ├── put.py
+│   │       ├── patch.py
+│   │       └── delete.py
+│   └── tests
 │       └── test_api.py
 ├── cli
 │   ├── cli.py
