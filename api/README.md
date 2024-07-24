@@ -8,19 +8,34 @@
 -- [Python from .venv](#python-from-venv)
 - [OpenAPI docs](#openapi-docs)
 
-### Configuration 
+## Overview
 
-Configuration is stored in a [Redis](redis.io)-compatible key-value store ([KVS](https://en.wikipedia.org/wiki/Key%E2%80%93value_database)).  The API is a lightweight abstraction to store (_import_), retrieve (_export_), and _delete_ JSON encoded configuration objects within KVS. Multiple sets of configurations can be managed by naming different _instances_.  Within an instance, multiple _sections_ can be defined.  This results in keys being encoded in KVS as _config:\<instance\>:\<section\>_, like _config_:_ak7vv_:_n0nbh_ for a configuration section _n0nbh_ within the instance _ak7vv_.
+The API is a lightweight abstraction and supports RESTful operations for JSON encoded objects.
+
+## Configuration API
+
+### Structure
+
+Multiple sets of configurations can be managed by naming different _instances_.  Within an instance, multiple _sections_ can be defined.
 
 The value associated with a key is encoded as a JSON object and not validated beyond being valid JSON.  Lightweight abstraction means the responsibility for validating and understanding encoded JSON data rests with the consumers of the API for the value part of anything stored in KVS.
 
-One example of a consumer of the API are the CLI commands in [../cli](../cli) that invoke REST API calls to implement the CLI backend.  Components integrated with Hamframe can use the API to retrieve or modify configuration sections.
-
 If _section_ is not specified in the API call, the operation will assume _section_ to be a wildcard and potentially match multiple _sections_ within the same _instance_ if they exist. Each section is returned as a numbered enumeration of the resulting array.  The response message in the body of the request indicates number of sections were matched with the property _"sections:"_ with an integer value.
+
+If _instance_ is not specified in the API call, the operation will assume _instance_ to be a wildcard and potentially match multiple _instances_. Each instance is returned as a numbered enumeration of the resulting array. The response message in the body of the request indicates number of instances were matched with the property _"instances:"_ with an integer value.
+
+
+### Backend
+
+Configuration is stored in a [Redis](redis.io)-compatible key-value store ([KVS](https://en.wikipedia.org/wiki/Key%E2%80%93value_database)). Keys are encoded in KVS as _config:\<instance\>:\<section\>_, like _config_:_ak7vv_:_n0nbh_ for a configuration section _n0nbh_ within the instance _ak7vv_.  The KVS is always assumed to be local unless specified otherwise (REDIS_HOST, REDIS_PORT environment variables).  A single API instance can only be associated with a single KVS endpoint.
+
+One example of a consumer of the API are the CLI commands in [../cli](../cli) that invoke REST API calls to implement the CLI backend.  Components integrated with Hamframe can use the API to retrieve or modify configuration sections.
 
 ## Using the API
 
-The API is implemented as a Docker container running [FastAPI](https://fastapi.tiangolo.com/).  By default, the API will open 65432/tcp.
+The API is implemented as a Docker container running [FastAPI](https://fastapi.tiangolo.com/).  By default, the API will open 65432/tcp unless you specify LISTENER_PORT environment variable to be something else. The API will listen on localhost unless you specify something else with LISTENER_HOST environment variable.  If you need access from outside the host, specify the LISTENER_HOST to be the IP address or DNS name of a single interface or 0.0.0.0 to listen on all.
+
+The API is versioned as, for example, "/v1/configuration" to allow for what would otherwise be breaking changes over time.  The intent is to support GET, PUT, PATCH, and DELETE for all objects, but the completeness may vary.  Root "/" has no significance.
 
 ### Container
 
@@ -63,6 +78,8 @@ and optionally you can pass environment variables like
     export LISTENER_HOST=0.0.0.0 \
     python api.py
 ```
+
+Use the Container if you intend to use this code.
 
 ## Testing
 
