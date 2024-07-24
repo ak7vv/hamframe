@@ -10,8 +10,6 @@ import sys
 from internal import logger_init, check_env_vars, set_log_level
 from routers.configuration.operations import router as configuration_router
 
-
-
 # check if python version is what this is written with:
 
 if sys.version_info < (3, 9):

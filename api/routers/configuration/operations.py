@@ -1,7 +1,14 @@
 # Configuration operations
 
 from enum import Enum
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Request, Response
+
+from .get import get as configuration_get
+from .put import put as configuration_put
+from .patch import patch as configuration_patch
+from .delete import delete as configuration_delete
+
+
 
 router = APIRouter()
 
@@ -18,12 +25,21 @@ class SectionName(str, Enum):
 # GET
 
 @router.get('/configuration')
-async def get_config_all():
+async def get_config_all(
+    request: Request,
+    response: Response
+):
+    # get(
+    #     request=request,
+    #     response=response,
+    # )
     return {'message': 'that\'s everything.'}
+
 
 @router.get('/configuration/{instance}')
 async def get_config_instance(instance: str):
     return {'instance': instance}
+
 
 @router.get('/configuration/{instance}/{section}')
 async def get_config_instance_section(instance: str, section: SectionName):
