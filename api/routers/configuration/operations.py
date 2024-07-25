@@ -1,8 +1,7 @@
 # Configuration operations
 
 from enum import Enum
-from typing import Optional
-from fastapi import APIRouter, Body, Path, Request, Response, Query
+from fastapi import APIRouter, Body
 
 from .get import get as configuration_get
 from .put import put as configuration_put
