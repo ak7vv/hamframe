@@ -12,8 +12,8 @@ from routers.configuration.operations import router as configuration_router
 
 # check if python version is what this is written with:
 
-if sys.version_info < (3, 9):
-    print('ERROR: Python 3.9+ required.')
+if sys.version_info < (3, 10):
+    print('ERROR: Python 3.10+ required.')
     os._exit(1)
 
 # Set up logger and dance through the permutations of being main and
