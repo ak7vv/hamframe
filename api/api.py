@@ -7,10 +7,11 @@ from fastapi import FastAPI, Response, status
 import logging
 import sys
 
+from globals import env
 from internal import logger_init, check_env_vars, set_log_level
 from routers.configuration.operations import router as configuration_router
 
-# check if python version is what this is written with:
+# python version sanity check
 
 if sys.version_info < (3, 10):
     print('ERROR: Python 3.10+ required.')
@@ -31,7 +32,8 @@ else:
     logger_init()
 
 # check env and use defaults if not present
-env = check_env_vars()
+# this populates env dict global
+check_env_vars()
 
 # set logger level based on what we got back
 set_log_level(env['LOG_LEVEL'])

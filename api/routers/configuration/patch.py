@@ -1,8 +1,10 @@
 # Configuration PATCH
 
 from ast import Dict
+from fastapi import Response, status
 
 def patch(
+        response: Response,
         instance_param: str = None,
         section_param: str = None        
 ) -> Dict:

@@ -1,18 +1,18 @@
-from ast import Dict
 import os
 import logging
+from typing import Dict
+from globals import env
 
-def check_env_vars() -> Dict:
-    """
-    Checks if environment variables we care about are present.
+def check_env_vars():
+    """Checks if environment variables we care about are present.
     If so, accept them.
     If not, substitute a reasonable default.
-
-    Returns:
-        Dict: returns a dictionary of environment variables and their assigned
-        values. NOT typesafe. Consumer is resonsible for typecasting as needed.
+        
+    Sets globals.env Dict of environment variables and their assigned
+    values.
+    
+    NOT typesafe. Consumer is resonsible for typecasting as needed.
     """
-
     # access the 'global' logger
     logger = logging.getLogger('api')
 
@@ -36,8 +36,6 @@ def check_env_vars() -> Dict:
 
     all_env_vars = dict(os.environ)
     
-    env = {}
-
     logger.debug(f'all_env_vars: {all_env_vars}')
     logger.debug(f'env = {env}')
 
@@ -50,5 +48,3 @@ def check_env_vars() -> Dict:
             logger.debug(f'env: {var}={env[var]} (default)')
 
     logger.debug(f'env = {env}')
-
-    return env
