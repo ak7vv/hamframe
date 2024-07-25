@@ -1,7 +1,8 @@
 # Configuration operations
 
 from enum import Enum
-from fastapi import APIRouter, Body, Request, Response
+from typing import Optional
+from fastapi import APIRouter, Body, Path, Request, Response, Query
 
 from .get import get as configuration_get
 from .put import put as configuration_put
@@ -20,34 +21,28 @@ class SectionName(str, Enum):
     n0nbh = 'n0nbh'
     couchbase = 'couchbase'
 
-
-
 # GET
 
 @router.get('/configuration')
-async def get_config_all(
-    request: Request,
-    response: Response
-):
-    # get(
-    #     request=request,
-    #     response=response,
-    # )
-    return {'message': 'that\'s everything.'}
-
-
 @router.get('/configuration/{instance}')
-async def get_config_instance(instance: str):
-    return {'instance': instance}
-
-
 @router.get('/configuration/{instance}/{section}')
-async def get_config_instance_section(instance: str, section: SectionName):
-    match section:
-        case SectionName.couchbase:
-            return {'message': 'i am a futon.'}
-        case SectionName.n0nbh:
-            return {'message': 'it is dark.'}
+def get_config(
+    request: Request,
+    response: Response,
+    instance: str = None,
+    section: SectionName = None
+):
+    return_dict = configuration_get(
+        request=request,
+        response=response,
+        instance_param=instance,
+        section_param=section
+    )
+    
+    print(f'return_dict: {return_dict}')
+
+    return return_dict
+
 
 
 
