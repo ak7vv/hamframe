@@ -1,7 +1,7 @@
 # Configuration PATCH
 
-from ast import Dict
 from fastapi import Response, status
+from typing import Dict
 
 def patch(
         response: Response,

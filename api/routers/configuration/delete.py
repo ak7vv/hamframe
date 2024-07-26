@@ -1,7 +1,7 @@
 # Configuration DELETE
 
-from ast import Dict
 from fastapi import Response, status
+from typing import Dict
 
 def delete(
         response: Response,

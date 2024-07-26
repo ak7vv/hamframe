@@ -1,8 +1,11 @@
 # Configuration operations
 
-from enum import Enum
-from fastapi import APIRouter, Body, Response
+from fastapi import APIRouter, Body, HTTPException, Response
+from typing import Union
 
+from pydantic import ValidationError
+
+from globals import ConfigurationCouchbase, ConfigurationN0nbh, ConfigurationSectionName
 from .get import get as configuration_get
 from .put import put as configuration_put
 from .patch import patch as configuration_patch
@@ -14,13 +17,6 @@ router = APIRouter()
 
 
 
-# Data models
-
-class SectionName(str, Enum):
-    n0nbh = 'n0nbh'
-    couchbase = 'couchbase'
-
-
 # GET
 
 @router.get('/configuration')
@@ -29,7 +25,7 @@ class SectionName(str, Enum):
 async def get_config(
     response: Response,
     instance: str = None,
-    section: SectionName = None
+    section: ConfigurationSectionName = None
 ):
     """Handler for GET operation on configuration
 
@@ -39,7 +35,7 @@ async def get_config(
         section (SectionName, optional): Name of the configuration section. Defaults to None.
 
     Returns:
-        Dict: HTTP operation response
+        dict: HTTP operation response
     """
     return configuration_get(
         response=response,
@@ -51,20 +47,54 @@ async def get_config(
 
 # PUT
 
-@router.put('/configuration')
-@router.put('/configuration/{instance}')
+# @router.put('/configuration')
+# @router.put('/configuration/{instance}')
 @router.put('/configuration/{instance}/{section}')
 async def put_config(
     response: Response,
-    instance: str = None,
-    section: SectionName = None,
+    # data: ConfigurationCouchbase | ConfigurationN0nbh,
+    instance: str,
+    section: ConfigurationSectionName,
     body: dict = Body (...)
 ):
+    """Handler for configuration PUT operation
+
+    Args:
+        response (Response): HTTP status code pass-through
+        instance (str, optional): Name of the instance. Defaults to None.
+        section (SectionName, optional): Name of the configuration section. 
+        Defaults to None.
+        body (dict, optional): Submitted configuration in body, formatted as 
+        JSON and converted to dict. Defaults to Body(...).
+
+    Returns:
+        dict: HTTP operation response
+    """
+
+    print(f'instance: {instance}')
+    print(f'section: {section}')
+    print(f'body: {body}')
+    # print(f'data: {data}')
+
+    # if section == ConfigurationSectionName.couchbase:
+    #     try:
+    #         validated_data = ConfigurationCouchbase(**data.model_dump())
+    #     except ValidationError as e:
+    #         raise HTTPException(status_code=422, detail=e.errors())
+    # elif section == ConfigurationSectionName.n0nbh:
+    #     try:
+    #         validated_data = ConfigurationN0nbh(**data.model_dump())
+    #     except ValidationError as e:
+    #         raise HTTPException(status_code=422, detail=e.errors())
+    # # else:
+    # #     raise HTTPException(status_code=400, detail='Invalid configuration section.')
+
     
     return configuration_put(
         response=response,
         instance_param=instance,
-        section_param=section
+        section_param=section,
+        body=body
     )
 
 
@@ -76,7 +106,7 @@ async def put_config(
 @router.patch('/configuration/{instance}/{section}')
 async def patch_config(
     instance: str = None,
-    section: SectionName = None,
+    section: ConfigurationSectionName = None,
     body: dict = Body (...)
 ):
 
@@ -93,7 +123,7 @@ async def patch_config(
 @router.delete('/configuration/{instance}/{section}')
 async def delete_config(
     instance: str = None,
-    section: SectionName = None
+    section: ConfigurationSectionName = None
 ):
     return configuration_delete(
         instance_param=instance,

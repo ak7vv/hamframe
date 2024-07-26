@@ -1,9 +1,11 @@
 # Configuration GET
 
 from fastapi import Response, status
-from globals import env
-from ast import Dict
+from typing import Dict
+
 from internal.check_conf_server import check_conf_server
+
+
 
 def get(
         response: Response,
@@ -28,6 +30,7 @@ def get(
     HTTP Status Codes:
         424: Redis failure
     """
+
     return_dict = {'instance': instance_param, 'section': section_param}
 
     # do we have a working Redis connection?
@@ -36,6 +39,16 @@ def get(
         response.status_code = status.HTTP_424_FAILED_DEPENDENCY
         return { 'message': 'redis connection failed' }
     # we have a working redis connection
+
+    if instance_param:
+        if section_param:
+            pattern='configuration:' + instance_param + ':' + section_param
+        else:
+            pattern = 'configuration:' + instance_param + ':*'
+    else:
+        pattern='configuration:*:*'
+
+    print(f'pattern: {pattern}')
 
     # do something useful with redis
 
