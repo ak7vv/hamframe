@@ -1,6 +1,0 @@
-{
-    "editor.fontSize": 18,
-    "python.analysis.extraPaths": [
-        "venv"
-    ]
-}
